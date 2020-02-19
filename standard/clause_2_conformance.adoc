@@ -1,0 +1,26 @@
+== Conformance
+This draft specification defines five requirements/conformance classes for the Styles API:
+
+* "core" provides access to styles and their metadata. JSON is a mandatory encoding in requests and responses where JSON schemas have been specified for the Styles API.
+* "manage-styles" adds the capabilities for creating, updating and deleting styles and their metadata.
+* "style-validation" adds the capability to validate a stylesheet.
+* "resources" add the capabilities to provide access to resources referenced from stylesheets (symbols, sprites) or style metadata (thumbnails).
+* "manage-resources" add the capabilities for creating, updating and deleting resources.
+
+In addition, there are four requirements/conformance classes for additional encodings supported by resources of the API:
+
+* "html" supports HTML in responses to GET requests for all requests to the Styles API.
+* "mapbox-styles" supports Mapbox Styles as a style encoding.
+* "sld-10" supports OGC SLD 1.0 as a style encoding.
+* "sld-11" supports OGC SLD 1.1 as a style encoding.
+
+Finally, there are two requirements/conformance classes extending the information about Collection resources specified in OGC API - Features - Part 1: Core:
+
+* "style-info" adds information about available styles for each collection.
+* "queryables" adds information about the feature properties that may be used in styling rules.
+
+The standardization target for all classes is: Web API.
+
+Conformance with this draft specification shall be checked using all the relevant tests specified in Annex A (normative) of this document. The framework, concepts, and methodology for testing, and the criteria to be achieved to claim conformance are specified in the OGC Compliance Testing Policies and Procedures and the OGC Compliance Testing web site.
+
+In order to conform to this draft specification, a software implementation has to implement "core".

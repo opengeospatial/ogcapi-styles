@@ -1,0 +1,9 @@
+[appendix]
+:appendix-caption: Annex
+== Revision History
+
+[width="90%",options="header"]
+|===
+|Date |Editor |Release |Primary clauses modified |Description
+|February 19, 2020 |C. Portele | 1.0.0-SNAPSHOT |all |initial version, derived from the [OGC Testbed-15: Styles API Engineering Report](http://docs.opengeospatial.org/per/19-010r2.html)
+|===

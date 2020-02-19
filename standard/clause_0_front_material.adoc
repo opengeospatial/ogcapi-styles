@@ -1,0 +1,119 @@
+[big]*i.     Abstract*
+
+This document is the draft OGC API - Styles specification that defines a Web API that enables map servers and clients as well as visual style editors to manage and fetch styles.
+
+Web APIs are software interfaces that use an architectural style that is founded on the technologies of the Web.
+Styles consist of symbolizing instructions that are applied by a rendering engine on features and/or coverages.
+
+A Styles API supports several types of consumers, mainly:
+
+* Visual style editors that create, update and delete styles for datasets that are shared by other Web APIs implementing the OGC API - Features - Part 1: Core standard or the draft OGC API - Coverages or draft OGC API - Tiles specifications;
+* Web APIs implementing the draft OGC API - Maps specification fetch styles and render spatial data (features or coverages) on the server;
+* Map clients that fetch styles and render spatial data (features or coverages) on the client.
+
+Feature data is either accessed directly or organized into spatial partitions such as a tiled data store (aka "vector tiles").
+
+The Styles API is consistent with the emerging OGC API family of standards.
+
+The Styles API implements the conceptual model for style encodings and style metadata as documented
+in link:http://docs.opengeospatial.org/per/19-023r1.html#Metadata[chapter 6] of the "OGC Testbed-15: Encoding and Metadata Conceptual Model for Styles Engineering Report".
+
+The model defines three main concepts:
+
+1. The **style** is the main resource.
+2. Each style is available in one or more **stylesheets** - the representation of a
+style in an encoding like OGC SLD 1.0 or Mapbox Style. Clients will use the
+stylesheet of a style that fits best based on the capabilities of available tools
+and their preferences.
+3. For each style there is **style metadata** available, with general descriptive
+information about the style, structural information (e.g., layers and attributes),
+and so forth to allow users to discover and select existing styles for their data.
+
+This model directly maps to the resources and documents in the Styles API,
+which supports the resources and operations listed in the Table below.
+
+[#tldr1,reftext='{table-caption} {counter:table-num}']
+.Styles API - overview of resources and applicable HTTP methods
+[cols="20,30,10,40",options="header"]
+!===
+|Resource |Path |HTTP method |Document reference
+|Landing page |`/` |GET |<<landing_page>>
+|Conformance declaration |`/conformance` |GET |<<conformance_declaration>>
+.3+|Styles .3+|`/styles` |GET |<<get_styles>>
+.2+|POST |<<create_style>>
+|<<style_validate>>
+.4+|Style .4+|`/styles/{styleId}` |GET |<<get_style>>
+.2+|PUT |<<update_style>>
+|<<style_validate>>
+|DELETE |<<delete_style>>
+.3+|Style metadata .3+|`/styles/{styleId}/metadata` |GET |<<get_style_metadata>>
+|PUT |<<update_style_metadata>>
+|PATCH |<<patch_style_metadata>>
+|Resources |`/resources` |GET |<<get_resources>>
+.3+|Resource .3+|`/resources/{resourceId}` |GET |<<get_resource>>
+|PUT |<<update_resource>>
+|DELETE |<<delete_resource>>
+!===
+
+In order to support styles, data APIs (for example, supporting OGC API Features
+and/or the draft OGC API Tiles) require additional capabilities, too. These are:
+
+* List and manage the applicable styles per feature collection
+(path `/collections/{collectionId}`).
+* Add a `queryables` resource (path `/collections/{collectionId}/queryables`)
+to support clients such as visual style editors to construct expressions for
+selection criteria in queries on features in the collection. "Queryable" means
+that the property may be used in styling rules or other filter expressions.
+
+To support styling of coverage data, other additional capabilities in the
+data API may be required, but have not been investigated by Testbed 15.
+
+This document uses link:http://spec.openapis.org/oas/v3.0.2[OpenAPI 3.0]
+to specify the building blocks of the API.
+
+[quote, OpenAPI Specification, Introduction]
+____
+The OpenAPI Specification (OAS) defines a standard, language-agnostic interface to RESTful APIs which allows both humans and computers to discover and understand the capabilities of the service without access to source code, documentation, or through network traffic inspection. When properly defined, a consumer can understand and interact with the remote service with a minimal amount of implementation logic.
+
+An OpenAPI definition can then be used by documentation generation tools to display the API, code generation tools to generate servers and clients in various programming languages, testing tools, and many other use cases.
+____
+
+
+[big]*ii.    Keywords*
+
+The following are keywords to be used by search engines and document catalogues.
+
+ogcdoc, OGC document, OpenAPI, OGC API, style, style encoding, style metadata, Styles API
+
+[big]*iii.   Preface*
+
+OGC is currently missing a robust conceptual model and APIs capable of supporting styles with multiple style encodings (for example OGC SLD and Mapbox Style). The Open Portrayal Framework (OPF) task in Testbed-15 investigated this issue, building on previous portrayal activities in the OGC. This document specifies building blocks for Web APIs consistent with the OGC API series to manage and fetch styles.
+
+Attention is drawn to the possibility that some of the elements of this document may be the subject of patent rights. The Open Geospatial Consortium shall not be held responsible for identifying any or all such patent rights.
+
+Recipients of this document are requested to submit, with their comments, notification of any relevant patent claims or other intellectual property rights of which they may be aware that might be infringed by any implementation of the draft specification set forth in this document, and to provide supporting documentation.
+
+[big]*iv.    Submitting organizations*
+
+The following organizations submitted this Document to the Open Geospatial Consortium (OGC):
+
+* Ecere Corporation
+* GeoSolutions
+* interactive instruments GmbH
+* Leidos
+* Reinventing Geospatial, Inc.
+* US Army Geospatial Center (AGC)
+
+[big]*v.     Submitters*
+
+All questions regarding this submission should be directed to the editor or the submitters:
+
+|===
+|*Name* |*Affiliation*
+
+|Clemens Portele _(editor)_ |interactive instruments GmbH
+|Andrea Aime |GeoSolutions
+|Jeff Harrison |US Army Geospatial Center (AGC)
+|Jérôme Jacovella-St-Louis |Ecere Corporation
+|Richard Kim |Reinventing Geospatial, Inc.
+|===

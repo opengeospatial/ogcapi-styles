@@ -1,0 +1,108 @@
+== Introduction
+
+[[Overview]]
+=== Overview
+
+This document specifies draft building blocks for Web APIs to manage and fetch styles supporting multiple style encodings and metadata to describe and discover styles.
+
+The Styles API supports several types of consumers, mainly:
+
+* Visual style editors that create, update and delete styles for datasets that are shared by other Web APIs implementing the OGC API - Features - Part 1: Core standard or the draft OGC API - Coverages or draft OGC API - Tiles specifications;
+* Web APIs implementing the draft OGC API - Maps specification fetch styles and render spatial data (features or coverages) on the server;
+* Map clients that fetch styles and render spatial data (features or coverages) on the client.
+
+Feature data is either accessed directly or organized into spatial partitions such as a tiled data store (aka "vector tiles").
+
+The Styles API is consistent with the emerging OGC API family of standards.
+
+The remainder of this Clause illustrates use cases and workflows that the Styles API could support.
+
+Clause 7 specifies the Styles API.
+
+Clause 8 specifies extensions to OGC API - Features - Part 1: Core standard (or the emerging OGC API - Common specification) to support the use cases.
+
+[[use-cases]]
+=== Use cases
+
+This section describes expectations of how clients will interact with the Styles API.
+
+The following use cases assume that:
+
+* Some feature dataset that is structured according to a data specification, such as the NGA Topographic Data Store 6.1 (TDS), is available via an API that implements the OGC API - Features - Part 1: Core and draft OGC API - Tiles specifications;
+* Roads are included in the data in a collection `transportationgroundcrv` as features with a property f_code with a value of AP030;
+* The URI of the landing page is `http://example.org/data-api`;
+* A style repository is available via an API that implements the Styles API specification;
+* The URI of the landing page of the Styles API is `http://example.org/styles-api`.
+
+NOTE: The URIs in the use case descriptions are examples and use the domain `example.org`, a link:https://www.iana.org/domains/reserved[reserved domain maintained by IANA] for illustrative examples in documents without prior coordination with IANA.
+
+==== A map client
+
+A map client that wants to visualize data for features or tiled feature data for the collection `http://example.org/data-api/collections/transportationgroundcrv` will look for a `styles` member in the response. The client will probably select one of the styles from the list taking the media types of the supported stylesheets into account and provide a capability so that users can change the style. The stylesheet returned based on the `href` member of the link will be used to render the data.
+
+In addition to feature data, the map client might also fetch a hillshade style to apply to an elevation coverage accessed from a Web API supporting OGC API Coverages.
+
+==== A visual style editor creating a new style
+
+A user wants to create a new style for TDS roads using a visual style editor. The user knows the dataset and the data access API.
+
+A user creates the style in the visual style editor, selects the native stylesheet language for the style and identifies the `transportationgroundcrv` collection in the dataset as a sample data source. The visual style editor executes a request to the landing page (`http://example.org/data-api`) and the conformance declaration (`http://example.org/data-api/conformance`) of the data access API to determine the API capabilities. Note that alternatively the OpenAPI definition may be inspected, but for a client that supports the OGC API standards in general, using the API resources directly is often simpler and, therefore, used in this example.
+
+If the visual style editor supports, for example, both the styling of GeoJSON features or Mapbox Vector Tile data, the editor would require support for at least one of the two following sets of conformance classes:
+
+* `http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/core` and `http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/geojson`
+or
+* `http://www.opengis.net/spec/ogcapi-tiles-1/1.0/conf/core` (with URI templates referencing tiles of media type `application/vnd.mapbox-vector-tile`).
+
+The first option provides access to GeoJSON features via `http://example.org/data-api/collections/transportationgroundcrv/items`, the second one provides access to Mapbox Vector Tiles (MVT) encoded data via `http://example.org/data-api/collections/transportationgroundcrv/tiles`.
+
+In addition, the visual style editor will look for the following conformance classes:
+
+* `http://www.opengis.net/t15/opf-styles-1/1.0/conf/queryables`: If this conformance class is supported, the visual style editor can specify styling rules that make use of feature properties. Otherwise all styling rules will apply to all features in each collection.
+* `http://www.opengis.net/t15/opf-styles-1/1.0/conf/style-info`: If this conformance class is supported, the visual style editor will be able to create a link from the collection to the newly created style.
+
+The editor will also request information about the features in the collection via a request to `http://example.org/data-api/collections/transportationgroundcrv`.
+
+If `http://www.opengis.net/t15/opf-styles-1/1.0/conf/queryables` is supported, the queryables are retrieved via a request to `http://example.org/data-api/collections/transportationgroundcrv/queryables`.
+
+Based on this information, the visual style editor is able to configure its user interface and guide the user through the creation of the style for road features and visualize the draft style using the sample data. Once the user has finished the style, the style is published on a Style repository that supports the Styles API.
+
+If the user requests the use of a Style repository that the editor interacts with for the first time, the editor will again inspect the capabilities of the repository by fetching the conformance declaration at `http://example.org/styles-api/conformance`.
+
+At least the following conformance classes must be supported in order for sharing the new style via the repository.
+
+* `http://www.opengis.net/t15/opf-styles-1/1.0/conf/core`
+* `http://www.opengis.net/t15/opf-styles-1/1.0/conf/manage-styles`
+
+In addition, if the style includes symbols or sprites, the repository also has to support the following conformance classes:
+
+* `http://www.opengis.net/t15/opf-styles-1/1.0/conf/resources`
+* `http://www.opengis.net/t15/opf-styles-1/1.0/conf/manage-resources`
+
+Finally, the repository has to support the native stylesheet language that the user has selected for the style definition, i.e. one of:
+
+* `http://www.opengis.net/t15/opf-styles-1/1.0/conf/mapbox-styles`
+* `http://www.opengis.net/t15/opf-styles-1/1.0/conf/sld-10`
+* `http://www.opengis.net/t15/opf-styles-1/1.0/conf/sld-11`
+
+The visual style editor will ask the user for her credentials (username and password) in the style repository and use the credentials in any of the following POST/PUT/PATCH requests.
+
+If `http://www.opengis.net/t15/opf-styles-1/1.0/conf/style-validation` is supported, the visual style editor can also offer validation of the draft style any time during the drafting process using POST requests with the draft stylesheet to `http://example.org/styles-api/styles?validate=only`.
+
+To create the new style either a POST request with the stylesheet to `http://example.org/styles-api/styles` or a PUT request to `http://example.org/styles-api/styles/{styleId}` (where `{styleId}` is the identifier of the style specified by the user) is sent. `?validate=true` may also be added to the request URI to trigger validation in this step if the style validation conformance class is supported. If PUT is used, the visual style editor should check that no existing style `{styleId}` exists.
+
+After a successful creation of the style (in case of a POST request, the URI of the new style `http://example.org/styles-api/styles/{styleId}` is returned in an HTTP header `Location`), the visual style editor will update the style metadata using a PUT or PATCH request to `http://example.org/styles-api/styles/{styleId}/metadata`.
+
+If the data access API supports the conformance class `http://www.opengis.net/t15/ogcapi-features-m/1.0/conf/style-links`, the visual style editor will add a link to the new style using a PATCH request to `http://example.org/data-api/collections/transportationgroundcrv`.
+
+==== A visual style editor updating an existing style
+
+The process is quite similar to the previous example with the following changes:
+
+* The user will start from an existing style, not with a new style. In other words, the user will open/load the style from the style repository and the editor will fetch a stylesheet of the style from `http://example.org/styles-api/styles/{styleId}` (in the style encoding of choice) and the styles metadata from `http://example.org/styles-api/styles/{styleId}/metadata`.
+* If the style metadata includes links to sample data (e.g., `http://example.org/data-api/collections/transportationgroundcrv`), the editor may use that data for sample visualizations and perhaps to determine changes to queryables. The user may also select other data sources for these purposes.
+* Since an existing style is updated, the style definition will always be updated with a PUT request to `http://example.org/styles-api/styles/{styleId}` (no POST request to `http://example.org/styles-api/styles`, which would create a new style).
+
+==== A Web API implementing OGC API - Maps
+
+A Web API that implements the conformance class "Map tile" of the OGC API Maps specification returns geo-referenced bitmap images showing maps. The URI template for the map tiles is `/collections/{collectionId}/map/{styleId}/tiles/{tileMatrixSetId}/{tileMatrix}/{tileRow}/{tileCol}` and includes a query parameter `styleId`. If a client requests a map tile for the collection `transportationgroundcrv` the API will use the requested style to render the map. The stylesheet may be fetched from the same Web API or another Web API that supports the Styles API.

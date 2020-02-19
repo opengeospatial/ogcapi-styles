@@ -1,0 +1,609 @@
+////
+TODO: move normative statements to separate files
+////
+
+[[collection-extensions]]
+== Extensions to the Collection resource
+
+The previous clause specifies the Styles API. In order to support portrayal workflows, data APIs (supporting OGC API Features and/or Tiles) should provide additional information about the data to support styling.
+
+This clause specifies the extensions to the http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#core-overview[Collection] as additional requirements/conformance classes to OGC API Features.
+
+NOTE: In the future, these classes could extend an OGC API Common
+requirements/conformance class that supports feature collections, but as
+no mature draft for OGC API Common exists, this document extends OGC API Features.
+
+The extensions are the following:
+
+* The feature collection (path `/collections/{collectionId}`) is extended by the set of applicable styles (member `styles`, same value as in `/styles` in the Styles API) and a default style (member `defaultStyle`, the style id).
+* The PATCH operation on the same resource (path `/collections/{collectionId}`) is added. Only `styles` and `defaultStyle` may be updated.
+* The `queryables` resource (path `/collections/{collectionId}/queryables`) has been added to support clients like visual style editors to construct expressions for selection criteria in queries on features in the collection.
+
+NOTE: There is planned work on an extension for queryables for the OGC API Features standard and the draft OGC API Catalogues specification. The requirements for stating the queryables for the use by a visual style editor should be brought into this work activity. Once that extension is available, the requirements class for queryables can be dropped from this document.
+
+This resulting Features API has the resources listed in the Table below.
+
+[#tldr3,reftext='{table-caption} {counter:table-num}']
+.Overview of resources, applicable HTTP methods
+[cols="20,35,10,35",options="header"]
+!===
+|Resource |Path |HTTP method |Changes
+|Landing page |`/` |GET |unchanged
+|Conformance declaration |`/conformance` |GET |unchanged, except for returning additional conformance classes
+|Feature collections |`/collections` |GET |unchanged
+.2+|Feature collection .2+|`/collections/{collectionId}` |GET |include links to styles in the response, see <<get_style_info>>
+|PATCH |new, see <<patch_style_info>>
+|Queryables |`/collections/{collectionId}/queryables` |GET |new, see <<get_queryables>>
+|Features |`/collections/{collectionId}/items` |GET |unchanged
+|Feature |`/collections/{collectionId}/items/{featureId}` |GET |unchanged
+!===
+
+The following is an example of the conformance declaration of a Styles API
+that implements all requirements classes except "html".
+
+[[example_features-cc]]
+.Updated conformance declaration
+=================
+[source,JSON]
+----
+{
+  "conformsTo": [
+    "http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/core",
+    "http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/oas30",
+    "http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/html",
+    "http://www.opengis.net/spec/ogcapi-features-1/1.0/conf/geojson",
+    "http://www.opengis.net/t15/opf-styles-1/1.0/conf/style-info",
+    "http://www.opengis.net/t15/opf-styles-1/1.0/conf/queryables"
+  ]
+}
+----
+=================
+
+NOTE: To support styling of coverage data, other additional capabilities in the
+relevant OGC API specifications supporting coverage data may be required,
+but have not been investigated by Testbed 15.
+
+[[rc_style-info]]
+=== Requirements Class "Style information"
+
+include::requirements/requirements_class_style-info.adoc[]
+
+[[get_style_info]]
+==== Fetch styles associated with a collection
+
+The description of the collection includes additional information related to styles:
+
+* The `styles` array lists styles that can be used to render features in this collection.
+* The `defaultStyle` is the id of a recommended style to use for this collection.
+
+[[req_style-info_success]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/style-info/success*
+^|A |A successful execution of the operation GET on `/collections/{collectionId}` SHALL include two members (with name `styles` and `defaultStyle`), if style information is available for the collection (for example, the style information may be set using a PATCH operation as described below).
+^|B |The `styles` member SHALL be based on the following OpenAPI 3.0 schema:
+
+[source,YAML]
+----
+type: array
+items:
+  type: object
+  nullable: true
+  required:
+    - id
+    - links
+  properties:
+    id:
+      type: string
+      nullable: true
+    title:
+      type: string
+      nullable: true
+    links:
+      type: array
+      nullable: true
+      minItems: 1
+      items:
+        $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/schemas/link'
+----
+^|C |The `defaultStyle` member SHALL be based on the following OpenAPI 3.0 schema:
+
+[source,YAML]
+----
+type: string
+----
+|===
+
+[[rec_style-info_consistency]]
+[width="90%",cols="2,6a"]
+|===
+^|*Recommendation {counter:rec-id}* |*/rec/style-info/consistency*
+^|A |Each style SHOULD have a link for each style encoding supported for the style (link relation: `stylesheet`) with the `type` attribute stating the media type of the style encoding.
+^|B |Each style SHOULD have a link to the style metadata (link relation: `describedBy`) with the `type` attribute stating the media type of the metadata encoding.
+^|C |The value of the `defaultStyle` member SHOULD be an `id` included in the `styles` array.
+|===
+
+[[example_style-info]]
+.JSON encoding of style information
+=================
+This example links to two styles, "night" and "topographic". Each is available in two style encodings. The "topographic" style is identified as the recommended default style for rendering the features on a map.
+
+[source,JSON]
+----
+{
+  "id": "address",
+  "title": "address",
+  ...
+  },
+  "itemType": "feature",
+  "styles": [
+    {
+      "id": "night",
+      "title": "Topographic night style",
+      "links": [
+        {
+          "href": "https://example.com/api/1.0/styles/night?f=mapbox",
+          "type": "application/vnd.mapbox.style+json",
+          "rel": "stylesheet"
+        },
+        {
+          "href": "https://example.com/api/1.0/styles/night?f=sld10",
+          "type": "application/vnd.ogc.sld+xml;version=1.0",
+          "rel": "stylesheet"
+        },
+        {
+          "href": "https://example.com/api/1.0/styles/night/metadata?f=json",
+          "type": "application/json",
+          "rel": "describedBy"
+        }
+      ]
+    },
+    {
+      "id": "topographic",
+      "title": "Regular topographic style",
+      "links": [
+        {
+          "href": "https://example.com/api/1.0/styles/topographic?f=mapbox",
+          "type": "application/vnd.mapbox.style+json",
+          "rel": "stylesheet"
+        },
+        {
+          "href": "https://example.com/api/1.0/styles/topographic?f=sld10",
+          "type": "application/vnd.ogc.sld+xml;version=1.0",
+          "rel": "stylesheet"
+        },
+        {
+          "href": "https://example.com/api/1.0/styles/topographic/metadata?f=json",
+          "type": "application/json",
+          "rel": "describedBy"
+        }
+      ]
+    }
+  ],
+  "defaultStyle": "topographic"
+}
+----
+=================
+
+[[patch_style_info]]
+==== Update styles associated with a collection
+
+In the <<get_style_info,previous section>> the additional style information for each feature collection is described. This operation can be used to update the style information.
+
+The PATCH request updates the metadata of the style with the id `styleId`. If no such style exists, an error is returned.
+
+[[req_style-info_patch-style-info-op]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/style-info/patch-style-info-op*
+^|A |The server SHALL support the HTTP PATCH operation at path `/collection/{collectionId}`.
+^|B |The server SHALL accept content based on the following OpenAPI 3.0 schema:
+
+[source,YAML]
+----
+type: object
+properties:
+  styles:
+    type: array
+    nullable: true
+    items:
+      type: object
+      nullable: true
+      required:
+        - id
+        - links
+      properties:
+        id:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        links:
+          type: array
+          nullable: true
+          minItems: 1
+          items:
+            $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/schemas/link'
+  defaultStyle:
+    type: string
+    nullable: true
+----
+|===
+
+The only members that may be updated at this time are `styles` and `defaultStyle`. This specification does not specify how servers have to respond to additional content in the request content.
+
+[[req_style-info_patch-style-info-success]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/style-info/patch-style-info-success*
+^|A |A successful execution of the operation SHALL be reported as a response with a HTTP status code `204`.
+^|B |The style information SHALL be updated by the content submitted in the request as specified by RFC 7396 (JSON Merge Patch).
+|===
+
+In other words, a GET request to `/collections/{collectionId}` after the PATCH operation has to reflect the updated style information.
+
+See the explanations <<rfc7396_quote,in the operation to update style metadata>> for more information about about RFC 7396 (JSON Merge Patch).
+
+Some examples requests and their effect on the Collection resource:
+
+To add or update the default style, just send:
+
+[source,JSON]
+----
+{
+  "defaultStyle": "night"
+}
+----
+
+To remove the default style, send:
+
+[source,JSON]
+----
+{
+  "defaultStyle": null
+}
+----
+
+For arrays the complete array needs to be sent. I.e., to
+update the list of styles, send the complete new array value.
+
+To remove all styles, send:
+
+[source,JSON]
+----
+{
+  "styles": null
+}
+----
+
+[[req_style-info_patch-style-info-error]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/style-info/patch-style-info-error*
+^|A |If the request does not conform to the requirements (e.g., the patch document is invalid or includes additional members) a response with status code `400` SHALL be returned.
+^|B |If the collection does not exist, a response with status code `404` SHALL be returned.
+^|C |If the patch document appears to be valid, but the server is incapable of processing the request, a response with status code `422` SHALL be returned.
+^|D |If the media type of the patch document is not supported by the API, a response with status code `415` and an `Accept-Patch` header with the supported media types SHALL be returned.
+|===
+
+[[rc_queryables]]
+=== Requirements Class "Queryables"
+
+include::requirements/requirements_class_queryables.adoc[]
+
+[[get_queryables]]
+==== Fetch the queryable properties of the features in a collection
+
+This operation returns the list of queryable properties that can be used to filter features in a collection and supports clients in constructing expressions for selection criteria in queries on features in the collection.
+
+The response is an object with a member `queryables`, which contains an array with a description of the queryable properties of the feature collection. "Queryable" means that the property may be used in query expressions, such as in a query extension to OGC API - Features or as part of a selection criteria in an OGC SLD/SE or Mapbox styling rule.
+
+Often the list of queryables for a collection will be a subset of all available properties in the features and be restricted to those properties that are, for example, indexed in the backend datastore to support performant queries.
+
+For each queryable property the following information is or may be provided:
+
+* `id` (required) - the property name for use in expressions.
+* `type` (required) - the data type of the property, one of
+** `string`
+** `uri`
+** `enum`
+** `number`
+** `integer`
+** `date`
+** `dateTime`
+** `boolean`
+* `description` (optional) - a description of the property.
+* `required` (optional) - indicator whether the property is always present in features.
+* `mediaTypes` (optional) - in general, the representation of the queryables is meant to be independent of the feature encoding. However, this is not always the case. For example, length restrictions or namespace prefixes may result in different property identifiers for the same property. To support this, the definition of a queryable may be restricted to one or more feature encodings (media types).
+* `pattern` (optional, only for "string" and "uri") - a regular expression to validate the values of the property.
+* `values` (required, only for "enum") - an array of valid values of the property.
+* `range` (optional, only for "number", "integer", "date" and "dateTime") - the range of valid values expressed as an array with two items. Open ranges can be expressed using null for the minimum or maximum value.
+
+Note that this is not about providing a schema for the features in the collection. A schema provides a complete syntactic definition of a specific feature encoding, typically for validation purposes. Schema languages like XML Schema or JSON Schema are much richer and support more complex syntactic rules, but are also more complex to parse.
+
+[[req_queryables_op]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/queryables/op*
+^|A |The server SHALL support the HTTP GET operation at the path `/collection/{collectionId}/queryables` for each collection.
+|===
+
+[[req_queryables_success]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/queryables/success*
+^|A |A successful execution of the operation SHALL be reported as a response with a HTTP status code `200`.
+^|B |The content of that response SHALL be based upon the OpenAPI 3.0 schema component "queryables", if the `itemType` of the collection is `feature`:
+
+.queryables
+[source,YAML]
+----
+type: object
+required:
+  - queryables
+properties:
+  queryables:
+    type: array
+    nullable: true
+    items:
+      oneOf:
+        - $ref: 'queryable-string'
+        - $ref: 'queryable-enum'
+        - $ref: 'queryable-number'
+        - $ref: 'queryable-boolean'
+        - $ref: 'queryable-date'
+        - $ref: 'queryable-dateTime'
+----
+
+.queryable
+[source,YAML]
+----
+type: object
+nullable: true
+required:
+  - id
+  - type
+properties:
+  id:
+    type: string
+    nullable: true
+    description: \|-
+      the property name for use in expressions
+  title:
+    type: string
+    nullable: true
+    description: \|-
+      the title of the property for presentation to a
+      human user
+  description:
+    type: string
+    nullable: true
+    description: \|-
+      a description of the property
+  required:
+    type: boolean
+    nullable: true
+    default: false
+    description: \|-
+      indicator whether the property is always present
+      in features
+  mediaTypes:
+    type: array
+    nullable: true
+    description: \|-
+      In cases where a property is available only in a
+      subset of the supported feature encodings, the
+      list of the media types of the encodings can be
+      specified.
+
+      This capabilitiy is also needed for cases where
+      the names of properties may differ between
+      feature encodings. For example, identifiers in an
+      XML/GML encoding may include a namespace,
+      in GeoJSON or MVT this is not the case.
+
+      There are other reasons, too. For example, the
+      property identifier in a Shapefile may be different
+      because of length restrictions.
+    items:
+      type: string
+  type:
+    type: string
+    nullable: true
+    description: \|-
+      the data type of the property
+    enum:
+      - string
+      - uri
+      - enum
+      - number
+      - integer
+      - date
+      - dateTime
+      - boolean
+discriminator:
+  propertyName: type
+  mapping:
+    string: queryable-string
+    enum: queryable-enum
+    uri: queryable-string
+    number: queryable-number
+    integer: queryable-number
+    date: queryable-date
+    dateTime: queryable-dateTie
+    boolean: queryable-boolean
+----
+
+.queryable-string
+[source,YAML]
+----
+allOf:
+- $ref: 'queryable'
+- type: object
+  nullable: true
+  properties:
+    pattern:
+      type: string
+      nullable: true
+      description: \|-
+        a regular expression to validate the values
+        of the property
+----
+
+.queryable-enum
+[source,YAML]
+----
+allOf:
+- $ref: 'queryable'
+- type: object
+  nullable: true
+  required:
+    - values
+  properties:
+    values:
+      type: array
+      nullable: true
+      description: \|-
+        the list of values of the property
+      items:
+        type: string
+----
+
+.queryable-number
+[source,YAML]
+----
+allOf:
+- $ref: 'queryable'
+- type: object
+  nullable: true
+  properties:
+    range:
+      type: array
+      nullable: true
+      minItems: 2
+      maxItems: 2
+      items:
+        type: number
+        nullable: true
+      description: \|-
+        a range of valid values; open range can be
+        expressed using `null`
+----
+
+.queryable-boolean
+[source,YAML]
+----
+allOf:
+- $ref: '#/components/schemas/queryable'
+----
+
+.queryable-date
+[source,YAML]
+----
+allOf:
+- $ref: 'queryable'
+- type: object
+  nullable: true
+  properties:
+    range:
+      type: array
+      nullable: true
+      minItems: 2
+      maxItems: 2
+      items:
+        type: string
+        format: date
+        nullable: true
+      description: \|-
+        a range of valid values; open range can be
+        expressed using `null`
+----
+
+.queryable-dateTime
+[source,YAML]
+----
+queryable-dateTime:
+  allOf:
+  - $ref: 'queryable'
+  - type: object
+    nullable: true
+    properties:
+      range:
+        type: array
+        nullable: true
+        minItems: 2
+        maxItems: 2
+        items:
+          type: string
+          format: date-time
+          nullable: true
+        description: \|-
+          a range of valid values; open range can be
+          expressed using `null`
+----
+^|C |The `id` member of each queryable SHALL be unique.
+|===
+
+Note that this requirements class does not specify any requirements on collections that are not feature collections.
+
+[[example_queryables]]
+.JSON encoding of queryables
+=================
+[source,JSON]
+----
+{
+  "queryables": [
+    {
+      "id": "name",
+      "description": "the name of the vegetation area",
+      "required": true,
+      "type": "string",
+      "example": "[A-Z0-9]{5}"
+    },
+    {
+      "id": "type",
+      "description": "the dominant characteristic of the vegetation area",
+      "type": "enum",
+      "values": [
+        "grassland",
+        "forest",
+        "farmland"
+      ]
+    },
+    {
+      "id": "count",
+      "description": "the number of cattle",
+      "type": "integer",
+      "range": [
+        0,
+        null
+      ]
+    },
+    {
+      "id": "fenced",
+      "description": "indicator whether the area is walled or fenced",
+      "type": "boolean"
+    },
+    {
+      "id": "inspectionDate",
+      "description": "the date of the last inspection",
+      "type": "date",
+      "range": [
+        "2010-01-01",
+        null
+      ]
+    },
+    {
+      "id": "lastUpdate",
+      "description": "the date of the last update of the feature",
+      "type": "dateTime",
+      "range": [
+        "2018-01-01T00:00:00Z",
+        null
+      ]
+    }
+  ]
+}
+----
+=================

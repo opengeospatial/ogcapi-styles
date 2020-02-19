@@ -1,0 +1,10 @@
+== Scope
+
+OGC API Styles specifies building blocks for Web APIs that enables map servers and clients as well as visual style editors to manage and fetch styles.
+
+The API is part of the emerging OGC API family of standards. The API complements the current and emerging OGC API specifications for features, maps and tiles and builds on the conceptual model for the encoding of styles and their metadata developed in OGC Testbed-15.
+
+The building blocks of the API are specified using OpenAPI 3.0.
+
+CAUTION: TODO +
+We need to decide and clarify the terminology. Currently, "Styles API" is used for all building blocks under `/styles` and `/resources` (Clause 7), while Clause 8 specifies additional building blocks for data resources under `/collections`. Note that the queryables (`/collections/{collectionId}/queryables`) are a general concept and should be moved to OGC API Common or OGC API Features.

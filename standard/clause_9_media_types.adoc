@@ -1,0 +1,58 @@
+[[mediatypes]]
+== Media Types
+
+`application/json` is the JSON media type used for all content except the stylesheets and the symbol resources.
+
+`text/html` is the HTML media type for all "web pages" provided by the API.
+
+No media types have been formally registered with IANA for the style encodings (Mapbox Styles and OGC SLD).
+Temporary media types in the vnd-branch as specified below are used for now.
+
+=== application/vnd.mapbox.style+json
+
+* Type name:  application
+* Subtype name:  vnd.mapbox.style+json
+* Required parameters:  n/a
+* Optional parameters:  n/a
+* Encoding considerations:  See RFC 8259, The JavaScript Object Notation (JSON) Data Interchange Format
+* Security considerations:  See Section 12 of RFC 8259
+* Interoperability considerations:  n/a
+* Published specification:  link:https://docs.mapbox.com/mapbox-gl-js/style-spec/[Mapbox Style Specification, Version 8]
+* Applications that use this media type:  Geographic information systems (GIS)
+* Additional information:
+** Deprecated alias names for this type:  n/a
+** Magic number(s):  n/a
+** File extension(s):  .json
+** Macintosh file type code(s):  n/a
+* Person to contact for further information:  n/a
+* Intended usage:  COMMON
+* Restrictions on usage:  none
+* Author:  n/a
+* Change controller:  Mapbox
+
+=== application/vnd.ogc.sld+xml
+
+* Type name:  application
+* Subtype name:  vnd.ogc.sld+xml
+* Required parameters:  n/a
+* Optional parameters:
+** "charset": See Section 3 of RFC 7303.
+** "version": If provided, this parameter indicates the major and the first minor version number of the SLD version used in the document, e.g. "1.1".
+*** Syntax: `version = 1*DIGIT "." 1*DIGIT`. The first group of digits is the major version number, the second group is the minor version number.
+*** The parameter can be used to provide protocol-specific operations, such as version-based content negotiation in HTTP. The parameter is a hint, if used in HTTP content negotiation. I.e., client implementations should be prepared to receive content in a different version than requested and server implementations should honor the version parameter during content negotiation, if possible.
+* Encoding considerations:  Same as application/xml - see section 9.1 of RFC 7303.
+* Security considerations:  OGC SLD is a generic XML grammar, but application designers must not assume that it provides generic protection against security threats. RFC 7303, Section 10, discusses security concerns for generic XML, which are also applicable to SLD. Xlink references inSLD documents may cause arbitrary URIs to be dereferenced. In this case, the security issues of RFC 3986, section 7, should be considered. SLD documents do not contain active or executable content.
+* Interoperability considerations:  n/a
+* Published specification: link:http://portal.opengeospatial.org/files/?artifact_id=1188[OGC: OGC 02-070, Styled Layer Descriptor, Version 1.0 (2002)]
+and link:http://portal.opengeospatial.org/files/?artifact_id=22364[OGC: OGC 05-078r4, Styled Layer Descriptor, Version 1.1 (2007)]
+* Applications that use this media type:  Geographic information systems (GIS)
+* Additional information:
+** Deprecated alias names for this type:  n/a
+** Magic number(s):  n/a
+** File extension(s):  .sld, .xml
+** Macintosh file type code(s):  n/a
+* Person to contact for further information:  n/a
+* Intended usage:  COMMON
+* Restrictions on usage:  none
+* Author:  n/a
+* Change controller:  OGC

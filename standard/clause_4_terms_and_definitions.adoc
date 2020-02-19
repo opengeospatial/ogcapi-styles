@@ -1,0 +1,29 @@
+== Terms and Definitions
+This document uses the terms defined in Sub-clause 5.3 of [OGC 06-121r8], which is based on the ISO/IEC Directives, Part 2, Rules for the structure and drafting of International Standards. In particular, the word “shall” (not “must”) is the verb form used to indicate a requirement to be strictly followed to conform to this draft specification.
+
+For the purposes of this document, the following additional terms and definitions apply.
+
+=== queryable
+a property that can be queried
+
+=== <portrayal> sprite
+an image containing a collection of uniformly-sized symbols as sub-images
+
+=== style
+a sequence of rules of symbolizing instructions to be applied by a rendering engine on one or more features and/or coverages
+
+=== style encoding
+specification to express a style as one or more files
+
+EXAMPLE: OGC SLD versions 1.0 and 1.1, Mapbox Styles.
+
+=== stylesheet
+representation of a style in a style encoding
+
+=== style metadata
+essential information about a style in order to support users in discovering and selecting styles for rendering their data and for visual style editors to create user interfaces for editing a style
+
+=== Web API
+API using an architectural style that is founded on the technologies of the Web [source: OGC API - Features - Part 1: Core]
+
+NOTE: See link:https://www.w3.org/TR/dwbp/#APIHttpVerbs[Best Practice 24: Use Web Standards as the foundation of APIs] (W3C Data on the Web Best Practices) for more detail.

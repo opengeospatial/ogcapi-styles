@@ -1,0 +1,12 @@
+[cols="1,4",width="90%"]
+|===
+2+|*Requirements Class* {set:cellbgcolor:#CACCCE}
+2+|http://www.opengis.net/t15/opf-styles-1/{m_n}/req/core {set:cellbgcolor:#FFFFFF}
+|Target type |Web API
+|Dependency |OGC API - Common (Core)
+|===
+
+////
+|*Requirement 1* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/t15/opf-styles-1/{m_n}/req/core/req-name-1 +
+requirement description {set:cellbgcolor:#FFFFFF}
+////

@@ -1,0 +1,7 @@
+[cols="1,4",width="90%"]
+|===
+2+|*Requirements Class* {set:cellbgcolor:#CACCCE}
+2+|http://www.opengis.net/t15/opf-styles-1/{m_n}/req/queryables {set:cellbgcolor:#FFFFFF}
+|Target type |Web API
+|Dependency |link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#rc_core[OGC API - Features - Part 1: Core, conformance class "Core"]
+|===

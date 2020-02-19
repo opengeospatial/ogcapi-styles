@@ -1,0 +1,8 @@
+[appendix]
+:appendix-caption: Annex
+[[Bibliography]]
+= Bibliography
+
+1. [[geojson]] link:https://tools.ietf.org/html/rfc7946[IETF: RFC 7946 - The GeoJSON Format]
+2. [[t15_d011]] link:http://docs.opengeospatial.org/per/19-023r1.html[OGC: OGC Testbed-15: Encoding and Metadata Conceptual Model for Styles Engineering Report. OGC 19-023, Open Geospatial Consortium (2019)]
+3. [[mbstyle]] link:https://docs.mapbox.com/mapbox-gl-js/style-spec/[Mapbox: Mapbox Style Specification, Version 8]

@@ -1,0 +1,318 @@
+[appendix]
+:appendix-caption: Annex
+== Conformance Class Abstract Test Suite (Normative)
+
+=== Conformance Class "Core"
+
+==== Test Case 1
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/core/1
+|Requirement(s): |/req/core/styles-op, /req/core/styles-success, /req/core/style-op, /req/core/style-success, /req/core/style-md-op, /req/core/style-md-success
+|Test purpose: | Verify that the style resources can be fetched.
+|Test method: | 1. Issue an HTTP GET request to the path `/styles` with header `Accept: application/json`.
+2. Validate that the response has a status code 200.
+3. Validate the contents of the returned document against the schema in /req/core/styles-success, item B.
+4. Verify that each style id `#/styles/{i}/id` (where `{i}` is the index of the style in the array) is unique.
+5. Verify that each style has at least one link with `rel=stylesheet`.
+6. Verify that for each link with `rel=stylesheet` that the `href` value links to a resource at the path `/styles/{styleId}` where `{styleId}` is the `id` member of the style.
+7. For each link with `rel=stylesheet` send a GET request to the URI in `href` using the value of `type` in the `Accept` header. Verify that the response has a status code 200 and the requested content type (header `Content-Type`). If the response has as `Content-Language` header, try to verify that linguistic text in the response in the stated language.
+8. Verify that each style has at least one link with `rel=describedBy`.
+9. Verify that for each link with `rel=describedBy` that the `href` value links to a resource at the path `/styles/{styleId}/metadata` where `{styleId}` is the `id` member of the style.
+10. For each link with `rel=describedBy` send a GET request to the URI in `href` using the value of `type` in the `Accept` header. Verify that the response has a status code 200 and the requested content type (header `Content-Type`). If the response has as `Content-Language` header, try to verify that linguistic text in the response in the stated language. Validate the contents of the returned document against the schema in /req/core/style-md-success, item B.
+|===
+
+==== Test Case 2
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/core/2
+|Requirement(s): |/req/core/styles-success
+|Test purpose: | Verify that `/styles` list all styles on the server.
+|Test method: | Use `manage-styles` operations or some other way to add and delete styles. Issue an HTTP GET request to the path `/styles` with header `Accept: application/json` before and after each change and verify that added styles are included and deleted styles have been removed.
+
+If no mechanism for adding/deleting styles is available, skip the test.
+|===
+
+=== Conformance Class "Manage styles"
+
+==== Test Case 1
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/manage-styles/1
+|Requirement(s): |/req/manage-styles/create-style-op, /req/manage-styles/create-style-success
+|Test purpose: | Verify that styles can be created using POST requests
+|Test method: | 1. Send a POST request to `/styles` with a valid stylesheet in one of the supported style encodings (inspect the API definition of the path) with the `Content-Type` header sent to the media type of the style encoding.
+2. Validate that the response has an HTTP status code 201 and a header `Location` with a URI to path `/styles/{styleId}`.
+3. Send a GET request to the URI in `Location` using the media type of the submitted stylesheet in the `Accept` header. Verify that the response has a status code 200 and the requested content type (header `Content-Type`).
+4. Send a GET request to the URI in `Location` with `/metadata` appended to the path. Use `application/json` in the `Accept` header. Verify that the response has a status code 200 and the requested content type (header `Content-Type`). Validate the contents of the returned document against the schema in /req/core/style-md-success, item B.
+|===
+
+==== Test Case 2
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/manage-styles/2
+|Requirement(s): |/req/manage-styles/create-style-error
+|Test purpose: | Verify that POSTing invalid requests returns an error
+|Test method: | 1. Send a POST request to `/styles` with empty payload and verify that the response has an HTTP status code 400.
+2. Send a POST request to `/styles` with payload in an unsupported media type in the header `Content-Type` (inspect the API definition of the path) and verify that the response has an HTTP status code 400.
+|===
+
+==== Test Case 3
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/manage-styles/3
+|Requirement(s): |/req/manage-styles/update-style-op, /req/manage-styles/update-style-success
+|Test purpose: | Verify that styles can be created or updated using PUT requests
+|Test method: | 1. Send a PUT request to `/styles/{styleId}` with a valid stylesheet in one of the supported style encodings (inspect the API definition of the path) with the `Content-Type` header sent to the media type of the style encoding.
+2. Validate that the response has an HTTP status code 204.
+3. Send a GET request to `/styles/{styleId}` using the media type of the submitted stylesheet in the `Accept` header. Verify that the response has a status code 200 and the requested content type (header `Content-Type`).
+4. Send a GET request to the URI in `Location` with `/metadata` appended to the path. Use `application/json` in the `Accept` header. Verify that the response has a status code 200 and the requested content type (header `Content-Type`). Validate the contents of the returned document against the schema in /req/core/style-md-success, item B.
+|===
+
+==== Test Case 4
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/manage-styles/4
+|Requirement(s): |/req/manage-styles/update-style-error
+|Test purpose: | Verify that PUTting invalid requests returns an error
+|Test method: | 1. Send a PUT request to `/styles/{styleId}` with empty payload and verify that the response has an HTTP status code 400.
+2. Send a POST request to `/styles/{styleId}` with payload in an unsupported media type in the header `Content-Type` (inspect the API definition of the path) and verify that the response has an HTTP status code 400.
+|===
+
+==== Test Case 5
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/manage-styles/5
+|Requirement(s): |/req/manage-styles/delete-style-op, /req/manage-styles/delete-style-success
+|Test purpose: | Verify that styles can be deleted using DELETE requests
+|Test method: | 1. Send a DELETE request to `/styles/{styleId}` where `{styleId}` is one of the style identifiers in the Styles resource.
+2. Validate that the response has an HTTP status code 204.
+3. Send a GET request to `/styles/{styleId}`. Verify that the response has a status code 404.
+4. Send a GET request to `/styles/{styleId}/metadata`. Verify that the response has a status code 404.
+|===
+
+==== Test Case 6
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/manage-styles/6
+|Requirement(s): |/req/manage-styles/delete-style-error
+|Test purpose: | Verify that deleting a non-existent style returns an error
+|Test method: | 1. Send a DELETE request to `/styles/{styleId}` where `{styleId}` is NOT one of the style identifiers in the Styles resource.
+2. Validate that the response has an HTTP status code 404.
+|===
+
+==== Test Case 7
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/manage-styles/7
+|Requirement(s): |/req/manage-styles/update-style-md-op, /req/manage-styles/update-style-md-success
+|Test purpose: | Verify that style metadata can be updated using PUT requests
+|Test method: | 1. Send a PUT request to `/styles/{styleId}/metadata` with a valid style metadata document (validate the metadata document against the schema in /req/core/style-md-success, item B) with the `Content-Type` header set to `application/json`.
+2. Validate that the response has an HTTP status code 204.
+3. Send a GET request to `/styles/{styleId}/metadata` with an `Accept: application/json` header. Verify that the response has a status code 200 and the requested content type (header `Content-Type`). Verify that the retrieved document has the same content as the submitted document (formatting changes are allowed).
+|===
+
+==== Test Case 8
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/manage-styles/8
+|Requirement(s): |/req/manage-styles/update-style-md-error
+|Test purpose: | Verify that sending a metadata PUT request to a non-existing style returns an error
+|Test method: | 1. Send a PUT request to `/styles/{styleId}` where `{styleId}` is NOT one of the style identifiers in the Styles resource.
+2. Validate that the response has an HTTP status code 404.
+|===
+
+==== Test Case 9
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/manage-styles/9
+|Requirement(s): |/req/manage-styles/patch-style-md-op, /req/manage-styles/patch-style-md-success, /req/manage-styles/patch-style-md-error
+|Test purpose: | Verify that style metadata can be updated using PATCH requests
+|Test method: | 1. Send a PATCH request to `/styles/{styleId}/metadata` with a valid style metadata document (validate the metadata document against the schema in /req/core/style-md-success, item B) with the `Content-Type` header set to `application/json`.
+2. Validate that the response has an HTTP status code 204 or 422.
+3. If the status code is 204, send a GET request to `/styles/{styleId}/metadata` with an `Accept: application/json` header. Verify that the response has a status code 200 and the requested content type (header `Content-Type`). Verify that the retrieved document includes all the changes in the patch document (formatting changes are allowed). For example, retrieve the metadata document before the PATCH request and execute the patch locally and then compare the document with the API response after the PATCH.
+|===
+
+==== Test Case 10
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/manage-styles/10
+|Requirement(s): |/req/manage-styles/patch-style-md-error
+|Test purpose: | Verify that sending invalid PATCH requests returns an error
+|Test method: | 1. Send a PATCH request to `/styles/{styleId}/metadata` where `{styleId}` is NOT one of the style identifiers in the Styles resource. Validate that the response has an HTTP status code 404.
+2. Send a PATCH request to `/styles/{styleId}/metadata` with an invalid style metadata document (validating the metadata document against the schema in /req/core/style-md-success, item B, returns an error) with the `Content-Type` header set to `application/json`. Validate that the response has an HTTP status code 400.
+3. Send a PATCH request to `/styles/{styleId}/metadata` with empty payload and verify that the response has an HTTP status code 400.
+4. Send a PATCH request to `/styles/{styleId}/metadata` with payload in an unsupported media type in the header `Content-Type` (inspect the API definition of the path) and verify that the response has an HTTP status code 415 and an `Accept-Patch` header with the supported media types as stated in the API definition.
+|===
+
+=== Conformance Class "Style validation"
+
+==== Test Case 1
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/style-validation/1
+|Requirement(s): |/req/style-validation/input, /req/style-validation/output
+|Test purpose: | Verify that styles are properly validated, if requested
+|Test method: | 1. Repeat test case /conf/manage-styles/1, but with a query parameter `validate=true` in the POST request URI.
+2. Repeat test case /conf/manage-styles/1, but with a query parameter `validate=no` in the POST request URI.
+3. Send a POST request to `/styles?validate=true` with an invalid stylesheet and verify that the response has an HTTP status code 400.
+4. Send a POST request to `/styles?validate=only` with the same stylesheet and verify that the response has an HTTP status code 400.
+5. Send a POST request to `/styles?validate=only` with a valid stylesheet and verify that the response has an HTTP status code 204.
+6. Repeat test case /conf/manage-styles/3, but with a query parameter `validate=true` in the PUT request URI.
+7. Repeat test case /conf/manage-styles/3, but with a query parameter `validate=no` in the PUT request URI.
+8. Send a PUT request to `/styles/{styleId}?validate=true` with an invalid stylesheet and verify that the response has an HTTP status code 400.
+9. Send a PUT request to `/styles/{styleId}?validate=only` with the same stylesheet and verify that the response has an HTTP status code 400.
+10. Send a PUT request to `/styles/{styleId}?validate=only` with a valid stylesheet and verify that the response has an HTTP status code 204.
+|===
+
+=== Conformance Class "Resources"
+
+==== Test Case 1
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/resources/1
+|Requirement(s): |/req/resources/resources-op, /req/resources/resources-success, /req/resources/resource-op, /req/resources/resource-success
+|Test purpose: | Verify that the resources can be fetched.
+|Test method: | 1. Issue an HTTP GET request to the path `/resources` with header `Accept: application/json`.
+2. Validate that the response has a status code 200.
+3. Validate the contents of the returned document against the schema in /req/core/resources-success, item B.
+4. Verify that each resources id `#/resources/{i}/id` (where `{i}` is the index of the resources in the array) is unique.
+5. Verify that each resource has a link with `rel=item`.
+6. Verify that for each link with `rel=item` that the `href` value links to a resource at the path `/resources/{resourceId}` where `{resourceId}` is the `id` member of the resource.
+7. For each link with `rel=item` send a GET request to the URI in `href` using the value of `type` in the `Accept` header. Verify that the response has a status code 200 and the requested content type (header `Content-Type`).
+|===
+
+==== Test Case 2
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/resources/2
+|Requirement(s): |/req/resources/resources-success
+|Test purpose: | Verify that `/resources` list all resources on the server.
+|Test method: | Use `manage-resources` operations or some other way to add and delete resources. Issue an HTTP GET request to the path `/resources` with header `Accept: application/json` before and after each change and verify that added resources are included and deleted resources have been removed.
+
+If no mechanism for adding/deleting resources is available, skip the test.
+|===
+
+=== Conformance Class "Manage Resources"
+
+==== Test Case 1
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/manage-resources/1
+|Requirement(s): |/req/manage-resources/update-resources-op, /req/manage-resources/update-resources-success
+|Test purpose: | Verify that resources can be created or updated using PUT requests
+|Test method: | 1. Send a PUT request to `/resources/{resourceId}`.
+2. Validate that the response has an HTTP status code 204.
+3. Send a GET request to `/resources/{resourceId}` using the media type of the submitted resource in the `Accept` header. Verify that the response has a status code 200 and the requested content type (header `Content-Type`).
+|===
+
+==== Test Case 2
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/manage-styles/2
+|Requirement(s): |/req/manage-resources/delete-resource-op, /req/manage-resources/delete-resource-success
+|Test purpose: | Verify that resources can be deleted using DELETE requests
+|Test method: | 1. Send a DELETE request to `/resources/{resourceId}` where `{resourceId}` is one of the resource identifiers in the Resources resource.
+2. Validate that the response has an HTTP status code 204.
+3. Send a GET request to `/resources/{resourceId}`. Verify that the response has a status code 404.
+|===
+
+==== Test Case 3
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/manage-styles/6
+|Requirement(s): |/req/manage-resources/delete-resource-error
+|Test purpose: | Verify that deleting a non-existent resource returns an error
+|Test method: | 1. Send a DELETE request to `/resources/{resourceId}` where `{resourceId}` is NOT one of the resource identifiers in the Resources resource.
+2. Validate that the response has an HTTP status code 404.
+|===
+
+=== Conformance Class "HTML"
+
+==== Test Case 1
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/html/1
+|Requirement(s): |/req/html/get, /req/html/content
+|Test purpose: | Verify that all resources support HTML
+|Test method: | 1. Issue HTTP GET requests to the path `/styles` once with header `Accept: application/json` and once with `Accept: text/html`. Verify that both responses have a status code 200 and the requested content type (header `Content-Type`). Verify to the extent possible that the HTML response document is a HTML 5 document where all information identified in the JSON response is included in the HTML <body>, and all links are included in HTML <a> elements in the HTML <body>.
+2. For each link with `rel=describedBy` in the JSON response document send again two GET requests to the URI in `href` using the headers `Accept: application/json` and `Accept: text/html` respectively. Verify that both responses have a status code 200 and the requested content type (header `Content-Type`). Verify to the extent possible that the HTML response document is a HTML 5 document where all information identified in the JSON response is included in the HTML <body>, and all links are included in HTML <a> elements in the HTML <body>.
+|===
+
+=== Conformance Class "Mapbox Style"
+
+==== Test Case 1
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/mapbox-style/1
+|Requirement(s): |/req/mapbox-style/media-type, /req/mapbox-style/content
+|Test purpose: | Verify that Mapbox style is supported as a style encoding
+|Test method: | If the API supports the conformance classes "Manage styles" or "Style validation", execute all test cases of the supported conformance classes using stylesheets that are Mapbox Style documents (version 8) using the media type `application/vnd.mapbox.style+json`.
+
+Otherwise skip the test.
+|===
+
+=== Conformance Class "SLD 1.0"
+
+==== Test Case 1
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/sld-10/1
+|Requirement(s): |/req/sld-10/media-type, /req/sld-10/content
+|Test purpose: | Verify that SLD 1.0 is supported as a style encoding
+|Test method: | If the API supports the conformance classes "Manage styles" or "Style validation", execute all test cases of the supported conformance classes using stylesheets that are OGC SLD 1.0 documents using the media type `application/vnd.ogc.sld+xml;version=1.0`.
+
+Otherwise skip the test.
+|===
+
+=== Conformance Class "SLD 1.1"
+
+==== Test Case 1
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/sld-11/1
+|Requirement(s): |/req/sld-11/media-type, /req/sld-11/content
+|Test purpose: | Verify that SLD 1.1 is supported as a style encoding
+|Test method: | If the API supports the conformance classes "Manage styles" or "Style validation", execute all test cases of the supported conformance classes using stylesheets that are OGC SLD 1.1 documents using the media type `application/vnd.ogc.sld+xml;version=1.0`.
+
+Otherwise skip the test.
+|===
+
+=== Conformance Class "Style information"
+
+==== Test Case 1
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/style-info/9
+|Requirement(s): |/req/style-info/patch-style-info-op, /req/style-info/patch-style-info-success, /req/style-info/success, /req/style-info/patch-style-info-error
+|Test purpose: | Verify that style information can be updated using PATCH requests
+|Test method: | 1. Send a PATCH request to `/collection/{collectionId}` with a valid document (validate the document against the schema in /req/style-info/patch-style-info-op, item B) with the `Content-Type` header set to `application/json` for each collection listed in `/collections`.
+2. Validate that the response has an HTTP status code 204 o 422.
+3. If the status code is 204, send a GET request to `/collection/{collectionId}` with an `Accept: application/json` header. Verify that the response has a status code 200 and the requested content type (header `Content-Type`). Verify that the retrieved document includes all the changes in the patch document (formatting changes are allowed). For example, retrieve the collection document before the PATCH request and execute the patch locally and then compare the document with the API response after the PATCH.
+|===
+
+==== Test Case 2
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/style-info/2
+|Requirement(s): |/req/style-info/patch-style-info-error
+|Test purpose: | Verify that sending invalid PATCH requests returns an error
+|Test method: | 1. Send a PATCH request to `/collection/{collectionId}` where `{collectionId}` is NOT one of the collection identifiers in the Collections resource. Validate that the response has an HTTP status code 404.
+2. Send a PATCH request to `/collection/{collectionId}` with an invalid patch document (validating the metadata document against the schema in /req/style-info/patch-style-info-op, item B, returns an error) with the `Content-Type` header set to `application/json`. Validate that the response has an HTTP status code 400.
+3. Send a PATCH request to `/collection/{collectionId}` with empty payload and verify that the response has an HTTP status code 400.
+4. Send a PATCH request to `/collection/{collectionId}` with payload in an unsupported media type in the header `Content-Type` (inspect the API definition of the path) and verify that the response has an HTTP status code 415 and an `Accept-Patch` header with the supported media types as stated in the API definition.
+|===
+
+=== Conformance Class "Queryables"
+
+==== Test Case 1
+[cols=">20h,<80a",width="100%"]
+|===
+|Test id: |/conf/queryables/1
+|Requirement(s): |/req/queryables/op, /req/queryables/success
+|Test purpose: | Verify that the queryables can be fetched.
+|Test method: | 1. Issue an HTTP GET request to the path `/collection/{collectionId}/queryables` with header `Accept: application/json` for each collection listed in `/collections`.
+2. Validate that the response has a status code 200.
+3. Validate the contents of the returned document against the schema in /req/queryables/success, item B, if the `itemType` is `feature`.
+4. Verify that each queryable id `#/queryables/{i}/id` (where `{i}` is the index of the queryable in the array) is unique.
+|===
