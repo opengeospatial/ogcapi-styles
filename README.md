@@ -55,6 +55,11 @@ The editor's draft is on the OGC website:
 
 A [PDF version](http://docs.opengeospatial.org/DRAFTS/20-009.pdf) is available, too.
 
+If you prefer to view sample API definitions to get an idea, have a look at the following OpenAPI definitions on SwaggerHub (from Testbed-15):
+
+* [Styles API](https://app.swaggerhub.com/apis/cportele/opf-style-api/1.0.0)
+* [Features API with style extensions](https://app.swaggerhub.com/apis/cportele/opf-features-api/1.0.0)
+
 Several implementations of the draft standard exist:
 
 * [Implementations of the draft specification / demo services](implementations.md)
