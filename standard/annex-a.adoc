@@ -17,9 +17,9 @@
 5. Verify that each style has at least one link with `rel=stylesheet`.
 6. Verify that for each link with `rel=stylesheet` that the `href` value links to a resource at the path `/styles/{styleId}` where `{styleId}` is the `id` member of the style.
 7. For each link with `rel=stylesheet` send a GET request to the URI in `href` using the value of `type` in the `Accept` header. Verify that the response has a status code 200 and the requested content type (header `Content-Type`). If the response has as `Content-Language` header, try to verify that linguistic text in the response in the stated language.
-8. Verify that each style has at least one link with `rel=describedBy`.
-9. Verify that for each link with `rel=describedBy` that the `href` value links to a resource at the path `/styles/{styleId}/metadata` where `{styleId}` is the `id` member of the style.
-10. For each link with `rel=describedBy` send a GET request to the URI in `href` using the value of `type` in the `Accept` header. Verify that the response has a status code 200 and the requested content type (header `Content-Type`). If the response has as `Content-Language` header, try to verify that linguistic text in the response in the stated language. Validate the contents of the returned document against the schema in /req/core/style-md-success, item B.
+8. Verify that each style has at least one link with `rel=describedby`.
+9. Verify that for each link with `rel=describedby` that the `href` value links to a resource at the path `/styles/{styleId}/metadata` where `{styleId}` is the `id` member of the style.
+10. For each link with `rel=describedby` send a GET request to the URI in `href` using the value of `type` in the `Accept` header. Verify that the response has a status code 200 and the requested content type (header `Content-Type`). If the response has as `Content-Language` header, try to verify that linguistic text in the response in the stated language. Validate the contents of the returned document against the schema in /req/core/style-md-success, item B.
 |===
 
 ==== Test Case 2
@@ -236,7 +236,7 @@ If no mechanism for adding/deleting resources is available, skip the test.
 |Requirement(s): |/req/html/get, /req/html/content
 |Test purpose: | Verify that all resources support HTML
 |Test method: | 1. Issue HTTP GET requests to the path `/styles` once with header `Accept: application/json` and once with `Accept: text/html`. Verify that both responses have a status code 200 and the requested content type (header `Content-Type`). Verify to the extent possible that the HTML response document is a HTML 5 document where all information identified in the JSON response is included in the HTML <body>, and all links are included in HTML <a> elements in the HTML <body>.
-2. For each link with `rel=describedBy` in the JSON response document send again two GET requests to the URI in `href` using the headers `Accept: application/json` and `Accept: text/html` respectively. Verify that both responses have a status code 200 and the requested content type (header `Content-Type`). Verify to the extent possible that the HTML response document is a HTML 5 document where all information identified in the JSON response is included in the HTML <body>, and all links are included in HTML <a> elements in the HTML <body>.
+2. For each link with `rel=describedby` in the JSON response document send again two GET requests to the URI in `href` using the headers `Accept: application/json` and `Accept: text/html` respectively. Verify that both responses have a status code 200 and the requested content type (header `Content-Type`). Verify to the extent possible that the HTML response document is a HTML 5 document where all information identified in the JSON response is included in the HTML <body>, and all links are included in HTML <a> elements in the HTML <body>.
 |===
 
 === Conformance Class "Mapbox Style"

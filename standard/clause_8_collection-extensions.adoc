@@ -119,7 +119,7 @@ type: string
 |===
 ^|*Recommendation {counter:rec-id}* |*/rec/style-info/consistency*
 ^|A |Each style SHOULD have a link for each style encoding supported for the style (link relation: `stylesheet`) with the `type` attribute stating the media type of the style encoding.
-^|B |Each style SHOULD have a link to the style metadata (link relation: `describedBy`) with the `type` attribute stating the media type of the metadata encoding.
+^|B |Each style SHOULD have a link to the style metadata (link relation: `describedby`) with the `type` attribute stating the media type of the metadata encoding.
 ^|C |The value of the `defaultStyle` member SHOULD be an `id` included in the `styles` array.
 |===
 
@@ -154,7 +154,7 @@ This example links to two styles, "night" and "topographic". Each is available i
         {
           "href": "https://example.com/api/1.0/styles/night/metadata?f=json",
           "type": "application/json",
-          "rel": "describedBy"
+          "rel": "describedby"
         }
       ]
     },
@@ -175,7 +175,7 @@ This example links to two styles, "night" and "topographic". Each is available i
         {
           "href": "https://example.com/api/1.0/styles/topographic/metadata?f=json",
           "type": "application/json",
-          "rel": "describedBy"
+          "rel": "describedby"
         }
       ]
     }

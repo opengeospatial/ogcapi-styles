@@ -202,7 +202,7 @@ properties:
 ^|C |The `styles` member SHALL include one item for each style currently on the server.
 ^|D |The `id` member of each style SHALL be unique.
 ^|E |Each style SHALL have at least one link to a style encoding supported for the style (link relation: `stylesheet`) with the `type` attribute stating the media type of the style encoding.
-^|F |Each style SHALL have a link to the style metadata (link relation: `describedBy`) with the `type` attribute stating the media type of the metadata encoding.
+^|F |Each style SHALL have a link to the style metadata (link relation: `describedby`) with the `type` attribute stating the media type of the metadata encoding.
 |===
 
 NOTE: Currently the links to the thumbnails of a style are available only as part of the style metadata (see <<rec_core_style-md-preview,recommendation "/rec/core/style-md-preview">>). To display an overview of the styles with a thumbnail image, a client needs to send multiple requests, the first one for the list of styles and then a request for each style metadata to get the thumbnail links. Whether the preview should also be included for each style in the Styles resource should be discussed.
@@ -239,7 +239,7 @@ NOTE: Currently the links to the thumbnails of a style are available only as par
         {
           "href": "https://example.com/api/v1/styles/night/metadata?f=json",
           "type": "application/json",
-          "rel": "describedBy"
+          "rel": "describedby"
         }
       ]
     },
@@ -260,7 +260,7 @@ NOTE: Currently the links to the thumbnails of a style are available only as par
         {
           "href": "https://example.com/api/v1/styles/topographic/metadata?f=json",
           "type": "application/json",
-          "rel": "describedBy"
+          "rel": "describedby"
         }
       ]
     }
