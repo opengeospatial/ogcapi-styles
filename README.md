@@ -104,3 +104,5 @@ The OGC API Styles Standards Working Group (SWG) is the group at OGC responsible
 * [Copy of License Language](https://raw.githubusercontent.com/opengeospatial/ogcapi-styles/master/LICENSE)
 
 For more information, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+Pull Requests from contributors are welcomed. However, please note that by sending a Pull Request or Commit to this GitHub repository, you are agreeing to the terms in the Observer Agreement https://portal.ogc.org/files/?artifact_id=92169
