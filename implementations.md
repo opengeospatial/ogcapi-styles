@@ -10,7 +10,7 @@ All server links go to the landing page of the API.
 
 Servers:
 
-* [ldproxy, interactive instruments](https://services.interactive-instruments.de/t15/daraa)
+* [ldproxy, interactive instruments](https://demo.ldproxy.net/daraa)
 * [GeoServer, GeoSolutions](https://ows.geo-solutions.it/geoserver/ogc/styles)
 * [GNOSIS Map Server, Ecere](http://maps.ecere.com/geoapi/collections/vtp/Daraa2)
 * [CubeSERV, CubeWerx Inc.](https://test.cubewerx.com/cubewerx/cubeserv/demo/ogcapi/Daraa)
