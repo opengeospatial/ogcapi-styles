@@ -18,7 +18,7 @@
 :source-highlighter: pygments
 :pygments-style: borland
 :pygments-linenums-mode: table
-:copyrightYear: 2020
+:copyrightYear: 2021
 
 :category: OGC(R) Implementation Standard
 :doc-type: IS
@@ -109,7 +109,9 @@ include::clause_6_introduction.adoc[]
 
 include::clause_7_styles-api.adoc[]
 
+////
 include::clause_8_collection-extensions.adoc[]
+////
 
 include::clause_9_media_types.adoc[]
 

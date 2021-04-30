@@ -6,4 +6,5 @@
 |===
 |Date |Editor |Release |Primary clauses modified |Description
 |February 19, 2020 |C. Portele | 1.0.0-SNAPSHOT |all |initial version, derived from the [OGC Testbed-15: Styles API Engineering Report](http://docs.opengeospatial.org/per/19-010r2.html)
+|April 30, 2021 |C. Portele | 1.0.0-SNAPSHOT |all |major update based on discussions in SWG meeting on April 20, 2021 
 |===

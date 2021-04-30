@@ -1,8 +1,8 @@
 [cols="1,4",width="90%"]
 |===
 2+|*Requirements Class* {set:cellbgcolor:#CACCCE}
-2+|http://www.opengis.net/t15/opf-styles-1/{m_n}/req/sld-10 {set:cellbgcolor:#FFFFFF}
+2+|http://www.opengis.net/spec/ogcapi-styles-1/1.0/req/sld-10 {set:cellbgcolor:#FFFFFF}
 |Target type |Web API
-|Dependency |<<rc_core>>
-|Dependency |link:http://portal.opengeospatial.org/files/?artifact_id=1188[OGC 02-070, Styled Layer Descriptor, Version 1.0]
+|Dependency |<<rc_manage-styles>>
+|Dependency |<<sld10,Styled Layer Descriptor, Version 1.0>>
 |===

@@ -1,10 +1,12 @@
 == Conventions
 This section provides details and examples for any conventions used in the document. Examples of conventions are symbols, abbreviations, use of XML schema, or special notes regarding how to read the document.
 
+#TODO: add information about the use of OpenAPI 3.0, link relation types, etc.#
+
 === Identifiers
 The normative provisions in this draft specification are denoted by the URI
 
-http://www.opengis.net/t15/opf-styles-1/{m_n}
+http://www.opengis.net/spec/ogcpapi-styles-1/1.0
 
 All requirements and conformance tests that appear in this document are denoted by partial URIs which are relative to this base.
 

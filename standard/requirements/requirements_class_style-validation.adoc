@@ -1,7 +1,8 @@
 [cols="1,4",width="90%"]
 |===
 2+|*Requirements Class* {set:cellbgcolor:#CACCCE}
-2+|http://www.opengis.net/t15/opf-styles-1/{m_n}/req/style-validation {set:cellbgcolor:#FFFFFF}
+2+|http://www.opengis.net/spec/ogcapi-styles-1/1.0/req/style-validation {set:cellbgcolor:#FFFFFF}
 |Target type |Web API
 |Dependency |<<rc_manage-styles>>
+|Dependency |<<rfc7240,RFC 7240 "Prefer Header for HTTP">>
 |===
