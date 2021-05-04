@@ -1,22 +1,24 @@
 == References
 The following normative documents contain provisions that, through reference in this text, constitute provisions of this document. For dated references, subsequent amendments to, or revisions of, any of these publications do not apply. For undated references, the latest edition of the normative document referred to applies.
 
-[[rfc7396]]
-link:https://tools.ietf.org/rfc/rfc7396.txt[IETF: RFC 7396, JSON Merge Patch (2014)]
+* [[rfc7240]] Internet Engineering Task Force (IETF). RFC 7240: **Prefer Header for HTTP** [online]. Edited by J. Snell. 2014 [viewed 2021-04-13]. Available at http://tools.ietf.org/rfc/rfc7240.txt
 
-[[sld10]]
-link:http://portal.opengeospatial.org/files/?artifact_id=1188[OGC: OGC 02-070, Styled Layer Descriptor, Version 1.0 (2002)]
+* [[rfc7396]] Internet Engineering Task Force (IETF). RFC 7396: **JSON Merge Patch** [online]. Edited by P. Hoffman, J. Snell. 2014 [viewed 2021-01-25]. Available at http://tools.ietf.org/rfc/rfc7396.txt
 
-[[sld11]]
-link:http://portal.opengeospatial.org/files/?artifact_id=22364[OGC: OGC 05-078r4, Styled Layer Descriptor, Version 1.1 (2007)]
+* [[sld10]] Open Geospatial Consortium (OGC). OGC 02-070: **Styled Layer Descriptor, Version 1.0** [online]. Edited by W. Lalonde. 2021 [viewed 2021-04-28]. Available at http://portal.opengeospatial.org/files/?artifact_id=1188
 
-[[oapif-1]]
-link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html[OGC: OGC 17-069r3, OGC API - Features - Part 1: Core (2019)]
+* [[sld11]] Open Geospatial Consortium (OGC). OGC 05-078r4: **Styled Layer Descriptor profile of the Web Map Service Implementation Specification, Version 1.1** [online]. Edited by M. Lupp. 2021 [viewed 2021-04-28]. Available at http://portal.opengeospatial.org/files/?artifact_id=22364
 
-[NOTE]
-====
-If "OGC API - Common" would be available and consistent with "OGC API - Features - Part 1: Core", "OGC API - Common" would be a normative reference instead of "OGC API - Features - Part 1: Core".
-====
+* [[CommonCore]] Open Geospatial Consortium (OGC). OGC 19-072: **OGC API - Common - Part 1: Core (DRAFT)** [online]. Edited by Ch. Heazel. 2021 [viewed 2020-03-16]. Available at https://portal.ogc.org/files/?artifact_id=97330
 
-[[html]]
-link:https://html.spec.whatwg.org/[WhatWG: HTML (Living Standard)]
+////
+* [[OAFeat-1]] Open Geospatial Consortium (OGC). **OGC API - Features - Part 1: Core 1.0** [online]. Edited by C. Portele, P. Vretanos, C. Heazel. 2019 [viewed 2020-05-24]. Available at http://www.opengis.net/doc/IS/ogcapi-features-1/1.0
+////
+
+* [[OAFeat-4]] Open Geospatial Consortium (OGC). **OGC API - Features - Part 4: Create, Replace, Update and Delete (DRAFT)** [online]. Edited by C. Portele, P. Vretanos. 2021 [viewed 2021-04-29]. Available at https://docs.ogc.org/DRAFTS/20-002.html
+
+* [[OpenAPI]] OpenAPI Initiative (OAI). **OpenAPI Specification 3.0** [online]. 2020 [viewed 2020-03-16]. The latest patch version at the time of publication of this standard was 3.0.3, available at http://spec.openapis.org/oas/v3.0.3
+
+////
+* [[HTML5]] WHATWG. *HTML*, Living Standard [online, viewed 2020-03-16]. Available at https://html.spec.whatwg.org/
+////

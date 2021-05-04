@@ -3,42 +3,62 @@ TODO: move normative statements to separate files
 ////
 
 [[styles-api]]
-== Styles API
+== API building blocks for styles
 
-Stylesheets often reference external resources, especially symbols and fonts to be used in the rendering process. Symbols are either managed as a single file for each symbol or they are organized in a sprite. In a sprite, all symbols are combined into a single bitmap image to reduce memory and the number of http requests. Single symbols and sprites are both supported by the Styles API. Further, they may be stored in the Styles API. For example, this approach would avoid issues with cross-origin requests. Of course, existing external symbol libraries may also be referenced from stylesheets. The Styles API currently does not support font resources. If external fonts / glyphs are used in a stylesheet, an existing font library has to be referenced.
+=== Base resources
 
-The API supports the resources and operations listed in the Table below with the associated conformance class and the link to the document section that specifies the requirements.
+Styles can be associated with a variety of resources in an API, for example, a feature dataset, a feature collection, or a coverage. This standard does not restrict the resource types with which styles may be associated.
+
+This standard uses the term "base resource" for such resources. In the API, styles are sub-resources of a base resource.
+
+Typical base resources are:
+
+* The API landing page at path `/`.
+** If the API provides distributions of a dataset, then the styles will be associated with the dataset.
+** If the API does not provide access to data, it is a general purpose Styles API and the styles will typically be applicable to a range of data resources available elsewhere.
+* A data collection at path `/collections/{collectionId}`.
+
+=== Resources referenced from styles
+
+Stylesheets often reference external resources, especially symbols and fonts to be used in the rendering process. Symbols are either managed as a single file for each symbol or they are organized in a sprite. In a sprite, all symbols are combined into a single bitmap image to reduce memory and the number of http requests. 
+
+Since these resources are referenced from stylesheets using a URI of the resource, the details where and how the resources are hosted are not important and this specification does not specify API building blocks for publishing such resources.
+
+=== Overview
+
+The API building blocks support the resources and operations listed in the table below with the associated conformance class and the link to the document section that specifies the requirements.
+
+The `{baseResource}` is a path template for any API resource with which styles can be associated.
 
 [#tldr2,reftext='{table-caption} {counter:table-num}']
 .Overview of resources and applicable HTTP methods
 [cols="15,24,8,18,25",options="header"]
 !===
 |Resource |Path |HTTP method |Conformance class|Document reference
-|Landing page |`/` |GET |core |<<landing_page>>
 |Conformance declaration |`/conformance` |GET |core |<<conformance_declaration>>
-.3+|Styles .3+|`/styles` |GET |core |<<get_styles>>
+.3+|Styles .3+|`{baseResource}/styles` |GET |core |<<get_styles>>
 .2+|POST |manage-styles |<<create_style>>
 |style-validation |<<style_validate>>
-.4+|Style .4+|`/styles/{styleId}` |GET |core |<<get_style>>
-.2+|PUT |manage-styles |<<update_style>>
+.4+|Style .4+|`{baseResource}/styles/{styleId}` |GET |core |<<get_style>>
+.2+|PUT |manage-styles |<<replace_style>>
 |style-validation |<<style_validate>>
 |DELETE |manage-styles |<<delete_style>>
-.3+|Style metadata .3+|`/styles/{styleId}/metadata` |GET |core |<<get_style_metadata>>
-|PUT |manage-styles |<<update_style_metadata>>
-|PATCH |manage-styles |<<patch_style_metadata>>
-|Resources |`/resources` |GET |resources |<<get_resources>>
-.3+|Resource .3+|`/resources/{resourceId}` |GET |resources |<<get_resource>>
-|PUT |manage-resources |<<update_resource>>
-|DELETE |manage-resources |<<delete_resource>>
+.3+|Style metadata .3+|`{baseResource}/styles/{styleId}/metadata` |GET |core |<<get_style_metadata>>
+|PUT |manage-styles |<<replace_style_metadata>>
+|PATCH |manage-styles |<<update_style_metadata>>
 !===
 
-The conceptual model and this draft specification support multiple style encodings (stylesheets) per style. For example, a Styles API may publish a "night" style in the style encodings OGC SLD 1.0, OGC SLD 1.1 and Mapbox Style. The client will select the stylesheet that fits best based on its capabilities and preferences.
+////
+|Landing page |`/` |GET |core |<<landing_page>>
+|Resources |`/resources` |GET |resources |<<get_resources>>
+.3+|Resource .3+|``{baseResource}/resources/{resourceId}` |GET |resources |<<get_resource>>
+|PUT |manage-resources |<<update_resource>>
+|DELETE |manage-resources |<<delete_resource>>
+////
 
-This version of the Styles API was written with the following assumptions:
+This standard supports multiple style encodings (stylesheets) per style. For example, an API may publish a "night" style in the style encodings OGC SLD 1.0, OGC SLD 1.1 and Mapbox Style. The client will select the stylesheet that fits best based on its capabilities and preferences.
 
-* When a new style is created using POST `/styles` or PUT `/styles/{styleId}`, the submitted stylesheet is the reference.
-* A server may derive stylesheets in other style encodings from the reference stylesheet, but there is no requirement to support such a capability. If one or more stylesheets are derived, they will be automatically be added to the style metadata.
-* When an existing style is updated using PUT `/styles/{styleId}`, the submitted stylesheet becomes the new reference and all other stylesheets for the style are removed. New stylesheets may be derived from the new reference stylesheet. The style metadata is updated.
+This standard only specifies Style Metadata as a sub-resource to a Style resource. APIs and other specification may specify additional sub-resources. For example, a Map sub-resource could be provided that returns map representations of the base resource rendered using the style.
 
 [[rc_core]]
 === Requirements Class "Core"
@@ -46,47 +66,25 @@ This version of the Styles API was written with the following assumptions:
 include::requirements/requirements_class_core.adoc[]
 
 [[ogcapi-common-core]]
-[NOTE]
-====
-An "OGC API - Common" specification is under development (October 1, 2019). The current draft of Common is based on the generic concepts of the <<oapif-1,OGC API - Features - Part 1: Core>> standard. However, the work is in the earliest stages of the standardization process. In order to avoid duplicating content, this document does not copy the basic requirements, recommendations and permissions from OGC API Common/Features. If "OGC API - Common" is not available as a normative reference, the alternative would be to remove the dependency and to specify the following normative statements are part of this requirements class:
+==== OGC API - Common - Part 1: Core
 
-* Landing page
-** link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#req_core_root-op[Requirement /req/core/root-op]
-** link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#req_core_root-success[Requirement /req/core/root-success]
-*** Change: No `data` link to `/collections` is required, but a `styles` link has to point to the `/styles` resource
-* API definition
-** link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#req_core_api-definition-op[Requirement /req/core/api-definition-op]
-** link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#per_core_api-definition-uri[Permission /per/core/api-definition-uri]
-** link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#req_core_api-definition-success[Requirement /req/core/api-definition-success]
-** link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#rec_core_api-definition-oas[Recommendation /rec/core/api-definition-oas]
-* Conformance declaration
-** link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#req_core_conformance-op[Requirement /req/core/conformance-op]
-** link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#req_core_conformance-success[Requirement /req/core/conformance-success]
-* Web API
-** link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#req_core_http[Requirement /req/core/http]
-** link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#rec_core_head[Recommendation /rec/core/head]
-** link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#per_core_additional-status-codes[Permission /per/core/additional-status-codes]
-** link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#req_core_query-param-unknown[Requirement /req/core/query-param-unknown]
-** link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#req_core_query-param-invalid[Requirement /req/core/query-param-invalid]
-** link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#rec_core_etag[Recommendation /rec/core/etag]
-** link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#rec_core_cross-origin[Recommendation /rec/core/cross-origin]
-** link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#rec_core_link-header[Recommendation /rec/core/link-header]
+At the time of writing, <<CommonCore,OGC API - Common - Part 1: Core>> is a candidate standard and not yet an approved standard. The requirements class "Core" has to be supported. This includes support for the API resources Landing Page, Conformance Declaration and API Definition.
 
-The link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#rec_core_cross-origin[recommendation /rec/core/cross-origin] is in particular relevant to support browser-based visual style editors. It is recommended to support CORS. It is important to declare all relevant headers in the response. For APIs that support the "manage-styles" conformance class especially the `Location` header needs to be declared (for example, "access-control-expose-headers: Location, Link") to allow clients access to the URI of a newly created style.
+[[base-resource]]
+==== Base resource
 
-The link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#rec_core_string-i18n[recommendation /rec/core/string-i18n] is mainly implemented by the Content-Language header in the response to requests, in particular to those returning a stylesheet or style metadata.
-
-The link:http://docs.opengeospatial.org/is/17-069r3/17-069r3.html#req_core_crs84[requirement /req/core/crs84] is not applicable to the Styles API since no geometries are used in the API.
-====
-
-[[landing_page]]
-==== API landing page
-
-The following is an example of the landing page of a Styles API. This implementation supports the "json" conformance class, but not the "html" conformance class.
+[[req_core_base-resource-link]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/core/base-resource-link*
+^|A |The content of any base resource (at path `{baseResource}`) with which styles are associated in the API SHALL include a link to a Styles resource at path `{baseResource}/styles` (link relation type 'http://www.opengis.net/def/rel/OGC/1.0/styles').
+|===
 
 [[example_lp]]
 .Landing page in JSON
 =================
+For a general purpose Styles API the base resource will be the Landing Page of the API. The following is an example of a landing page with a Styles sub-resource. This implementation supports the "json" conformance class, but not the "html" conformance class.
+
 [source,JSON]
 ----
 {
@@ -111,13 +109,13 @@ The following is an example of the landing page of a Styles API. This implementa
     },
     {
       "href": "https://example.org/api/v1/conformance",
-      "rel": "conformance",
+      "rel": "http://www.opengis.net/def/rel/OGC/1.0/conformance",
       "type": "application/json",
       "title": "list of conformance classes implemented by this API"
     },
     {
       "href": "https://example.org/api/v1/styles",
-      "rel": "styles",
+      "rel": "http://www.opengis.net/def/rel/OGC/1.0/styles",
       "type": "application/json",
       "title": "the styles shared via this API"
     }
@@ -129,7 +127,7 @@ The following is an example of the landing page of a Styles API. This implementa
 [[conformance_declaration]]
 ==== Declaration of conformance classes
 
-The following is an example of the conformance declaration of a Styles API that implements all requirements classes except "html".
+The following is an example of the conformance declaration of an API that implements all requirements classes of this standard and OGC API Common Core, except "html".
 
 [[example_cc]]
 .Conformance declaration in JSON
@@ -138,15 +136,18 @@ The following is an example of the conformance declaration of a Styles API that 
 ----
 {
   "conformsTo": [
-      "http://www.opengis.net/t15/opf-styles-1/1.0/conf/core",
-      "http://www.opengis.net/t15/opf-styles-1/1.0/conf/manage-styles",
-      "http://www.opengis.net/t15/opf-styles-1/1.0/conf/style-validation",
-      "http://www.opengis.net/t15/opf-styles-1/1.0/conf/resources",
-      "http://www.opengis.net/t15/opf-styles-1/1.0/conf/manage-resources",
-      "http://www.opengis.net/t15/opf-styles-1/1.0/conf/mapbox-styles",
-      "http://www.opengis.net/t15/opf-styles-1/1.0/conf/sld-10",
-      "http://www.opengis.net/t15/opf-styles-1/1.0/conf/sld-11"
-    ]
+    "http://www.opengis.net/spec/ogcapi-common-1/1.0/req/core",
+    "http://www.opengis.net/spec/ogcapi-common-1/1.0/req/json",
+    "http://www.opengis.net/spec/ogcapi-common-1/1.0/req/oas30",
+    "http://www.opengis.net/spec/ogcapi-styles-1/1.0/conf/core",
+    "http://www.opengis.net/spec/ogcapi-styles-1/1.0/conf/manage-styles",
+    "http://www.opengis.net/spec/ogcapi-styles-1/1.0/conf/style-validation",
+    "http://www.opengis.net/spec/ogcapi-styles-1/1.0/conf/resources",
+    "http://www.opengis.net/spec/ogcapi-styles-1/1.0/conf/manage-resources",
+    "http://www.opengis.net/spec/ogcapi-styles-1/1.0/conf/mapbox-styles",
+    "http://www.opengis.net/spec/ogcapi-styles-1/1.0/conf/sld-10",
+    "http://www.opengis.net/spec/ogcapi-styles-1/1.0/conf/sld-11"
+  ]
 }
 ----
 =================
@@ -154,13 +155,13 @@ The following is an example of the conformance declaration of a Styles API that 
 [[get_styles]]
 ==== Fetch styles
 
-This operation returns a list of styles that are currently available.
+This operation returns a list of styles that are currently available for the base resource.
 
 [[req_core_styles-op]]
 [width="90%",cols="2,6a"]
 |===
 ^|*Requirement {counter:req-id}* |*/req/core/styles-op*
-^|A |The server SHALL support the HTTP GET operation at the path `/styles`.
+^|A |The server SHALL support the HTTP GET operation at the path `{baseResource}/styles`.
 |===
 
 [[req_core_styles-success]]
@@ -178,42 +179,36 @@ required:
 properties:
   styles:
     type: array
-    nullable: true
     items:
       type: object
-      nullable: true
       required:
         - id
         - links
       properties:
         id:
           type: string
-          nullable: true
         title:
           type: string
-          nullable: true
         links:
           type: array
-          nullable: true
           minItems: 1
           items:
-            $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/schemas/link'
+            $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml'
 ----
 ^|C |The `styles` member SHALL include one item for each style currently on the server.
 ^|D |The `id` member of each style SHALL be unique.
-^|E |Each style SHALL have at least one link to a style encoding supported for the style (link relation: `stylesheet`) with the `type` attribute stating the media type of the style encoding.
-^|F |Each style SHALL have a link to the style metadata (link relation: `describedby`) with the `type` attribute stating the media type of the metadata encoding.
+^|E |Each style SHALL have at least one link to a style encoding supported for the style (link relation type: `stylesheet`) with the `type` attribute stating the media type of the style encoding.
+^|F |Each style SHALL have a link to the style metadata (link relation type: `describedby`) with the `type` attribute stating the media type of the metadata encoding.
 |===
 
-NOTE: Currently the links to the thumbnails of a style are available only as part of the style metadata (see <<rec_core_style-md-preview,recommendation "/rec/core/style-md-preview">>). To display an overview of the styles with a thumbnail image, a client needs to send multiple requests, the first one for the list of styles and then a request for each style metadata to get the thumbnail links. Whether the preview should also be included for each style in the Styles resource should be discussed.
+#TODO: Currently the links to the thumbnails of a style are available only as part of the style metadata (see <<rec_core_style-md-preview,recommendation "/rec/core/style-md-preview">>). To display an overview of the styles with a thumbnail image, a client needs to send multiple requests, the first one for the list of styles and then a request for each style metadata to get the thumbnail links. Whether the preview should also be included for each style in the Styles resource should be discussed.#
 
 [[rec_core_style-title]]
 [width="90%",cols="2,6a"]
 |===
 ^|*Recommendation {counter:rec-id}* |*/rec/core/style-title*
-^|A |If a style has a title, it SHOULD be included in the `title` member of the style.
+^|A |If a style has a title, it SHOULD be included in the `title` member of the style object.
 |===
-
 
 [[example_styles]]
 .JSON encoding of styles
@@ -278,7 +273,7 @@ This operation returns the stylesheet of a style.
 [width="90%",cols="2,6a"]
 |===
 ^|*Requirement {counter:req-id}* |*/req/core/style-op*
-^|A |The server SHALL support the HTTP GET operation at the path `/style/{styleId}` for each style referenced from the Styles resource at `/styles`.
+^|A |The server SHALL support the HTTP GET operation at the path `{baseResource}/style/{styleId}` for each style referenced from the Styles resource at `{baseResource}/styles`.
 |===
 
 [[req_core_style-success]]
@@ -290,7 +285,7 @@ This operation returns the stylesheet of a style.
 ^|C |The language used in linguistic text in the response SHALL be consistent with the language stated in the `Content-Language` header.
 |===
 
-NOTE: The `Content-Language` header in a HTTP response is used to describe the language(s) intended for the audience. If no Content-Language is specified, the default is that the content is intended for all language audiences.
+The `Content-Language` header in a HTTP response is used to describe the language(s) intended for the audience. If no Content-Language is specified, the default is that the content is intended for all language audiences.
 
 [[get_style_metadata]]
 ==== Fetch style metadata
@@ -301,7 +296,7 @@ This operation returns the metadata of a style.
 [width="90%",cols="2,6a"]
 |===
 ^|*Requirement {counter:req-id}* |*/req/core/style-md-op*
-^|A |The server SHALL support the HTTP GET operation at the path `/style/{styleId}/metadata` for each style metadata referenced from the Styles resource at `/styles`.
+^|A |The server SHALL support the HTTP GET operation at the path `{baseResource}/style/{styleId}/metadata` for each style metadata referenced from the Styles resource at `{baseResource}/styles`.
 |===
 
 [[req_core_style-md-success]]
@@ -310,6 +305,337 @@ This operation returns the metadata of a style.
 ^|*Requirement {counter:req-id}* |*/req/core/style-md-success*
 ^|A |A successful execution of the operation SHALL be reported as a response with an HTTP status code `200`.
 ^|B |The content of that response SHALL be based upon the following OpenAPI 3.0 schema:
+
+[source,YAML]
+----
+type: object
+required:
+  - id
+properties:
+  id:
+    type: string
+  title:
+    type: string
+  description:
+    type: string
+  keywords:
+    type: array
+    items:
+      type: string
+  pointOfContact:
+    type: string
+  accessConstraints:
+    type: string
+    enum:
+      - unclassified
+      - confidential
+      - restricted
+      - secret
+      - topSecret
+  dates:
+    type: object
+    properties:
+      creation:
+        type: string
+        format: date-time
+      publication:
+        type: string
+        format: date-time
+      revision:
+        type: string
+        format: date-time
+      validTill:
+        type: string
+        format: date-time
+      receivedOn:
+        type: string
+        format: date-time
+  scope:
+    type: string
+    example: style
+    enum:
+      - style
+  version:
+    type: string
+    example: 1.0.0
+  stylesheets:
+    type: array
+    items:
+      type: object
+      required:
+        - link
+      properties:
+        title:
+          type: string
+        version:
+          type: string
+        specification:
+          type: string
+          format: url
+        native:
+          type: boolean
+        tilingScheme:
+          type: string
+        link:
+          $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml'
+  layers:
+    type: array
+    items:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+          enum:
+            - point
+            - line
+            - polygon
+            - geometry
+            - raster
+        attributes:
+          type: object
+          additionalProperties:
+            $ref: 'https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/schemas/v3.0/schema.json#/definitions/Schema'
+        sampleData:
+          $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml'
+  links:
+    type: array
+    items:
+      $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml'
+----
+^|C |The language used in linguistic text in the response SHALL be consistent with the language stated in the `Content-Language` header.
+|===
+
+The elements of the schema are defined in <<t15_d011,"OGC Testbed-15: Encoding and Metadata Conceptual Model for Styles Engineering Report">>, except for the items in the `attributes` object, where each member describes a JSON Schema for an attribute.
+
+[[rec_core_style-md-sample-data]]
+[width="90%",cols="2,6a"]
+|===
+^|*Recommendation {counter:rec-id}* |*/rec/core/style-md-sample-data*
+^|A |Sample data that can be used to illustrate the style SHOULD be represented as links with the following link relation types:
+
+* `enclosure` for links to sample data that may be downloaded (e.g. a GeoPackage);
+* `collection` for links to a Collection resource according to OGC API Common (e.g. `/collections/{collectionId}`; the collection may be available as features (tiled or not) or as gridded data);
+* `start` for links to a Features resource according to OGC API Features (e.g. `/collections/{collectionId}/items`; the response may contain a `next` link to additional features);
+* `http://www.opengis.net/def/rel/OGC/1.0/tiles` for a link to a Tile Sets resource (e.g. `/collections/{collectionId}/tiles`).
+|===
+
+#TODO: Add guidance for links to coverage data?#
+
+[[rec_core_style-md-preview]]
+[width="90%",cols="2,6a"]
+|===
+^|*Recommendation {counter:rec-id}* |*/rec/core/style-md-preview*
+^|A |A link to a thumbnail SHOULD be included with link relation `preview` (specified by RFC 6903) and the appropriate media type in the `type` parameter.
+|===
+
+The thumbnail may be an image that is published as a resource in the API. The thumbnail can reference an appropriate raster tile, a map request, etc.
+
+[[example_style_metadata]]
+.Style metadata in JSON
+=================
+[source,JSON]
+----
+{
+  "id": "night",
+  "title": "Topographic night style",
+  "description": "This topographic basemap style is designed to be used in situations with low ambient light. The style supports datasets based on the TDS 6.1 specification.",
+  "keywords": [
+    "basemap",
+    "TDS",
+    "TDS 6.1",
+    "OGC API"
+  ],
+  "pointOfContact": "John Doe",
+  "accessConstraints": "unclassified",
+  "dates": {
+    "creation": "2019-01-01T10:05:00Z",
+    "publication": "2019-01-01T11:05:00Z",
+    "revision": "2019-02-01T11:05:00Z",
+    "validTill": "2019-02-01T11:05:00Z",
+    "receivedOn": "2019-02-01T11:05:00Z"
+  },
+  "scope": "style",
+  "version": "1.0.0",
+  "stylesheets": [
+    {
+      "title": "Mapbox Style",
+      "version": "8",
+      "specification": "https://docs.mapbox.com/mapbox-gl-js/style-spec/",
+      "native": true,
+      "tilingScheme": "GoogleMapsCompatible",
+      "link": {
+        "href": "https://example.org/api/v1/styles/night?f=mapbox",
+        "rel": "stylesheet",
+        "type": "application/vnd.mapbox.style+json"
+      }
+    },
+    {
+      "title": "OGC SLD",
+      "version": "1.0",
+      "native": false,
+      "link": {
+        "href": "https://example.org/api/v1/styles/night?f=sld10",
+        "rel": "stylesheet",
+        "type": "application/vnd.ogc.sld+xml;version=1.0"
+      }
+    }
+  ],
+  "layers": [
+    {
+      "id": "VegetationSrf",
+      "type": "polygon",
+      "sampleData": {
+        "href": "https://demo.ldproxy.net/daraa/collections/VegetationSrf/items?f=json&limit=100",
+        "rel": "start",
+        "type": "application/geo+json"
+      },
+      "attributes": {
+        "F_CODE": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "id": "HydrographyCrv",
+      "type": "line",
+      "sampleData": {
+        "href": "https://demo.ldproxy.net/daraa/collections/HydrographyCrv/items?f=json&limit=100",
+        "rel": "start",
+        "type": "application/geo+json"
+      },
+      "attributes": {
+        "F_CODE": {
+          "type": "string"
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "href": "https://example.org/api/v1/resources/night-thumbnail.png",
+      "rel": "preview",
+      "type": "image/png",
+      "title": "thumbnail of the night style applied to OSM data from Daraa, Syria"
+    }
+  ]
+}
+----
+=================
+
+[[rc_manage-styles]]
+=== Requirements Class "Manage styles"
+
+include::requirements/requirements_class_manage-styles.adoc[]
+
+This section defines requirements for the case when the resources that are created, replaced, updated and deleted are styles. The general rules for Create/Replace/Delete/Update operations are specified in <<OAFeat-4,OGC API - Common - Part 4: Create, Replace, Update and Delete; Requirements Classes "Create/Replace/Delete" and "Update">>. This section specifies how those requirements apply to the API building blocks for styles.
+
+[[manage-styles_styles-endpoint]]
+==== Resources endpoint
+
+[[create_style]]
+===== Create a new style
+
+[[req_manage-styles_resources-endpoint]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/manage-styles/resources-endpoint*
+^|A |For styles, the resources endpoints to create a new style SHALL be URIs specified by the URI template `{baseResource}/styles`.
+^|B |When a new style is created, a minimal style metadata resource SHALL be created at `{baseResource}/styles/{styleId}/metadata`.
+|===
+
+The style metadata will be incomplete and should be updated by the client to keep the style metadata consistent with the style definition.
+
+[[example_style_location]]
+.New style response
+=================
+The URI of the new style is `https://example.org/api/v1/styles/night`.
+
+[source]
+----
+HTTP/1.1 201 Created
+Date: Sun, 28 Jul 2019 12:32:34 GMT
+Location: https://example.org/api/v1/styles/night
+----
+=================
+
+[[rec_manage-styles_id-exists]]
+[width="90%",cols="2,6a"]
+|===
+^|*Recommendation {counter:per-id}* |*/rec/manage-styles/id-exists*
+^|A |If the request to create a new style is syntactically valid, but the server assigns new identifiers based on information in the stylesheet and the server already has a style with the identifier stated in the stylesheet, a response with status code `409` SHOULD be returned.
+|===
+
+[[manage-styles_style-endpoint]]
+==== Resource endpoints
+
+[[req_manage-styles_resource_endpoint]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/manage-styles/resource-endpoint*
+^|A |For styles, the resource endpoints SHALL be URIs specified by the URI template `{baseResource}/styles/{styleId}`.
+^|B |The parameter `styleId` SHALL be the `id` property of a style obtained by previously having queried the Styles resource (i.e., responses to GET requests to `{baseResource}/styles`).
+^|C |Additional resource endpoints SHALL be URIs specified by the URI template `{baseResource}/styles/{styleId}/metadata` (style metadata).
+|===
+
+[[replace_style]]
+==== Replace a style
+
+#TODO: There are two options how to handle PUT on `{baseResource}/styles/{styleId}`, depending on whether the server supports automated derivation of stylesheets in other style encodings.# 
+
+#1. The PUT request removes all existing stylesheets of the style. The submitted stylesheet is accepted as the new style definition. If the server supports automatic derivation of stylesheets in other style encodings, it will derive other stylesheets from the new style definition and add them to the style metadata.#
+
+#2. The PUT request sets or replaces the current stylesheet for the media type specified in the `Content-Type` header, but leaves other stylesheets of the style untouched. That is, all stylesheets are managed separately by clients.#
+
+#Do we want to support one or both of the options?#
+
+The style metadata resource at `{baseResource}/styles/{styleId}/metadata` is not updated. If the changes affect the metadata, the style metadata needs to be updated to keep the style metadata consistent with the style definition.
+
+[[delete_style]]
+==== Delete a style
+
+This operation deletes the style with the id `styleId`. If no such style exists, an error is returned.
+
+Deleting a style also deletes the subordinate resources, i.e., the style metadata.
+
+[[req_manage-styles_styles-delete]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/manage-styles/styles-delete*
+^|A |For requests to the style metadata (template `{baseResource}/styles/{styleId}/metadata`), the DELETE operation SHALL not be supported.
+^|B |DELETE requests to a style (template `{baseResource}/styles/{styleId}`) SHALL delete the style metadata of that style, too.
+|===
+
+[[replace_style_metadata]]
+==== Replace the metadata of a style
+
+The PUT operation on `{baseResource}/styles/{styleId}/metadata` replaces the metadata of the style with the id `styleId`. If no such style exists, an error is returned.
+
+[[req_manage-styles_replace-style-md]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/manage-styles/replace-style-md*
+^|> |The server SHALL accept style metadata based on the schema <<req_core_style-md-success,requirement /req/core/style-md-success, item B>> in all encodings supported by the API.
+|===
+
+[[update_style_metadata]]
+==== Update the metadata of a style
+
+The PATCH operation on `{baseResource}/styles/{styleId}/metadata` updates the metadata of the style with the id `styleId`. If no such style exists, an error is returned.
+
+[[req_features_representation-geojson-update]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/features/representation-geojson-update*
+^|Condition |Server implements <<OAFeat-4,OGC API - Features - Part 4: Create, Replace, Update and Delete, Requirements Class "Update">>
+^|Condition |Server advertises support for media type `application/merge-patch+json` in the API definition for PATCH requests at `{baseResource}/styles/{styleId}/metadata`
+^|A |The server SHALL process PATCH requests with a content type `application/merge-patch+json` to such a resource endpoint as specified by <<rfc7396,RFC 7396 (JSON Merge Patch)>>.
+^|B |The content of the request SHALL be based upon the following OpenAPI 3.0 schema:
 
 [source,YAML]
 ----
@@ -402,7 +728,7 @@ properties:
           type: string
           nullable: true
         link:
-          $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/schemas/link'
+          $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml'
   layers:
     type: array
     nullable: true
@@ -427,307 +753,17 @@ properties:
             - geometry
             - raster
         attributes:
-          $ref: 'https://api.swaggerhub.com/domains/cportele/ogcapi-draft-extensions/1.0.0#/components/schemas/queryables'
+          type: object
+          additionalProperties:
+            $ref: 'https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/schemas/v3.0/schema.json#/definitions/Schema'
         sampleData:
-          $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/schemas/link'
+          $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml'
   links:
     type: array
     nullable: true
     items:
-      $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/schemas/link'
+      $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml'
 ----
-^|C |The language used in linguistic text in the response SHALL be consistent with the language stated in the `Content-Language` header.
-|===
-
-The elements of the schema are defined in <<t15_d011,"OGC Testbed-15: Encoding and Metadata Conceptual Model for Styles Engineering Report">>.
-
-[[rec_core_style-md-sample-data]]
-[width="90%",cols="2,6a"]
-|===
-^|*Recommendation {counter:rec-id}* |*/rec/core/style-md-sample-data*
-^|A |Sample data that can be used to illustrate the style SHOULD be represented as links with the following link relation types:
-
-* `enclosure` for links to sample data that may be downloaded (e.g. a GeoPackage);
-* `collection` for links to a Collection resource according to OGC API Common (e.g. `/collections/{collectionId}`; the collection may be available as features (tiled or not) or as gridded data);
-* `start` for links to a Features resource according to OGC API Features (e.g. `/collections/{collectionId}/items`; the response may contain a `next` link to additional features);
-* `tiles` for a link to a Tile Collection resource (e.g. `/collections/{collectionId}/tiles`).
-|===
-
-NOTE: Additional rules may be needed for links to coverage data.
-
-[[rec_core_style-md-preview]]
-[width="90%",cols="2,6a"]
-|===
-^|*Recommendation {counter:rec-id}* |*/rec/core/style-md-preview*
-^|A |A link to a thumbnail SHOULD be included with link relation `preview` (specified by RFC 6903) and the appropriate media type in the `type` parameter.
-|===
-
-The thumbnail may be an image that is published as a resource in the API. The thumbnail can reference an appropriate raster tile, a map request, etc.
-
-[[example_style_metadata]]
-.Style metadata in JSON
-=================
-[source,JSON]
-----
-{
-  "id": "night",
-  "title": "Topographic night style",
-  "description": "This topographic basemap style is designed to be used in situations with low ambient light. The style supports datasets based on the TDS 6.1 specification.",
-  "keywords": [
-    "basemap",
-    "TDS",
-    "TDS 6.1",
-    "OGC API"
-  ],
-  "pointOfContact": "John Doe",
-  "accessConstraints": "unclassified",
-  "dates": {
-    "creation": "2019-01-01T10:05:00Z",
-    "publication": "2019-01-01T11:05:00Z",
-    "revision": "2019-02-01T11:05:00Z",
-    "validTill": "2019-02-01T11:05:00Z",
-    "receivedOn": "2019-02-01T11:05:00Z"
-  },
-  "scope": "style",
-  "version": "1.0.0",
-  "stylesheets": [
-    {
-      "title": "Mapbox Style",
-      "version": "8",
-      "specification": "https://docs.mapbox.com/mapbox-gl-js/style-spec/",
-      "native": true,
-      "tilingScheme": "GoogleMapsCompatible",
-      "link": {
-        "href": "https://example.org/api/v1/styles/night?f=mapbox",
-        "rel": "stylesheet",
-        "type": "application/vnd.mapbox.style+json"
-      }
-    },
-    {
-      "title": "OGC SLD",
-      "version": "1.0",
-      "native": false,
-      "link": {
-        "href": "https://example.org/api/v1/styles/night?f=sld10",
-        "rel": "stylesheet",
-        "type": "application/vnd.ogc.sld+xml;version=1.0"
-      }
-    }
-  ],
-  "layers": [
-    {
-      "id": "vegetationsrf",
-      "type": "polygon",
-      "sampleData": {
-        "href": "https://services.interactive-instruments.de/vtp/daraa/collections/vegetationsrf/items?f=json&limit=100",
-        "rel": "data",
-        "type": "application/geo+json"
-      }
-    },
-    {
-      "id": "hydrographycrv",
-      "type": "line",
-      "sampleData": {
-        "href": "https://services.interactive-instruments.de/vtp/daraa/collections/hydrographycrv/items?f=json&limit=100",
-        "rel": "data",
-        "type": "application/geo+json"
-      },
-      "attributes": [
-        {
-          "id": "f_code",
-          "type": "string"
-        }
-      ]
-    }
-  ],
-  "links": [
-    {
-      "href": "https://example.org/api/v1/resources/night-thumbnail.png",
-      "rel": "preview",
-      "type": "image/png",
-      "title": "thumbnail of the night style applied to OSM data from Daraa, Syria"
-    }
-  ]
-}
-----
-=================
-
-[[rc_manage-styles]]
-=== Requirements Class "Manage styles"
-
-include::requirements/requirements_class_manage-styles.adoc[]
-
-[[create_style]]
-==== Create a new style
-
-This operation creates a new style. The payload of the request is a stylesheet of the style in one of the supported style encodings.
-
-If the style submitted in the request body includes an identifier (this depends on the style encoding), that identifier will be used. If a style with that identifier already exists, an error is returned.
-
-EXAMPLE:: For Mapbox Styles use the value of the `name` member and for OGC SLD use the value of the `Name` child element, if these are provided.
-
-Note that such identifiers may result in URIs that include encoded characters. To avoid this, use PUT `/styles/{styleId}` instead and specify the desired `styleId` explicitly.
-
-If no identifier can be determined from the submitted style, the server will assign a new identifier to the style.
-
-The URI of the new style is returned in the header `Location`.
-
-[[req_manage-styles_create-style-op]]
-[width="90%",cols="2,6a"]
-|===
-^|*Requirement {counter:req-id}* |*/req/manage-styles/create-style-op*
-^|A |The server SHALL support the HTTP POST operation at the path `/styles`.
-^|B |The server SHALL accept a stylesheet in one of the style encodings supported by the API.
-|===
-
-[[req_manage-styles_create-style-success]]
-[width="90%",cols="2,6a"]
-|===
-^|*Requirement {counter:req-id}* |*/req/manage-styles/create-style-success*
-^|A |A successful execution of the operation SHALL be reported as a response with an HTTP status code `201`.
-^|B |The response SHALL include a header `Location` with the URI of the new style.
-^|C |A minimal style metadata resource SHALL be created at `/styles/{styleId}/metadata`.
-|===
-
-Note that the metadata will be incomplete and should be updated by the client to keep the style metadata consistent with the style definition.
-
-[[req_manage-styles_create-style-error]]
-[width="90%",cols="2,6a"]
-|===
-^|*Requirement {counter:req-id}* |*/req/manage-styles/create-style-error*
-^|A |If the request does not conform to the requirements (e.g., the stylesheet is invalid) a response with status code `400` SHALL be returned.
-|===
-
-[[rec_manage-styles_id-exists]]
-[width="90%",cols="2,6a"]
-|===
-^|*Recommendation {counter:rec-id}* |*/rec/manage-styles/id-exists*
-^|A |If the request is valid, but the server already has a style with the identifier stated in the stylesheet, a response with status code `409` SHOULD be returned.
-|===
-
-
-[[example_style_location]]
-.New style response
-=================
-The URI of the new style is `https://example.org/api/v1/styles/night`.
-
-[source]
-----
-HTTP/1.1 201 Created
-Date: Sun, 28 Jul 2019 12:32:34 GMT
-Location: https://example.org/api/v1/styles/night
-----
-=================
-
-[[update_style]]
-==== Update or create a style
-
-This operation updates the style with the id `styleId`. If no such style exists, a new style with that id is added.
-
-For updated styles, the style metadata resource at `/styles/{styleId}/metadata` is not updated. For new styles a minimal style metadata resource is
-created, too. Please update the metadata using a PUT request to keep the style metadata consistent with the style definition.
-
-[[req_manage-styles_update-style-op]]
-[width="90%",cols="2,6a"]
-|===
-^|*Requirement {counter:req-id}* |*/req/manage-styles/update-style-op*
-^|A |The server SHALL support the HTTP PUT operation at the path `/styles/{styleId}`.
-^|B |The server SHALL accept a stylesheet in one of the style encodings supported by the API.
-|===
-
-[[req_manage-styles_update-style-success]]
-[width="90%",cols="2,6a"]
-|===
-^|*Requirement {counter:req-id}* |*/req/manage-styles/update-style-success*
-^|A |A successful execution of the operation SHALL be reported as a response with an HTTP status code `204`.
-^|B |If a new style is created, a minimal style metadata resource SHALL be created at `/styles/{styleId}/metadata`.
-|===
-
-Note that the metadata should be updated by the client, too, to keep the style metadata consistent with the style definition.
-
-[[req_manage-styles_update-style-error]]
-[width="90%",cols="2,6a"]
-|===
-^|*Requirement {counter:req-id}* |*/req/manage-styles/update-style-error*
-^|A |If the request does not conform to the requirements (e.g., the stylesheet is invalid) a response with status code `400` SHALL be returned.
-|===
-
-[[delete_style]]
-==== Delete a style
-
-This operation deletes the style with the id `styleId`. If no such style exists, an error is returned.
-
-Deleting a style also deletes the subordinate resources, i.e., the style metadata.
-
-[[req_manage-styles_delete-style-op]]
-[width="90%",cols="2,6a"]
-|===
-^|*Requirement {counter:req-id}* |*/req/manage-styles/delete-style-op*
-^|A |The server SHALL support the HTTP DELETE operation at the path `/styles/{styleId}`.
-|===
-
-[[req_manage-styles_delete-style-success]]
-[width="90%",cols="2,6a"]
-|===
-^|*Requirement {counter:req-id}* |*/req/manage-styles/delete-style-success*
-^|A |A successful execution of the operation SHALL be reported as a response with an HTTP status code `204`.
-^|B |All subordinate resources including the style metadata at `/styles/{styleId}/metadata` SHALL be deleted, too.
-|===
-
-[[req_manage-styles_delete-style-error]]
-[width="90%",cols="2,6a"]
-|===
-^|*Requirement {counter:req-id}* |*/req/manage-styles/delete-style-error*
-^|A |If the style does not exist, a response with status code `404` SHALL be returned.
-|===
-
-[[update_style_metadata]]
-==== Replace the metadata of a style
-
-This operation replaces the metadata of the style with the id `styleId`. If no such style exists, an error is returned.
-
-[[req_manage-styles_update-style-md-op]]
-[width="90%",cols="2,6a"]
-|===
-^|*Requirement {counter:req-id}* |*/req/manage-styles/update-style-md-op*
-^|A |The server SHALL support the HTTP PUT operation at path `/styles/{styleId}/metadata`.
-^|B |The server SHALL accept style metadata based on the schema <<req_core_style-md-success,requirement /req/core/style-md-success, item B>> in all encodings supported by the API.
-|===
-
-[[req_manage-styles_update-style-md-success]]
-[width="90%",cols="2,6a"]
-|===
-^|*Requirement {counter:req-id}* |*/req/manage-styles/update-style-md-success*
-^|A |A successful execution of the operation SHALL be reported as a response with an HTTP status code `204`.
-^|B |The style metadata SHALL be replaced by the content submitted in the request.
-|===
-
-[[req_manage-styles_update-style-md-error]]
-[width="90%",cols="2,6a"]
-|===
-^|*Requirement {counter:req-id}* |*/req/manage-styles/update-style-md-error*
-^|A |If the style does not exist, a response with status code `404` SHALL be returned.
-|===
-
-[[patch_style_metadata]]
-==== Update parts of the metadata of a style
-
-This operation updates the metadata of the style with the id `styleId`. If no such style exists, an error is returned.
-
-[[req_manage-styles_patch-style-md-op]]
-[width="90%",cols="2,6a"]
-|===
-^|*Requirement {counter:req-id}* |*/req/manage-styles/patch-style-md-op*
-^|A |The server SHALL support the HTTP PATCH operation at path `/styles/{styleId}/metadata`.
-^|B |The server SHALL accept style metadata based on the schema <<req_core_style-md-success,requirement /req/core/style-md-success, item B>> in all encodings supported by the API.
-|===
-
-[[req_manage-styles_patch-style-md-success]]
-[width="90%",cols="2,6a"]
-|===
-^|*Requirement {counter:req-id}* |*/req/manage-styles/patch-style-md-success*
-^|A |A successful execution of the operation SHALL be reported as a response with an HTTP status code `204`.
-^|B |The style metadata SHALL be updated by the content submitted in the request as specified by RFC 7396 (JSON Merge Patch).
 |===
 
 [[rfc7396_quote]]
@@ -749,9 +785,7 @@ merge patch are given special meaning to indicate
 the removal of existing values in the target.
 ____
 
-NOTE: A more flexible, but more complex option for JSON-based PATCH operations is specified by RFC 6902. JSON Merge Patch is used because of its simpler and more intuitive design. An XML-based PATCH operation is specified by RFC 5261.
-
-Some examples using JSON Merge Patch include:
+Some examples using JSON Merge Patch:
 
 To add or update the point of contact, the access constraint and the revision date, just send:
 
@@ -808,17 +842,6 @@ To remove the keywords, send:
 
 The same applies to `stylesheets`, `layers` and `links`. To update these members, the complete new array value has to be sent.
 
-[[req_manage-styles_patch-style-md-error]]
-[width="90%",cols="2,6a"]
-|===
-^|*Requirement {counter:req-id}* |*/req/manage-styles/patch-style-md-error*
-^|A |If the request does not conform to the requirements (e.g., the patch document is invalid) a response with status code `400` SHALL be returned.
-^|B |If the style does not exist, a response with status code `404` SHALL be returned.
-^|C |If the patch document appears to be valid, but the server is incapable of processing the request, a response with status code `422` SHALL
-be returned.
-^|D |If the media type of the patch document is not supported by the API, a response with status code `415` and an `Accept-Patch` header with the supported media types SHALL be returned.
-|===
-
 [[rc_style-validation]]
 === Requirements Class "Validation of styles"
 
@@ -831,7 +854,8 @@ include::requirements/requirements_class_style-validation.adoc[]
 [width="90%",cols="2,6a"]
 |===
 ^|*Requirement {counter:req-id}* |*/req/style-validation/input*
-^|A |The server SHALL support a parameter with the name "validate" in POST requests to the path `/styles` and in PUT requests to the path `/styles/{styleId}` with the following schema:
+^|A |The server SHALL support the `Prefer` header with the https://tools.ietf.org/html/rfc7240#section-4.4["handling=strict" and "handling=lenient" Preferences].
+^|B |The server SHALL support a parameter with the name "dry-run" in POST requests to the path `{baseResource}/styles` and in PUT requests to the path `{baseResource}/styles/{styleId}` with the following schema:
 
 [source,YAML]
 ----
@@ -841,12 +865,8 @@ required: false
 style: form
 explode: false
 schema:
-  type: string
-  enum:
-    - yes
-    - no
-    - only
-  default: no
+  type: boolean
+  default: false
 ----
 |===
 
@@ -854,11 +874,14 @@ schema:
 [width="90%",cols="2,6a"]
 |===
 ^|*Requirement {counter:req-id}* |*/req/style-validation/output*
-^|A |If the `validate` parameter has been provided in the request with the value 'yes', the server SHALL validate the submitted stylesheet for conformance with the style encoding. If an error is identified, a response with status code `400` shall be returned.
-^|A |If the `validate` parameter has been provided in the request with the value 'only', the server SHALL validate the submitted stylesheet for conformance with the style encoding. If an error is identified, a response with status code `400` SHALL be returned. If no error is identified, a response with status code `204` SHALL be returned and no style SHALL be created or updated.
+^|A |If the `Prefer` header has been provided in the request with the "handling=strict" preference, the server SHALL validate the submitted stylesheet for conformance with the style encoding. If an error in the stylesheet is identified, a response with status code `400` SHALL be returned.
+^|A |If the `dry-run` parameter has been provided in the request with the value 'true', the server SHALL execute the request except that no style SHALL be created or updated. If no error condition is identified a response with status code `204` SHALL be returned.
 |===
 
-If no parameter `validate` is provided or the parameter has the value 'no', the standard response is returned (for a POST on `/styles` a `201` response with the `Location` header pointing to the new Style resource, for a PUT request on `/styles/{styleId}` a `204` response).
+If no parameter `dry-run` is provided or the parameter has the value 'false', the standard response for a Create or Replace operation is returned.
+
+////
+commented out for now
 
 [[rc_resources]]
 === Requirements Class "Resources"
@@ -872,7 +895,7 @@ A GET request returns a list of resources that are currently available. The reso
 
 For each resource the id and a link to the resource is provided.
 
-NOTE: OGC Testbed-15 required only support for a limited number of the resources. Therefore, the currently simple approach is sufficient, but in general the operation could support paging (using a parameter `limit` and links to the `next` page in responses).
+#TODO: OGC Testbed-15 required only support for a limited number of the resources. Therefore, the currently simple approach is sufficient, but in general the operation could support paging (using a parameter `limit` and links to the `next` page in responses).#
 
 [[req_resources_resources-op]]
 [width="90%",cols="2,6a"]
@@ -1025,6 +1048,10 @@ This operation deletes the resource with the id `resourceId`. If no such resourc
 ^|*Requirement {counter:req-id}* |*/req/manage-resources/delete-resource-error*
 ^|A |If the style does not exist, a response with status code `404` SHALL be returned.
 |===
+////
+
+////
+commented out, HTML is already a requirements class in Common Core
 
 [[rc_html]]
 === Requirements Class "HTML"
@@ -1049,6 +1076,7 @@ That is, all resources are expected to have a HTML representation except the sty
 * all information identified in the schemas of the link:https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#responseObject[Response Object] in the HTML `<body>`, and
 * all links in HTML `<a>` elements in the HTML `<body>`.
 |===
+////
 
 [[rc_sld-10]]
 === Requirements Class "OGC SLD 1.0"
@@ -1071,8 +1099,8 @@ include::requirements/requirements_class_sld-10.adoc[]
 
 The list of operations in a server implementing all conformance classes of this draft specification is:
 
-* POST `/styles`
-* PUT `/styles/{styleId}`
+* POST `{baseResource}/styles`
+* PUT `{baseResource}/styles/{styleId}`
 
 [[rc_sld-11]]
 === Requirements Class "OGC SLD 1.1"
@@ -1095,8 +1123,8 @@ include::requirements/requirements_class_sld-11.adoc[]
 
 The list of operations in a server implementing all conformance classes of this draft specification is:
 
-* POST `/styles`
-* PUT `/styles/{styleId}`
+* POST `{baseResource}/styles`
+* PUT `{baseResource}/styles/{styleId}`
 
 [[rc_mapbox-styles]]
 === Requirements Class "Mapbox Style"
@@ -1119,5 +1147,5 @@ include::requirements/requirements_class_mapbox-style.adoc[]
 
 The list of operations in a server implementing all conformance classes of this draft specification is:
 
-* POST `/styles`
-* PUT `/styles/{styleId}`
+* POST `{baseResource}/styles`
+* PUT `{baseResource}/styles/{styleId}`

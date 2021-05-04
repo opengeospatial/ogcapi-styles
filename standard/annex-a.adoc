@@ -2,6 +2,10 @@
 :appendix-caption: Annex
 == Conformance Class Abstract Test Suite (Normative)
 
+#TODO: The ATS needs to be updated and has been commented out until the changes to the requirements classes are under discussion.#
+
+////
+
 === Conformance Class "Core"
 
 ==== Test Case 1
@@ -316,3 +320,4 @@ Otherwise skip the test.
 3. Validate the contents of the returned document against the schema in /req/queryables/success, item B, if the `itemType` is `feature`.
 4. Verify that each queryable id `#/queryables/{i}/id` (where `{i}` is the index of the queryable in the array) is unique.
 |===
+////

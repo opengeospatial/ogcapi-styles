@@ -1,8 +1,8 @@
 [cols="1,4",width="90%"]
 |===
 2+|*Requirements Class* {set:cellbgcolor:#CACCCE}
-2+|http://www.opengis.net/t15/opf-styles-1/{m_n}/req/mapbox-style {set:cellbgcolor:#FFFFFF}
+2+|http://www.opengis.net/spec/ogcapi-styles-1/1.0/req/mapbox-style {set:cellbgcolor:#FFFFFF}
 |Target type |Web API
-|Dependency |<<rc_core>>
+|Dependency |<<rc_manage-styles>>
 |Dependency |link:https://docs.mapbox.com/mapbox-gl-js/style-spec/[Mapbox Style Specification, Version 8]
 |===
