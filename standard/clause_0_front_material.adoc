@@ -41,13 +41,13 @@ OGC API Features, the base resource would be the Collection (path `/collections/
 [cols="20,30,10,40",options="header"]
 !===
 |Resource |Path |HTTP method |Document reference
-|Landing page |`/` |GET |<<landing_page>>
+|Base resource |`{baseResource}` |GET |<<base-resource>>
 |Conformance declaration |`/conformance` |GET |<<conformance_declaration>>
 .3+|Styles .3+|`{baseResource}/styles` |GET |<<get_styles>>
 .2+|POST |<<create_style>>
 |<<style_validate>>
 .4+|Style .4+|`{baseResource}/styles/{styleId}` |GET |<<get_style>>
-.2+|PUT |<<update_style>>
+.2+|PUT |<<replace_style>>
 |<<style_validate>>
 |DELETE |<<delete_style>>
 .3+|Style metadata .3+|`{baseResource}/styles/{styleId}/metadata` |GET |<<get_style_metadata>>

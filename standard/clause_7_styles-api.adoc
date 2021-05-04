@@ -35,6 +35,7 @@ The `{baseResource}` is a path template for any API resource with which styles c
 [cols="15,24,8,18,25",options="header"]
 !===
 |Resource |Path |HTTP method |Conformance class|Document reference
+|Base resource |`{baseResource}` |GET |<<base-resource>>
 |Conformance declaration |`/conformance` |GET |core |<<conformance_declaration>>
 .3+|Styles .3+|`{baseResource}/styles` |GET |core |<<get_styles>>
 .2+|POST |manage-styles |<<create_style>>
