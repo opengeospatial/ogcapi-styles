@@ -1,6 +1,6 @@
 # OGC API - Styles
 
-This GitHub repository contains [OGC](http://opengeospatial.org)'s proposed standard for accessing styles for rendering geospatial data (features or coverages) on the web, "OGC API - Styles". The editor's draft of the specification can be found at [docs.opengeospatial.org/DRAFTS/20-009.html](https://docs.ogc.org/DRAFTS/20-009.html).
+This GitHub repository contains [OGC](http://opengeospatial.org)'s proposed standard for accessing styles for rendering geospatial data (features or coverages) on the web, "OGC API - Styles". The editor's draft of the specification can be found at [docs.ogc.org/DRAFTS/20-009.html](https://docs.ogc.org/DRAFTS/20-009.html).
 
 [OGC API standards](https://ogcapi.ogc.org) define modular API building blocks to spatially enable Web APIs in a consistent way. [OpenAPI](http://openapis.org) is used to define the reusable API building blocks with responses in JSON and HTML.
 
