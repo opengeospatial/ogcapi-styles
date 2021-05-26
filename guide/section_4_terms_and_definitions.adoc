@@ -2,24 +2,22 @@
 
 For the purposes of this document, the following additional terms and definitions apply.
 
-=== dataset
-collection of data, published or curated by a single agent, and available for access or download in one or more formats [DCAT]
+=== Portrayal
 
-=== distribution
-represents an accessible form of a *dataset* [DCAT]
+Presentation of information to humans (Note 1 to entry: Within the scope of this International Standard, portrayal is restricted to the portrayal of geographic information). [SOURCE: ISO 19117:2012, 4.20]
 
-EXAMPLE: a downloadable file, an RSS feed or a web service that provides the data.
+=== Layer
 
-=== feature
-abstraction of real world phenomena [ISO 19101:2002, definition 4.11]
+Abstraction of reality specified by a geographic data model (feature, coverage…​). A layer may be represented using a set of symbols (Style). A layer contributes to a single geographic subject and may be a theme.
 
-=== feature collection
-a set of *features* from a *dataset*
+=== Style
 
+Set of rules of symbolizing instructions to be applied by a rendering engine on a layer of geographic features (e.g., feature, coverage…​).
 
-CAUTION: link:https://github.com/opengeospatial/ogcapi-features/issues/4[ISSUE 4] +
-We need to make the document understandable to the developers that have no
-geo/OGC background, too. What do we need to explain in this section and what
-terms should we use in general?
+=== Rendering engine
 
-Answer - the definitions in the standards should be kept simple with more detailed information provided in the Guide.
+Automated process that produces graphics using a pipeline of layers and styles as inputs.
+
+=== Render
+
+Conversion of digital graphics data into visual form (EXAMPLE Generation of an image on a video display) [SOURCE: ISO 19117:2012, 4.27]

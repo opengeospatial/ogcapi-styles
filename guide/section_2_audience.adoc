@@ -1,2 +1,2 @@
 == Audience
-This document is written for developers who wish to implement the WFS 3.0 standards.  It serves as a ready source of non-normative information which may aid in their development efforts.
+This document is written for developers who wish to implement the OGC API - Styles standard.  It serves as a ready source of non-normative information which may aid in their development efforts.

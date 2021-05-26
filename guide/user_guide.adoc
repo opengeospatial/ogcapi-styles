@@ -105,26 +105,18 @@ include::section_4_terms_and_definitions.adoc[]
 include::section_5_conventions.adoc[]
 (needs a complete re-write)
 
-include::section_6_introduction_to_geospatial.adoc[]
+include::section_6_introduction_to_portrayal.adoc[]
 (done)
 
 include::section_7_introduction_to_OpenAPI.adoc[]
 (done)
 
-include::section_8_WFS_2_0_v_3_0.adoc[]
-(done)
-
-include::section_9_OpenAPI_v_Capabilities.adoc[]
+include::section_8_ogcapi_styles.adoc[]
 (done)
 
 include::section_10_information_assurance.adoc[]
 (done)
 
-include::section_11_conformance_checklists.adoc[]
-(validate against ATS)
-
-include::section_12_mediaTypes.adoc[]
-(done)
 
 include::annex_history.adoc[]
 (Done)
