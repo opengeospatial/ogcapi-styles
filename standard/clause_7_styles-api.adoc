@@ -78,7 +78,7 @@ At the time of writing, <<CommonCore,OGC API - Common - Part 1: Core>> is a cand
 [width="90%",cols="2,6a"]
 |===
 ^|*Requirement {counter:req-id}* |*/req/core/base-resource-link*
-^|A |The content of any base resource (at path `{baseResource}`) with which styles are associated in the API SHALL include a link to a Styles resource at path `{baseResource}/styles` (link relation type 'http://www.opengis.net/def/rel/OGC/1.0/styles').
+^|A |The content of any base resource (at path `{baseResource}`) with which styles are associated in the API SHALL include a link to a Styles resource at path `{baseResource}/styles` (link relation type 'http://www.opengis.net/def/rel/ogc/1.0/styles').
 |===
 
 [[example_lp]]
@@ -110,13 +110,13 @@ For a general purpose Styles API the base resource will be the Landing Page of t
     },
     {
       "href": "https://example.org/api/v1/conformance",
-      "rel": "http://www.opengis.net/def/rel/OGC/1.0/conformance",
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/conformance",
       "type": "application/json",
       "title": "list of conformance classes implemented by this API"
     },
     {
       "href": "https://example.org/api/v1/styles",
-      "rel": "http://www.opengis.net/def/rel/OGC/1.0/styles",
+      "rel": "http://www.opengis.net/def/rel/ogc/1.0/styles",
       "type": "application/json",
       "title": "the styles shared via this API"
     }
@@ -423,7 +423,7 @@ The elements of the schema are defined in <<t15_d011,"OGC Testbed-15: Encoding a
 * `enclosure` for links to sample data that may be downloaded (e.g. a GeoPackage);
 * `collection` for links to a Collection resource according to OGC API Common (e.g. `/collections/{collectionId}`; the collection may be available as features (tiled or not) or as gridded data);
 * `start` for links to a Features resource according to OGC API Features (e.g. `/collections/{collectionId}/items`; the response may contain a `next` link to additional features);
-* `http://www.opengis.net/def/rel/OGC/1.0/tiles` for a link to a Tile Sets resource (e.g. `/collections/{collectionId}/tiles`).
+* `http://www.opengis.net/def/rel/ogc/1.0/tiles` for a link to a Tile Sets resource (e.g. `/collections/{collectionId}/tiles`).
 |===
 
 #TODO: Add guidance for links to coverage data?#
