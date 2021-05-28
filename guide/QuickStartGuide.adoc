@@ -1,4 +1,4 @@
-= OGC API - Styles
+= Quick Start Guide to link:http://docs.ogc.org/DRAFTS/20-009.html[OGC API - Styles]
 
 == Introduction
 
