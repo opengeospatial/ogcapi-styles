@@ -96,6 +96,100 @@ HTTP GET operation at the path {baseResource}/styles
 ----
 =================
 
+==Fetch Style metadata
+The HTTP GET operation on the path {baseResource}/style/{styleId}/metadata will return the style metadata information following OpenAPI 3.0 schema specified in the :link http://docs.ogc.org/DRAFTS/20-009.html#get_style_metadata[standard]
+The server SHALL support the HTTP GET operation at the path {baseResource}/style/{styleId}/metadata for each style metadata referenced from the Styles resource at {baseResource}/styles.
 
+[[example_style_metadata]]
+.Style metadata in JSON
+=================
+[source,JSON]
+----
+{
+  "id": "night",
+  "title": "Topographic night style",
+  "description": "This topographic basemap style is designed to be used in situations with low ambient light. The style supports datasets based on the TDS 6.1 specification.",
+  "keywords": [
+    "basemap",
+    "TDS",
+    "TDS 6.1",
+    "OGC API"
+  ],
+  "pointOfContact": "John Doe",
+  "accessConstraints": "unclassified",
+  "dates": {
+    "creation": "2019-01-01T10:05:00Z",
+    "publication": "2019-01-01T11:05:00Z",
+    "revision": "2019-02-01T11:05:00Z",
+    "validTill": "2019-02-01T11:05:00Z",
+    "receivedOn": "2019-02-01T11:05:00Z"
+  },
+  "scope": "style",
+  "version": "1.0.0",
+  "stylesheets": [
+    {
+      "title": "Mapbox Style",
+      "version": "8",
+      "specification": "https://docs.mapbox.com/mapbox-gl-js/style-spec/",
+      "native": true,
+      "tilingScheme": "GoogleMapsCompatible",
+      "link": {
+        "href": "https://example.org/api/v1/styles/night?f=mapbox",
+        "rel": "stylesheet",
+        "type": "application/vnd.mapbox.style+json"
+      }
+    },
+    {
+      "title": "OGC SLD",
+      "version": "1.0",
+      "native": false,
+      "link": {
+        "href": "https://example.org/api/v1/styles/night?f=sld10",
+        "rel": "stylesheet",
+        "type": "application/vnd.ogc.sld+xml;version=1.0"
+      }
+    }
+  ],
+  "layers": [
+    {
+      "id": "VegetationSrf",
+      "type": "polygon",
+      "sampleData": {
+        "href": "https://demo.ldproxy.net/daraa/collections/VegetationSrf/items?f=json&limit=100",
+        "rel": "start",
+        "type": "application/geo+json"
+      },
+      "attributes": {
+        "F_CODE": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "id": "HydrographyCrv",
+      "type": "line",
+      "sampleData": {
+        "href": "https://demo.ldproxy.net/daraa/collections/HydrographyCrv/items?f=json&limit=100",
+        "rel": "start",
+        "type": "application/geo+json"
+      },
+      "attributes": {
+        "F_CODE": {
+          "type": "string"
+        }
+      }
+    }
+  ],
+  "links": [
+    {
+      "href": "https://example.org/api/v1/resources/night-thumbnail.png",
+      "rel": "preview",
+      "type": "image/png",
+      "title": "thumbnail of the night style applied to OSM data from Daraa, Syria"
+    }
+  ]
+}
+----
+=================
 
 
