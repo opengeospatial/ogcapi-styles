@@ -8,17 +8,17 @@ This guide is not intededed to be a replacement for the proposed link:http://doc
 
 == Use Case
 
-The styles API is design to support several types of use cases:
+The styles API is design to support three main use cases:
 
-* Implementations of the draft OGC API - Maps specification to fetch styles and render spatial data on the server
+* In conjunction with the OGC API - Maps standard to fetch styles and render spatial data on the server.
 
-* Map clients that fetch styles and render spatial data on the client
+* By Map clients to fetch styles and render spatial data on the client
 
-* Visual style editors that create, update and delete styles for datasets shared by other implementations of the OGC APIs
+* By Visual style editors that create, update and delete styles for datasets shared by other implementations of the OGC APIs
 
 == Key Concepts
 
-Their are three main concepts used to understand the Styles API:
+Their are three main concepts used in the Styles API:
 
 * Style - The main resource used in the API
 
@@ -26,15 +26,22 @@ Their are three main concepts used to understand the Styles API:
 
 * Stlye Metadata - General descriptive information of a style which allows users to disccover and select esisitng styles. Metadata is optional in the standard.
 
-== Resources
+== Resources / Operation
 
-|===
-|**Resource** | **Path**| **Purpose** 
+!===
+|**Resource / Operation** | **Path**| **Purpose** 
 |Base Resource | {baseResource} | This is the API resource that an style can be associated with, for example, a feature dataset, a feature collection, or a coverage. 
-|Conformance Class| /conformance | Are the requirements that a Web API must adhere to to be OGC API compliant. 
-|Styles| {baseResource}/styles | This operation is used to return a list of styles available for the baseResource or create a new style resource
-|Style | {baseResource}/styles/{styleId} | This operation is used to returns the specified stylesheet of a style. , Replace or delete
-|Style metadata | {baseResource}/styles/{styleId}/metadata | This operation is the metadata infomration of a style. Used to mmange the metadata information for an indivdual style, can be used to Fetch, Replace and update the metadata
+|Conformance Class| /conformance | List the requirements that the API adheres to. 
+|Styles| {baseResource}/styles | This operation is used to, return a list of available styles, create a new style or validate an existing style.
+|Style | {baseResource}/styles/{styleId} | This operation is used to return, replace or delete the stylesheet of a style resource
+|Style metadata | {baseResource}/styles/{styleId}/metadata | This operation is used to return or replace the metadata information of a style.
+!===
+
+Examples of simple use case
+
+Fetch Styles
+HTTP GET operation at the path {baseResource}/styles
+
 
 
 
