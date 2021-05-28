@@ -22,7 +22,7 @@ Their are three main concepts used to understand the Styles API:
 
 * Style - The main resource used in the API
 
-* Stylesheet -  Each Style is availbel from the API in one of more stylesheets. OGC SLD 1.0, Mapbox Style & ESRI Layer file
+* Stylesheet -  The encoding used by the style resource, a single style can contain one of more stylesheets. Example of stylesheets are OGC SLD 1.0, Mapbox Style & ESRI Layer file
 
 * Stlye Metadata - General descriptive information to allow users to disccover and select esisitng styles. Metadata is optional in the standard.
 
@@ -33,7 +33,7 @@ Their are three main concepts used to understand the Styles API:
 |Base Resource | {baseResource} | This is the API resource that an style can be associated with, for example, a feature dataset, a feature collection, or a coverage. 
 |Conformance Class| /conformance | Are the requirements that a Web API must adhere to to be OGC API compliant. 
 |Styles| {baseResource}/styles | This operation is used to return a list of styles available for the baseResource or create a style
-|Style | {baseResource}/styles/{styleId} | This resource is used manage individual resources ethier, to Fetch, Replace or delete
+|Style | {baseResource}/styles/{styleId} | This operation is used to reutrn the , Replace or delete
 |Style metadata | {baseResource}/styles/{styleId}/metadata | Used to mmange the metadata information for an indivdual style, can be used to Fetch, Replace and update the metadata
 
 
