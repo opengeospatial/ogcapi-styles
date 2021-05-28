@@ -37,9 +37,9 @@ Their are three main concepts used in the Styles API:
 |Style metadata | {baseResource}/styles/{styleId}/metadata | This operation is used to return or replace the metadata information of a style.
 !===
 
-Examples of simple use case
+== Basic operation examples
 
-Fetch Styles
+== Accessing a Style's list
 HTTP GET operation at the path {baseResource}/styles
 
 [[example_styles]]
@@ -96,12 +96,15 @@ HTTP GET operation at the path {baseResource}/styles
 ----
 =================
 
-==Fetch Style metadata
-The HTTP GET operation on the path {baseResource}/style/{styleId}/metadata will return the style metadata information following OpenAPI 3.0 schema specified in the :link http://docs.ogc.org/DRAFTS/20-009.html#get_style_metadata[standard]
-The server SHALL support the HTTP GET operation at the path {baseResource}/style/{styleId}/metadata for each style metadata referenced from the Styles resource at {baseResource}/styles.
+== Accessing a style's stylesheet
+
+Performing a **HTTP GET** operation on the path _{baseResource}/styles/{styleId}_ will return the stylesheet of the _baseResource_. The format of the returned stylesheet will conform to the format specified in the **HTTP Content-Type header**
+
+== Accessing a style's metadata
+Performing a **HTTP GET** operation on the path _{baseResource}/styles/{styleId}/metadata_ will return the style metadata information following the OpenAPI 3.0 schema specified in the http://docs.ogc.org/DRAFTS/20-009.html#get_style_metadata[standard].
 
 [[example_style_metadata]]
-.Style metadata in JSON
+.Returned style metadata in JSON
 =================
 [source,JSON]
 ----
@@ -191,5 +194,3 @@ The server SHALL support the HTTP GET operation at the path {baseResource}/style
 }
 ----
 =================
-
-
