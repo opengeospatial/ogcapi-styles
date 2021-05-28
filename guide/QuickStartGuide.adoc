@@ -1,14 +1,15 @@
-= Quick Start Guide to link:http://docs.ogc.org/DRAFTS/20-009.html[OGC API - Styles]
+= Quick Start Guide to link:http://docs.ogc.org/DRAFTS/20-009.html[OGC API - Styles] Standard
 
 == Introduction
 
-The OGC API - Style standard defines the API building blocks for Web APIs to enalbe map servers to manage and fetch styles. Web APIs are software interfaces that use an architectural style that is founded webb technologies and a style is a set of instructiosn used by a rending engine to symbolize features and/or coverages. 
+The OGC API - Style standard defines the API building blocks for Web APIs to manage and fetch styles. Web APIs are software interfaces that use an architectural that is founded and webb technologies and a style is a set of instructiosn used by a rending engine to symbolize features and/or coverages. 
 
-This guide is not intededed to be a replacement for the proposed OGC API - Styles Standard. Instead this guide is intended to focus on the API capabilities in order to help user understand and get started with the standard. Please refer to the OGC API - Stlyes Standard for additional detail. This guide will use the term "Styles API" to refer to a Web API tha has Implemented the OGC API - Style Standard.
+This guide is not intededed to be a replacement for the proposed link:http://docs.ogc.org/DRAFTS/20-009.html[OGC API - Styles] Standard. Instead this guide is intended to focus on the API's capabilities in order to help user get started and to increase their understanding. Please refer to the link:http://docs.ogc.org/DRAFTS/20-009.html[OGC API - Styles] Standard for additional detail. This guide will use the term "Styles API" to refer to a Web API tha has Implemented the OGC API - Style Standard.
 
 == Use Case
 
 The styles API is design to support several types of use cases:
+
 * Implementations of the draft OGC API - Maps specification to fetch styles and render spatial data on the server
 
 * Map clients that fetch styles and render spatial data on the client
@@ -17,18 +18,21 @@ The styles API is design to support several types of use cases:
 
 == Key Concepts
 
-Their are three main concepts used to understand the Styles API
+Their are three main concepts used to understand the Styles API:
+
 * Style - The main resource used in the API
+
 * Stylesheet -  Each Style is availbel from the API in one of more stylesheets. OGC SLD 1.0, Mapbox Style & ESRI Layer file
+
 * Stlye Metadata - General descriptive information to allow users to disccover and select esisitng styles. Metadata is optional in the standard.
 
 == Resources
 
 |===
 |**Resource** | **Path**| **Purpose** 
-|Base Resource | {baseResource} | this is what is used
-|Conformance Class| /conformance | ff
-|Styles| {baseResource}/styles | This resources is used to fetch the Styles or create a style
+|Base Resource | {baseResource} | This is the API resource that an style can be associated with, for example, a feature dataset, a feature collection, or a coverage. 
+|Conformance Class| /conformance | Are the requirements that a Web API must adhere to to be OGC API compliant. 
+|Styles| {baseResource}/styles | This operation is used to return a list of styles available for the baseResource or create a style
 |Style | {baseResource}/styles/{styleId} | This resource is used manage individual resources ethier, to Fetch, Replace or delete
 |Style metadata | {baseResource}/styles/{styleId}/metadata | Used to mmange the metadata information for an indivdual style, can be used to Fetch, Replace and update the metadata
 
