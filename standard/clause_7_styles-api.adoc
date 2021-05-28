@@ -274,7 +274,7 @@ This operation returns the stylesheet of a style.
 [width="90%",cols="2,6a"]
 |===
 ^|*Requirement {counter:req-id}* |*/req/core/style-op*
-^|A |The server SHALL support the HTTP GET operation at the path `{baseResource}/style/{styleId}` for each style referenced from the Styles resource at `{baseResource}/styles`.
+^|A |The server SHALL support the HTTP GET operation at the path `{baseResource}/styles/{styleId}` for each style referenced from the Styles resource at `{baseResource}/styles`.
 |===
 
 [[req_core_style-success]]
@@ -297,7 +297,7 @@ This operation returns the metadata of a style.
 [width="90%",cols="2,6a"]
 |===
 ^|*Requirement {counter:req-id}* |*/req/core/style-md-op*
-^|A |The server SHALL support the HTTP GET operation at the path `{baseResource}/style/{styleId}/metadata` for each style metadata referenced from the Styles resource at `{baseResource}/styles`.
+^|A |The server SHALL support the HTTP GET operation at the path `{baseResource}/styles/{styleId}/metadata` for each style metadata referenced from the Styles resource at `{baseResource}/styles`.
 |===
 
 [[req_core_style-md-success]]
