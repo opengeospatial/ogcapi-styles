@@ -24,7 +24,7 @@ Their are three main concepts used to understand the Styles API:
 
 * Stylesheet -  The encoding used by the style resource, a single style can contain one of more stylesheets. Example of stylesheets are OGC SLD 1.0, Mapbox Style & ESRI Layer file
 
-* Stlye Metadata - General descriptive information to allow users to disccover and select esisitng styles. Metadata is optional in the standard.
+* Stlye Metadata - General descriptive information of a style which allows users to disccover and select esisitng styles. Metadata is optional in the standard.
 
 == Resources
 
@@ -32,9 +32,9 @@ Their are three main concepts used to understand the Styles API:
 |**Resource** | **Path**| **Purpose** 
 |Base Resource | {baseResource} | This is the API resource that an style can be associated with, for example, a feature dataset, a feature collection, or a coverage. 
 |Conformance Class| /conformance | Are the requirements that a Web API must adhere to to be OGC API compliant. 
-|Styles| {baseResource}/styles | This operation is used to return a list of styles available for the baseResource or create a style
-|Style | {baseResource}/styles/{styleId} | This operation is used to reutrn the , Replace or delete
-|Style metadata | {baseResource}/styles/{styleId}/metadata | Used to mmange the metadata information for an indivdual style, can be used to Fetch, Replace and update the metadata
+|Styles| {baseResource}/styles | This operation is used to return a list of styles available for the baseResource or create a new style resource
+|Style | {baseResource}/styles/{styleId} | This operation is used to returns the specified stylesheet of a style. , Replace or delete
+|Style metadata | {baseResource}/styles/{styleId}/metadata | This operation is the metadata infomration of a style. Used to mmange the metadata information for an indivdual style, can be used to Fetch, Replace and update the metadata
 
 
 
