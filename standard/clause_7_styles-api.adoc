@@ -1103,6 +1103,25 @@ The list of operations in a server implementing all conformance classes of this 
 * POST `{baseResource}/styles`
 * PUT `{baseResource}/styles/{styleId}`
 
+[[sld10_content]]
+==== Expected content in an SLD 1.0 document
+
+In accordance with the SLD 1.0 standard, the root element of every SLD 1.0 stylesheet will be a `StyledLayerDescriptor` element.
+
+The content of a stylesheet will typically depend on the `{baseResource}`:
+
+* If `{baseResource}` is a Landing Page of an API that publishes a dataset (i.e., it includes a Collections resource at `/collections`), the document will typically contain one or more `NamedLayer` elements with names corresponding to collection ids, each with a `UserStyle`. 
+* If `{baseResource}` is a Collection, the document will typically contain one `NamedLayer` element with the name corresponding to the collection id with a `UserStyle`.
+* If `{baseResource}` is a Landing Page of an API that publishes no dataset (i.e., it includes no Collections resource at `/collections`), the document will typically contain one or more `NamedLayer` or `UserLayer` elements, each with a `UserStyle`.
+
+If a `UserStyle` has a name, it will typically correspond to the style id, but the name is not relevant.
+
+If a `UserStyle` has `FeatureTypeStyle` elements with a name, the name will typically correspond to the collection id.
+
+If there are multiple `UserStyle` elements in a layer, clients should use the style with a name that matches the style id, if there is one. Otherwise they should pick any of the styles.
+
+NOTE: This is a starting point for discussion and this may be converted into requirements and recommendations. See also [Issue 24](https://github.com/opengeospatial/ogcapi-styles/issues/24).
+
 [[rc_sld-11]]
 === Requirements Class "OGC SLD 1.1"
 
@@ -1126,6 +1145,11 @@ The list of operations in a server implementing all conformance classes of this 
 
 * POST `{baseResource}/styles`
 * PUT `{baseResource}/styles/{styleId}`
+
+[[sld11_content]]
+==== Expected content in an SLD 1.1 document
+
+The same rules apply like for <<sld10_content,SLD 1.0 documents>>.
 
 [[rc_mapbox-styles]]
 === Requirements Class "Mapbox Style"
