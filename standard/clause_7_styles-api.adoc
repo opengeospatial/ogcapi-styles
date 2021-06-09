@@ -396,6 +396,7 @@ properties:
             - point
             - line
             - polygon
+            - solid
             - geometry
             - raster
         attributes:
