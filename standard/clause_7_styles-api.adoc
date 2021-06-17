@@ -319,52 +319,54 @@ required:
 properties:
   id:
     type: string
+    title: Style Identifier
+    description: the identifier of the style
   title:
     type: string
+    title: Title
+    description: a title for the style, suitable for indicating the style usage in a style listing.
   description:
     type: string
+    title: Description
+    description: a longer description of the style, including all information needed to facilitate understanding, such as applicability, classification methods, reference to norms and whatever other information the user should be aware of before using the style
   keywords:
     type: array
+    title: Keywords
+    description: a list of well-known keywords that would help locating the style in a catalog
     items:
       type: string
   pointOfContact:
     type: string
-  accessConstraints:
+    title: Point of Contact
+    description: information that can be used to contact the authors or custodians for the style (free form, can be anything from an e-mail address to physical address and phone numbers)
+  license:
     type: string
-    enum:
-      - unclassified
-      - confidential
-      - restricted
-      - secret
-      - topSecret
-  dates:
-    type: object
-    properties:
-      creation:
-        type: string
-        format: date-time
-      publication:
-        type: string
-        format: date-time
-      revision:
-        type: string
-        format: date-time
-      validTill:
-        type: string
-        format: date-time
-      receivedOn:
-        type: string
-        format: date-time
+    title: License
+    description: the license under which the style is made available
+  created:
+    type: string
+    format: date-time
+    title: Created
+    description: the timestamp when the style was first produced
+  updated:
+    type: string
+    format: date-time
+    title: Updated
+    description: the timestamp of the last style change/revision
   scope:
     type: string
-    example: style
+    title: Scope
+    description: the scope of this metadata record, fixed to "style"
     enum:
       - style
   version:
     type: string
-    example: 1.0.0
+    title: Version
+    description: the version number for the current stylesheets of the style
   stylesheets:
     type: array
+    title: Stylesheets
+    description: the documents in different style encodings in which the style is available
     items:
       type: object
       required:
@@ -372,19 +374,27 @@ properties:
       properties:
         title:
           type: string
+          title: Title
+          description: the title of the encoding language, e.g. Mapbox Style, SLD, GeoCSS or CMSS
         version:
           type: string
+          title: Version
+          description: the version of the encoding language used, e.g., 1.0
         specification:
           type: string
           format: url
+          title: Specification
+          description: a link to the style encoding specification, e.g. https://docs.mapbox.com/mapbox-gl-js/style-spec/
         native:
           type: boolean
-        tilingScheme:
-          type: string
+          title: Native
+          description: true or false, indicating if this is the native encoding of the style, possibly hand prepared, or an on-the-fly conversion, with potential loss of details in the process
         link:
           $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml'
   layers:
     type: array
+    title: Data Layers
+    description: the layers involved in the symbolization (which might be just one), and the attributes used by the style for each layer (could be none); while part of this information could be retrieved from the stylesheets themselves, this is a succinct representation enumerating the minimum set of data the style needs in order to actually symbolize data
     items:
       type: object
       required:
@@ -392,33 +402,48 @@ properties:
       properties:
         id:
           type: string
+          title: Identifier 
+          description: a layer id, typically the same identifier used in the style to refer to the layer
         description:
           type: string
-        type:
+          title: Description
+          description: a layer description, which can be used to understand the role of the layer in the style
+        dataType:
           type: string
+          title: Data Type
+          description: the type of data represented in the layer
           enum:
-            - point
-            - line
-            - polygon
-            - solid
-            - geometry
-            - raster
+            - vector
+            - map
+            - coverage
             - model
-        attributes:
+        geometryType:
+          type: string
+          title: Geometry Type
+          description: the geometry type of the features shown in this layer, if dataType is "vector"
+          enum:
+            - points
+            - lines
+            - polygons
+            - solids
+            - any
+        propertiesSchema:
           type: object
+          title: Attributes
+          description: the properties that the style needs in order to perform filtering, classification, symbolization
           additionalProperties:
             $ref: 'https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/schemas/v3.0/schema.json#/definitions/Schema'
         sampleData:
           $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml'
   links:
     type: array
+    title: Links
+    description: links of the style metadata, including the "self" and "alternate" links
     items:
       $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml'
 ----
 ^|C |The language used in linguistic text in the response SHALL be consistent with the language stated in the `Content-Language` header.
 |===
-
-The elements of the schema are defined in <<t15_d011,"OGC Testbed-15: Encoding and Metadata Conceptual Model for Styles Engineering Report">>, except for the items in the `attributes` object, where each member describes a JSON Schema for an attribute.
 
 [[rec_core_style-md-sample-data]]
 [width="90%",cols="2,6a"]
@@ -671,137 +696,7 @@ The PATCH operation on `{baseResource}/styles/{styleId}/metadata` updates the me
 ^|Condition |Server implements <<OAFeat-4,OGC API - Features - Part 4: Create, Replace, Update and Delete, Requirements Class "Update">>
 ^|Condition |Server advertises support for media type `application/merge-patch+json` in the API definition for PATCH requests at `{baseResource}/styles/{styleId}/metadata`
 ^|A |The server SHALL process PATCH requests with a content type `application/merge-patch+json` to such a resource endpoint as specified by <<rfc7396,RFC 7396 (JSON Merge Patch)>>.
-^|B |The content of the request SHALL be based upon the following OpenAPI 3.0 schema (the server can remove any metadata property from the schema that is managed by the server and not meant to be edited by clients):
-
-[source,YAML]
-----
-type: object
-required:
-  - id
-properties:
-  id:
-    type: string
-  title:
-    type: string
-    nullable: true
-  description:
-    type: string
-    nullable: true
-  keywords:
-    type: array
-    nullable: true
-    items:
-      type: string
-  pointOfContact:
-    type: string
-    nullable: true
-  accessConstraints:
-    type: string
-    nullable: true
-    enum:
-      - unclassified
-      - confidential
-      - restricted
-      - secret
-      - topSecret
-  dates:
-    type: object
-    nullable: true
-    properties:
-      creation:
-        type: string
-        format: date-time
-        nullable: true
-      publication:
-        type: string
-        format: date-time
-        nullable: true
-      revision:
-        type: string
-        format: date-time
-        nullable: true
-      validTill:
-        type: string
-        format: date-time
-        nullable: true
-      receivedOn:
-        type: string
-        format: date-time
-        nullable: true
-  scope:
-    type: string
-    nullable: true
-    example: style
-    enum:
-      - style
-  version:
-    type: string
-    nullable: true
-    example: 1.0.0
-  stylesheets:
-    type: array
-    nullable: true
-    items:
-      type: object
-      nullable: true
-      required:
-        - link
-      properties:
-        title:
-          type: string
-          nullable: true
-        version:
-          type: string
-          nullable: true
-        specification:
-          type: string
-          format: url
-          nullable: true
-        native:
-          type: boolean
-          nullable: true
-        tilingScheme:
-          type: string
-          nullable: true
-        link:
-          $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml'
-  layers:
-    type: array
-    nullable: true
-    items:
-      type: object
-      nullable: true
-      required:
-        - id
-      properties:
-        id:
-          type: string
-        description:
-          type: string
-          nullable: true
-        type:
-          type: string
-          nullable: true
-          enum:
-            - point
-            - line
-            - polygon
-            - solid
-            - geometry
-            - raster
-            - model
-        attributes:
-          type: object
-          additionalProperties:
-            $ref: 'https://raw.githubusercontent.com/OAI/OpenAPI-Specification/master/schemas/v3.0/schema.json#/definitions/Schema'
-        sampleData:
-          $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml'
-  links:
-    type: array
-    nullable: true
-    items:
-      $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml'
-----
+^|B |The content of the request SHALL be based upon the OpenAPI 3.0 schema specified in <<req_core_style-md-success,requirement `/req/core/style-md-success`>>, but with all properties set to `nullable: true` (so that they can be deleted).
 |===
 
 [[rfc7396_quote]]
