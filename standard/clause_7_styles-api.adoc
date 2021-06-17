@@ -399,6 +399,7 @@ properties:
             - solid
             - geometry
             - raster
+            - model
         attributes:
           type: object
           additionalProperties:
@@ -755,6 +756,7 @@ properties:
             - solid
             - geometry
             - raster
+            - model
         attributes:
           type: object
           additionalProperties:
