@@ -195,11 +195,14 @@ properties:
           minItems: 1
           items:
             $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml'
+  default:
+    type: string
 ----
 ^|C |The `styles` member SHALL include one item for each style currently on the server.
 ^|D |The `id` member of each style SHALL be unique.
 ^|E |Each style SHALL have at least one link to a style encoding supported for the style (link relation type: `stylesheet`) with the `type` attribute stating the media type of the style encoding.
 ^|F |Each style SHALL have a link to the style metadata (link relation type: `describedby`) with the `type` attribute stating the media type of the metadata encoding.
+^|G |The `default` member SHALL, if provided, be the `id` of one of the styles in the `styles` array.
 |===
 
 #TODO: Currently the links to the thumbnails of a style are available only as part of the style metadata (see <<rec_core_style-md-preview,recommendation "/rec/core/style-md-preview">>). To display an overview of the styles with a thumbnail image, a client needs to send multiple requests, the first one for the list of styles and then a request for each style metadata to get the thumbnail links. Whether the preview should also be included for each style in the Styles resource should be discussed.#
@@ -217,6 +220,7 @@ properties:
 [source,JSON]
 ----
 {
+  "default": "topographic", 
   "styles": [
     {
       "id": "night",
@@ -412,6 +416,7 @@ properties:
             - vector
             - map
             - coverage
+            - model
         geometryType:
           type: string
           title: Geometry Type
@@ -598,6 +603,32 @@ Location: https://example.org/api/v1/styles/night
 ^|A |If the request to create a new style is syntactically valid, but the server assigns new identifiers based on information in the stylesheet and the server already has a style with the identifier stated in the stylesheet, a response with status code `409` SHOULD be returned.
 |===
 
+[[update_default_style]]
+===== Update the default style
+
+The PATCH operation on `{baseResource}/styles` updates the default style of the style collection.
+
+[[req_manage-styles_default-style-update]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/manage-styles/default-style-update*
+^|Condition |Server implements <<OAFeat-4,OGC API - Features - Part 4: Create, Replace, Update and Delete, Requirements Class "Update">>
+^|Condition |Server advertises support for media type `application/merge-patch+json` in the API definition for PATCH requests at `{baseResource}/styles`
+^|A |The server SHALL process PATCH requests with a content type `application/merge-patch+json` to such a resource endpoint as specified by <<rfc7396,RFC 7396 (JSON Merge Patch)>>.
+^|B |The content of the request SHALL be based upon the following OpenAPI 3.0 schema:
+
+[source,YAML]
+----
+type: object
+properties:
+  default:
+    type: string
+    nullable: true
+----
+|===
+
+A value `null` will remove the `default` member, i.e., there is no default style in the style collection. A value that is a valid style identifier in the collection will set that style as the default style. Otherwise an error will be returned.
+
 [[manage-styles_style-endpoint]]
 ==== Resource endpoints
 
@@ -641,14 +672,17 @@ Deleting a style also deletes the subordinate resources, i.e., the style metadat
 [[replace_style_metadata]]
 ==== Replace the metadata of a style
 
-The PUT operation on `{baseResource}/styles/{styleId}/metadata` replaces the metadata of the style with the id `styleId`. If no such style exists, an error is returned.
+Servers can support the PUT operation on `{baseResource}/styles/{styleId}/metadata` to replace the metadata of the style with the id `styleId`. If no such style exists, an error is returned.
 
-[[req_manage-styles_replace-style-md]]
+[[per_manage-styles_replace-style-md]]
 [width="90%",cols="2,6a"]
 |===
-^|*Requirement {counter:req-id}* |*/req/manage-styles/replace-style-md*
-^|> |The server SHALL accept style metadata based on the schema <<req_core_style-md-success,requirement /req/core/style-md-success, item B>> in all encodings supported by the API.
+^|*Requirement {counter:req-id}* |*/per/manage-styles/replace-style-md*
+^|A |The server MAY accept style metadata based on the schema <<req_core_style-md-success,requirement /req/core/style-md-success, item B>> in all encodings supported by the API.
+^|B |The server MAY ignore parts of the submitted metadata, in particular information that is managed by the server.
 |===
+
+For example, links of the link relation types `self` and `alternate` or the `stylesheets` array are in general automatically set by the server.
 
 [[update_style_metadata]]
 ==== Update the metadata of a style
