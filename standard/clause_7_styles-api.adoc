@@ -396,8 +396,10 @@ properties:
             - point
             - line
             - polygon
+            - solid
             - geometry
             - raster
+            - model
         attributes:
           type: object
           additionalProperties:
@@ -751,8 +753,10 @@ properties:
             - point
             - line
             - polygon
+            - solid
             - geometry
             - raster
+            - model
         attributes:
           type: object
           additionalProperties:
