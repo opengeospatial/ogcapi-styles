@@ -1023,10 +1023,10 @@ include::requirements/requirements_class_sld-10.adoc[]
 ^|A |Every POST or PUT operation of the server that accepts a stylesheet document as content SHALL support the media type `application/vnd.ogc.sld+xml;version=1.0`.
 |===
 
-[[req_sld-10_content]]
+[[req_sld-10_valid]]
 [width="90%",cols="2,6a"]
 |===
-^|*Requirement {counter:req-id}* |*/req/sld-10/content*
+^|*Requirement {counter:req-id}* |*/req/sld-10/valid*
 ^|A |Every POST or PUT operation of the server that accepts a stylesheet document as content SHALL accept valid OGC SLD 1.0 documents without errors.
 |===
 
@@ -1038,23 +1038,36 @@ The list of operations in a server implementing all conformance classes of this 
 [[sld10_content]]
 ==== Expected content in an SLD 1.0 document
 
-In accordance with the SLD 1.0 standard, the root element of every SLD 1.0 stylesheet will be a `StyledLayerDescriptor` element.
+[[req_sld10_root]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/sld10/root*
+^|A |In accordance with the SLD 1.0 standard, the root element of every SLD 1.0 stylesheet SHALL be a `StyledLayerDescriptor` element.
+|===
 
-The content of a stylesheet will typically depend on the `{baseResource}`:
+The content of a stylesheet document will typically depend on the `{baseResource}`:
 
-* If `{baseResource}` is a Landing Page of an API that publishes a dataset (i.e., it includes a Collections resource at `/collections`), the document will typically contain one or more `NamedLayer` elements with names corresponding to collection ids, each with a `UserStyle`. 
-* If `{baseResource}` is a Collection, the document will typically contain one `NamedLayer` element with the name corresponding to the collection id with a `UserStyle`.
-* If `{baseResource}` is a Landing Page of an API that publishes no dataset (i.e., it includes no Collections resource at `/collections`), the document will typically contain one or more `NamedLayer` or `UserLayer` elements, each with a `UserStyle`.
+[[rec_sld10_content]]
+[width="90%",cols="2,6a"]
+|===
+^|*Recommendation {counter:rec-id}* |*/rec/sld10/content*
+^|A |If `{baseResource}` is a Landing Page of an API that publishes a dataset (i.e., it includes a Collections resource at `/collections`), the document SHOULD contain one or more `NamedLayer` elements with names corresponding to collection ids, each with a `UserStyle`. 
+^|B |If `{baseResource}` is a Collection, the document SHOULD contain one `NamedLayer` element with the name corresponding to the collection id with a `UserStyle`.
+^|C |If `{baseResource}` is a Landing Page of an API that publishes no dataset (i.e., it includes no Collections resource at `/collections`), the document SHOULD contain one or more `NamedLayer` or `UserLayer` elements, each with a `UserStyle`.
+|===
 
-If a `UserStyle` has a name, it will typically correspond to the style id, but the name is not relevant.
+[[rec_sld10_style-names]]
+[width="90%",cols="2,6a"]
+|===
+^|*Recommendation {counter:rec-id}* |*/rec/sld10/style-names*
+^|A |If a `UserStyle` has a name, it SHOULD correspond to the style id, but the name is not relevant for the processing of the style.
+^|B |If a `UserStyle` has `FeatureTypeStyle` elements with a name, the name SHOULD correspond to the collection id.
+^|C |If a `NamedLayer` has a `Name` and a `FeatureTypeStyle` with a `FeatureTypeName`, both SHOULD be consistent. 
+|===
 
-If a `UserStyle` has `FeatureTypeStyle` elements with a name, the name will typically correspond to the collection id.
-
-If the `NamedLayer` has a `Name` and a `FeatureTypeStyle` with a `FeatureTypeName`, both should be consistent. Clients should be prepared to understand either of them, with the more specific `FeatureTypeName` taking priority (as in some cases the `Name` of the `NamedLayer` may refer to a particular symbolization, e.g. casing or center line).
+In the case of a `NamedLayer` with a `Name` and a `FeatureTypeStyle` with a `FeatureTypeName`, clients should be prepared to understand either of them, with the more specific `FeatureTypeName` taking priority (as in some cases the `Name` of the `NamedLayer` may refer to a particular symbolization, e.g. casing or center line).
 
 If there are multiple `UserStyle` elements in a layer, clients should use the style with a name that matches the style id, if there is one. Otherwise they should pick any of the styles.
-
-NOTE: This is a starting point for discussion and this may be converted into requirements and recommendations. See also [Issue 24](https://github.com/opengeospatial/ogcapi-styles/issues/24).
 
 [[rc_sld-11]]
 === Requirements Class "OGC SLD 1.1"
@@ -1068,10 +1081,10 @@ include::requirements/requirements_class_sld-11.adoc[]
 ^|A |Every POST or PUT operation of the server that accepts a stylesheet document as content SHALL support the media type `application/vnd.ogc.sld+xml;version=1.1`.
 |===
 
-[[req_sld-11_content]]
+[[req_sld-11_valid]]
 [width="90%",cols="2,6a"]
 |===
-^|*Requirement {counter:req-id}* |*/req/sld-11/content*
+^|*Requirement {counter:req-id}* |*/req/sld-11/valid*
 ^|A |Every POST or PUT operation of the server that accepts a stylesheet document as content SHALL accept valid OGC SLD 1.1 documents without errors.
 |===
 
