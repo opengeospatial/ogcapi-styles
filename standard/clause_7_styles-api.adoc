@@ -203,9 +203,11 @@ properties:
 ^|E |Each style SHALL have at least one link to a style encoding supported for the style (link relation type: `stylesheet`) with the `type` attribute stating the media type of the style encoding.
 ^|F |Each style SHALL have a link to the style metadata (link relation type: `describedby`) with the `type` attribute stating the media type of the metadata encoding.
 ^|G |The `default` member SHALL, if provided, be the `id` of one of the styles in the `styles` array.
+^|H |If a `tag` link to a URI for the schema of the data is available for a style in the style metadata (see <<rec_core_style-md-tag>>), a link with the link relation type `tag` SHALL also be provided in the Styles resource.
+^|I |If a thumbnail is available for a style in the style metadata (see <<rec_core_style-md-preview>>), a link with the link relation type `preview` SHALL also be provided in the Styles resource. 
 |===
 
-#TODO: Currently the links to the thumbnails of a style are available only as part of the style metadata (see <<rec_core_style-md-preview,recommendation "/rec/core/style-md-preview">>). To display an overview of the styles with a thumbnail image, a client needs to send multiple requests, the first one for the list of styles and then a request for each style metadata to get the thumbnail links. Whether the preview should also be included for each style in the Styles resource should be discussed.#
+The `tag` and `preview` links are also part of the style metadata. If available, they have to be included for a style in the Styles resource, too, so that clients have access to this information without the need to send requests for all style metadata resources.
 
 [[rec_core_style-title]]
 [width="90%",cols="2,6a"]
@@ -240,6 +242,15 @@ properties:
           "href": "https://example.com/api/v1/styles/night/metadata?f=json",
           "type": "application/json",
           "rel": "describedby"
+        },
+        {
+          "href": "https://registry.example.com/data/schemas/tds/6.1",
+          "rel": "tag"
+        },
+        {
+          "href": "https://example.com/api/v1/resources/night-thumbnail.png",
+          "type": "image/png",
+          "rel": "preview"
         }
       ]
     },
@@ -261,6 +272,15 @@ properties:
           "href": "https://example.com/api/v1/styles/topographic/metadata?f=json",
           "type": "application/json",
           "rel": "describedby"
+        },
+        {
+          "href": "https://registry.example.com/data/schemas/tds/6.1",
+          "rel": "tag"
+        },
+        {
+          "href": "https://example.com/api/v1/resources/topographic-thumbnail.png",
+          "type": "image/png",
+          "rel": "preview"
         }
       ]
     }
@@ -459,6 +479,19 @@ properties:
 
 #TODO: Add guidance for links to coverage data?#
 
+[[rec_core_style-md-tag]]
+[width="90%",cols="2,6a"]
+|===
+^|*Recommendation {counter:rec-id}* |*/rec/core/style-md-tag*
+^|A |If a style can be used to style multiple geospatial datasets that implement a common schema and where a canonical URI exists for the schema, a link with the link relation type `tag` SHOULD be provided. 
+|===
+
+The `tag` links indicate to clients that the style is suitable for styling any dataset distribution that conforms to the schema identified by the target URI.
+
+Clients that are familiar with the schema that is identified in a `tag` link will in general have no need for the information in the `layers` member, because the layer.
+
+NOTE: It has been proposed to register URIs for commonly used schemas in the http://www.opengis.net/def[OGC Definition Server].
+
 [[rec_core_style-md-preview]]
 [width="90%",cols="2,6a"]
 |===
@@ -554,6 +587,10 @@ The thumbnail may be an image that is published as a resource in the API. The th
       "rel": "preview",
       "type": "image/png",
       "title": "thumbnail of the night style applied to OSM data from Daraa, Syria"
+    },
+    {
+      "href": "https://registry.example.com/data/schemas/tds/6.1",
+      "rel": "tag"
     }
   ]
 }
