@@ -20,7 +20,7 @@ Typical base resources are:
 
 === Resources referenced from styles
 
-Stylesheets often reference external resources, especially symbols and fonts to be used in the rendering process. Symbols are either managed as a single file for each symbol or they are organized in a sprite. In a sprite, all symbols are combined into a single bitmap image to reduce memory and the number of http requests. 
+Stylesheets often reference external resources, especially symbols and fonts to be used in the rendering process. Symbols are either managed as a single file for each symbol or they are organized in a sprite. In a sprite, all symbols are combined into a single bitmap image to reduce memory and the number of http requests.
 
 Since these resources are referenced from stylesheets using a URI of the resource, the details where and how the resources are hosted are not important and this specification does not specify API building blocks for publishing such resources.
 
@@ -222,7 +222,7 @@ The `\http://www.opengis.net/def/rel/ogc/1.0/schema` and `preview` links are als
 [source,JSON]
 ----
 {
-  "default": "topographic", 
+  "default": "topographic",
   "styles": [
     {
       "id": "night",
@@ -424,7 +424,7 @@ properties:
       properties:
         id:
           type: string
-          title: Identifier 
+          title: Identifier
           description: a layer id, typically the same identifier used in the style to refer to the layer
         description:
           type: string
@@ -685,7 +685,7 @@ A value `null` will remove the `default` member, i.e., there is no default style
 [[replace_style]]
 ==== Replace a style
 
-#TODO: There are two options how to handle PUT on `{baseResource}/styles/{styleId}`, depending on whether the server supports automated derivation of stylesheets in other style encodings.# 
+#TODO: There are two options how to handle PUT on `{baseResource}/styles/{styleId}`, depending on whether the server supports automated derivation of stylesheets in other style encodings.#
 
 #1. The PUT request removes all existing stylesheets of the style. The submitted stylesheet is accepted as the new style definition. If the server supports automatic derivation of stylesheets in other style encodings, it will derive other stylesheets from the new style definition and add them to the style metadata.#
 
@@ -1064,10 +1064,10 @@ include::requirements/requirements_class_sld-10.adoc[]
 ^|A |Every POST or PUT operation of the server that accepts a stylesheet document as content SHALL support the media type `application/vnd.ogc.sld+xml;version=1.0`.
 |===
 
-[[req_sld-10_content]]
+[[req_sld-10_valid]]
 [width="90%",cols="2,6a"]
 |===
-^|*Requirement {counter:req-id}* |*/req/sld-10/content*
+^|*Requirement {counter:req-id}* |*/req/sld-10/valid*
 ^|A |Every POST or PUT operation of the server that accepts a stylesheet document as content SHALL accept valid OGC SLD 1.0 documents without errors.
 |===
 
@@ -1075,6 +1075,38 @@ The list of operations in a server implementing all conformance classes of this 
 
 * POST `{baseResource}/styles`
 * PUT `{baseResource}/styles/{styleId}`
+
+[[sld10_content]]
+==== Expected content in an SLD 1.0 document
+
+[[req_sld10_root]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/sld10/root*
+^|A |In accordance with the SLD 1.0 standard, the root element of every SLD 1.0 stylesheet SHALL be a `StyledLayerDescriptor` element.
+|===
+
+The content of a stylesheet document will typically depend on the `{baseResource}`:
+
+[[req_sld10_content]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/sld10/content*
+^|A |The document SHALL contain one or more `NamedLayer` or `UserLayer` elements, each with at least one `UserStyle`.
+^|B |If `{baseResource}` is a Collection or Landing Page of an API that publishes a dataset (i.e., it includes a Collections resource at `/collections`), names corresponding to collection ids SHALL be specified as the `FeatureTypeName` of a `FeatureTypeStyle` (for a feature collection) or as the `CoverageName` of a `CoverageStyle` (for a coverage), and/or as the `Name` of a NamedLayer (for compatibility with this alternate approach to associate styles with collections).
+|===
+
+[[rec_sld10_style-names]]
+[width="90%",cols="2,6a"]
+|===
+^|*Recommendation {counter:rec-id}* |*/rec/sld10/style-names*
+^|A |If a `UserStyle` has a name, it SHOULD correspond to the style id. The name is not relevant for the processing of the style, but may be assigned as the style id when posting a new style.
+^|B |The `UserStyle` SHOULD contain a `FeatureTypeStyle` element with a `FeatureTypeName`, or `CoverageStyle` element with a `CoverageName` corresponding to the collection id.
+|===
+
+In the case of a `NamedLayer` with both a `Name` and a `FeatureTypeStyle` with a `FeatureTypeName` (or a `CoverageStyle` with a `CoverageName`), clients should be prepared to understand either of them, with the more specific `FeatureTypeName` or `CoverageName` taking priority (as in some cases the `Name` of the `NamedLayer` may refer to a particular symbolization, e.g. casing or center line).
+
+If there are multiple `UserStyle` elements in a layer, clients should use the style with a name that matches the style id, if there is one. Otherwise they should pick any of the styles.
 
 [[rc_sld-11]]
 === Requirements Class "OGC SLD 1.1"
@@ -1088,10 +1120,10 @@ include::requirements/requirements_class_sld-11.adoc[]
 ^|A |Every POST or PUT operation of the server that accepts a stylesheet document as content SHALL support the media type `application/vnd.ogc.sld+xml;version=1.1`.
 |===
 
-[[req_sld-11_content]]
+[[req_sld-11_valid]]
 [width="90%",cols="2,6a"]
 |===
-^|*Requirement {counter:req-id}* |*/req/sld-11/content*
+^|*Requirement {counter:req-id}* |*/req/sld-11/valid*
 ^|A |Every POST or PUT operation of the server that accepts a stylesheet document as content SHALL accept valid OGC SLD 1.1 documents without errors.
 |===
 
@@ -1099,6 +1131,11 @@ The list of operations in a server implementing all conformance classes of this 
 
 * POST `{baseResource}/styles`
 * PUT `{baseResource}/styles/{styleId}`
+
+[[sld11_content]]
+==== Expected content in an SLD 1.1 document
+
+The same rules apply like for <<sld10_content,SLD 1.0 documents>>.
 
 [[rc_mapbox-styles]]
 === Requirements Class "Mapbox Style"
