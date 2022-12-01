@@ -434,21 +434,22 @@ properties:
           type: string
           title: Data Type
           description: the type of data represented in the layer
-          enum:
+          examples:
             - vector
             - map
             - coverage
             - model
-        geometryType:
-          type: string
-          title: Geometry Type
-          description: the geometry type of the features shown in this layer, if dataType is "vector"
+            - pointCloud
+            - mesh
+        geometryDimension:
+          type: integer
+          title: Geometry Dimension
+          description: 'the dimension of the geometries of the features shown in this layer, if dataType is "vector"; values are (0: points, 1: curves, 2: surfaces, 3: solids); the property will be absent, if the geometries have a mixed dimension or the dimension is unknown'
           enum:
-            - points
-            - lines
-            - polygons
-            - solids
-            - any
+            - 0
+            - 1
+            - 2
+            - 3
         propertiesSchema:
           type: object
           title: Attributes
