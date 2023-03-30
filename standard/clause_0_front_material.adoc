@@ -92,6 +92,7 @@ This is the list of submitters is from the Testbed-15 Engineering Report. Eventu
 
 The following organizations submitted this Document to the Open Geospatial Consortium (OGC):
 
+* CubeWerx Inc. (MariaDB)
 * Ecere Corporation
 * GeoSolutions
 * interactive instruments GmbH
@@ -111,4 +112,5 @@ All questions regarding this submission should be directed to the editor or the 
 |Jeff Harrison |US Army Geospatial Center (AGC)
 |Jérôme Jacovella-St-Louis |Ecere Corporation
 |Richard Kim |Reinventing Geospatial, Inc.
+|Panagiotis (Peter) A. Vretanos |Cubewerx Inc. (MariaDB)
 |===
