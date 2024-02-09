@@ -12,9 +12,10 @@ Servers:
 
 * [ldproxy, interactive instruments](https://demo.ldproxy.net/daraa)
 * [GeoServer, GeoSolutions](https://ows.geo-solutions.it/geoserver/ogc/styles)
-* [GNOSIS Map Server, Ecere](http://maps.ecere.com/geoapi/collections/vtp/Daraa2)
+* [GNOSIS Map Server, Ecere](https://maps.gnosis.earth/ogcapi/collections/Daraa/styles)
 * [CubeSERV, CubeWerx Inc.](https://test.cubewerx.com/cubewerx/cubeserv/demo/ogcapi/Daraa)
 
 Clients:
 
 * [GeoSolutions](https://testbed15.s3-eu-west-1.amazonaws.com/client/index.html)
+* [GNOSIS SDK / Cartographer, Ecere](https://ecere.ca/gnosis/)
