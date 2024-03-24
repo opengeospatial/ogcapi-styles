@@ -434,21 +434,22 @@ properties:
           type: string
           title: Data Type
           description: the type of data represented in the layer
-          enum:
+          examples:
             - vector
             - map
             - coverage
             - model
-        geometryType:
-          type: string
-          title: Geometry Type
-          description: the geometry type of the features shown in this layer, if dataType is "vector"
+            - pointCloud
+            - mesh
+        geometryDimension:
+          type: integer
+          title: Geometry Dimension
+          description: 'the dimension of the geometries of the features shown in this layer, if dataType is "vector"; values are (0: points, 1: curves, 2: surfaces, 3: solids); the property will be absent, if the geometries have a mixed dimension or the dimension is unknown'
           enum:
-            - points
-            - lines
-            - polygons
-            - solids
-            - any
+            - 0
+            - 1
+            - 2
+            - 3
         propertiesSchema:
           type: object
           title: Attributes
@@ -718,7 +719,7 @@ Servers can support the PUT operation on `{baseResource}/styles/{styleId}/metada
 [[per_manage-styles_replace-style-md]]
 [width="90%",cols="2,6a"]
 |===
-^|*Requirement {counter:req-id}* |*/per/manage-styles/replace-style-md*
+^|*Permission {counter:per-id}* |*/per/manage-styles/replace-style-md*
 ^|A |The server MAY accept style metadata based on the schema <<req_core_style-md-success,requirement /req/core/style-md-success, item B>> in all encodings supported by the API.
 ^|B |The server MAY ignore parts of the submitted metadata, in particular information that is managed by the server.
 |===
@@ -815,6 +816,32 @@ To remove the keywords, send:
 ----
 
 The same applies to `stylesheets`, `layers` and `links`. To update these members, the complete new array value has to be sent.
+
+==== Changes to a style with multiple occurrences in an API
+
+An OGC Web API can include multiple style resources with the same style identifier. 
+
+Example: An API can provide a style with identifier "night" for a dataset (path `/styles/night`) and for each collection (path template `/collections/{collectionId}/styles/night`). Typically, the style for a collection will not include rendering rules for the data in the other collections in the dataset.
+
+The behavior of an API how a change to one of style resources affects the style resources in the API with the same identier is not specified by this requirements class. Options include:
+
+* APIs may reject update or replace operations on selected style resources. For example, if the stylesheets for the collections are derived from the stylesheet for the dataset, the API can support only changes to the dataset style and provide the collection styles as derived, read-only styles. 
+* An API can implement create, update or replace operations for the collection styles so that the changes have the effect of adding, replacing or deleting the definition of the specified style as it pertains to the specified collection. E.g., after a DELETE of `/collections/foo/styles/night`, a future GET of `/collections/foo/styles/night` would return a 404 (Not Found) response, whereas a future GET of `/styles/night` would return a style definition that lacks any mention of collection `foo`.
+* An API can implement create, update or replace operations for the collection styles so that all changes to one style resource have no effect on other style resources including those with the same idetifier.
+
+[[per_manage-styles_styles-with-same-id]]
+[width="90%",cols="2,6a"]
+|===
+^|*Permission {counter:per-id}* |*/per/manage-styles/styles-with-same-id*
+^|A |Changes to a style MAY or MAY NOT change other style resources in the API with the same style identifier.
+|===
+
+[[rec_manage-styles_doc-styles-with-same-id]]
+[width="90%",cols="2,6a"]
+|===
+^|*Recommendation {counter:rec-id}* |*/rec/manage-styles/doc-styles-with-same-id*
+^|A |If the API includes multiple style resources with the same style identifier, the API documentation SHOULD specify how changes to one of the style resource will affect the other style resources with the same identifier.
+|===
 
 [[rc_style-validation]]
 === Requirements Class "Validation of styles"
