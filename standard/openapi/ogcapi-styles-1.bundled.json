@@ -2185,6 +2185,7 @@
                         "format": "date-time"
                       },
                       "aiAssistance": {
+                        "title": "AI assistance acknowledgement",
                         "description": "Acknowledgement of the use of AI assistance to generate the style",
                         "type": "string"
                       },
