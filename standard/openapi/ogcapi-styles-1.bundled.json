@@ -2014,7 +2014,6 @@
               "properties": {
                 "styles": {
                   "type": "array",
-                  "nullable": true,
                   "items": {
                     "type": "object",
                     "required": [
@@ -2048,9 +2047,7 @@
                       },
                       "attributionMediaType": {
                         "title": "Media type of the attribution",
-                        "description": {
-                          "Media type for the markup language of the attribution": "It can be either plain text (`text/plain`), HTML (`text/html`) or https://commonmark.org/[CommonMark] (`text/markdown`)."
-                        },
+                        "description": "Media type for the markup language of the attribution: It can be either plain text (`text/plain`), HTML (`text/html`) or https://commonmark.org/[CommonMark] (`text/markdown`).",
                         "enum": [
                           "text/plain",
                           "text/html",
@@ -2197,55 +2194,47 @@
                         "description": "Versioning information for this style, in the form of semantic versioning (major.minor.patch) string."
                       }
                     }
-                  },
-                  "example": [
-                    {
-                      "id": "night",
-                      "title": "Topographic night style",
-                      "links": [
-                        {
-                          "href": "https://example.com/api/1.0/styles/night?f=mapbox",
-                          "type": "application/vnd.mapbox.style+json",
-                          "rel": "stylesheet"
-                        },
-                        {
-                          "href": "https://example.com/api/1.0/styles/night?f=sld10",
-                          "type": "application/vnd.ogc.sld+xml;version=1.0",
-                          "rel": "stylesheet"
-                        },
-                        {
-                          "href": "https://example.com/api/1.0/styles/night/metadata?f=json",
-                          "type": "application/json",
-                          "rel": "describedBy"
-                        }
-                      ]
-                    },
-                    {
-                      "id": "topographic",
-                      "title": "Regular topographic style",
-                      "links": [
-                        {
-                          "href": "https://example.com/api/1.0/styles/topographic?f=mapbox",
-                          "type": "application/vnd.mapbox.style+json",
-                          "rel": "stylesheet"
-                        },
-                        {
-                          "href": "https://example.com/api/1.0/styles/topographic?f=sld10",
-                          "type": "application/vnd.ogc.sld+xml;version=1.0",
-                          "rel": "stylesheet"
-                        },
-                        {
-                          "href": "https://example.com/api/1.0/styles/topographic/metadata?f=json",
-                          "type": "application/json",
-                          "rel": "describedBy"
-                        }
-                      ]
-                    }
-                  ]
+                  }
                 },
                 "default": {
                   "type": "string"
                 }
+              },
+              "example": {
+                "styles": [
+                  {
+                    "id": "night",
+                    "title": "Topographic night style",
+                    "links": [
+                      {
+                        "href": "https://example.com/api/1.0/styles/night?f=mapbox",
+                        "type": "application/vnd.mapbox.style+json",
+                        "rel": "stylesheet"
+                      },
+                      {
+                        "href": "https://example.com/api/1.0/styles/night?f=sld10",
+                        "type": "application/vnd.ogc.sld+xml;version=1.0",
+                        "rel": "stylesheet"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "topographic",
+                    "title": "Regular topographic style",
+                    "links": [
+                      {
+                        "href": "https://example.com/api/1.0/styles/topographic?f=mapbox",
+                        "type": "application/vnd.mapbox.style+json",
+                        "rel": "stylesheet"
+                      },
+                      {
+                        "href": "https://example.com/api/1.0/styles/topographic?f=sld10",
+                        "type": "application/vnd.ogc.sld+xml;version=1.0",
+                        "rel": "stylesheet"
+                      }
+                    ]
+                  }
+                ]
               }
             }
           },
