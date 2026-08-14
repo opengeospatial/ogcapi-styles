@@ -1,0 +1,20 @@
+get:
+   tags:
+     - Styles
+   summary: Retrieve a style for a specified collection
+   operationId: .collection.getStyle
+   parameters:
+     - $ref: '../../parameters/common-geodata/collectionId-all.yaml'
+     - $ref: '../../parameters/styles-core/styleId-collection.yaml'
+     - $ref: '../../parameters/unspecified/f-style.yaml'
+   responses:
+     '200':
+       $ref: '../../responses/styles-core/rStyle.yaml'
+     '204':
+       $ref: '../../responses/styles-core/rEmptyStyle.yaml'
+     '404':
+       $ref: '../../responses/common-core/rNotFound.yaml'
+     '406':
+       $ref: '../../responses/common-core/rNotAcceptable.yaml'
+     '500':
+       $ref: '../../responses/common-core/rServerError.yaml'

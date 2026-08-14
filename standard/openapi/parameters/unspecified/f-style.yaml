@@ -1,0 +1,13 @@
+name: f
+in: query
+description: The format of the style response (e.g. CartoSym-CSS). Accepted values are 'sld', 'mbgl', 'cscss' or 'csjson'
+required: false
+schema:
+  type: string
+  enum:
+    - sld
+    - mbgl
+    - cscss
+    - csjson
+style: form
+explode: false

@@ -1,0 +1,152 @@
+type: object
+required:
+  - id
+  - links
+properties:
+  id:
+    type: string
+    title: Identifier of the style
+    description: Identifier of the style, for example, used in URI path parameters.
+    minLength: 1
+    example: dem
+  title:
+    type: string
+    title: Title of the style
+    description: A short, human-readable summary of the style.
+    example: Digital Elevation Model
+  description:
+    type: string
+    title: Description of the style
+    description: A human-readable explanation about the style.
+    example: A Digital Elevation Model.
+  attribution:
+    type: string
+    title: Attribution for the style
+    description: |-
+     Attribution for the style, providing a way to identify the source, which can contain markup text whose format may be indicated in the `attributionMediaType` property. That format can be either plain text (`text/plain`), HTML (`text/html`) or https://commonmark.org/[CommonMark] (`text/markdown`).
+     If the 'attributionMediaType' indicates something other than `text/plain`, the `attribution` element string should be interpreted by a markup parser selected based on that media type to be presented to the user
+     (e.g., `text/markdown` will be parsed by a library supporting CommonMark). By allowing markup, the attribution string can import images (e.g., organization logos) and format the text (e.g., the name of the organization in italics).
+  attributionMediaType:
+    title: Media type of the attribution
+    description:
+     Media type for the markup language of the attribution: It can be either plain text (`text/plain`), HTML (`text/html`) or https://commonmark.org/[CommonMark] (`text/markdown`).
+    enum:
+    - text/plain
+    - text/html
+    - text/markdown
+  accessConstraints:
+    title: Access Constraints of the style
+    description: |-
+       Restrictions on the availability of style that the user needs to be aware of before using or redistributing it:
+       * unclassified: Available for general disclosure
+       * restricted: Not for general disclosure
+       * confidential: Available for someone who can be entrusted with information
+       * secret: Kept or meant to be kept private, unknown, or hidden from all but a select group of people
+       * topSecret: Of the highest secrecy
+    enum:
+    - unclassified
+    - restricted
+    - confidential
+    - secret
+    - topSecret
+  publisher:
+    type: string
+    title: Responsible party publishing the style
+    description: Organization or individual responsible for making the data available
+  contacts:
+    type: array
+    title: A list of contacts
+    description:
+      A list of contacts qualified by their role(s) in association to the style.
+    minItems: 1
+    items:
+      $ref: '../records-core/contact.yaml'
+  license:
+    type: string
+    title: License associated to the style
+    description: The legal provisions under which the data of this style is made available.
+  rights:
+    type: string
+    title: Rights over the style
+    description: A statement that concerns all rights not addressed by the license such as a copyright statement.
+  formats:
+    title: Formats for distributing the style
+    description: A list of formats in which the data of this style is distributed
+    type: array
+    items:
+      $ref: '../records-core/format.yaml'
+  keywords:
+    type: array
+    title: Keywords representing aspects of the style
+    description: The topic or topics of the resource. Typically represented using free-form keywords, tags, key phrases, or classification codes.
+    items:
+      type: string
+  themes:
+    type: array
+    title: Themes represented by the resource
+    description:
+      A knowledge organization system used to classify the resource.
+    minItems: 1
+    items:
+      $ref: '../records-core/theme.yaml'
+  resourceLanguages:
+    type: array
+    title: The list of languages of the style
+    description: The list of languages in which the data of this style is available.
+    items:
+      $ref: '../records-core/language.yaml'
+  links:
+    type: array
+    title: Links relevant to this style
+    description: Links to this or other resources related to this style.
+    example:
+      - href: http://data.example.org/styles/night?f=sld10
+        rel: stylesheet
+        type: application/vnd.ogc.sld+xml;version=1.0
+        title: Night style
+    items:
+      $ref: '../common-core/link.yaml'
+  featureTypes:
+    title: Feature type(s) used by the style
+    description: The list of feature (or coverage) type(s) which are used inside the style. This is useful for associating the relevant portrayal rules of the style with data.
+    type: string
+  geoDataClasses:
+    title: Classes of data for which the style is suitable
+    description: 'One or more classes of geospatial data, identified by a URI, which implies compatibility with a particular schema (fields/properties, as defined in OGC API - Common - Part 3: Schemas) for one or more collections, each with particular semantic definitions and data types. This is useful for example to determine compatibility with styles or processes, or to identify a particular collection within a dataset based on semantics.'
+    type: array
+    items:
+      type: string
+      format: uri
+  minScaleDenominator:
+    title: Minimum scale denominator for the style
+    description: Minimum scale denominator for usage of the style.
+    type: number
+  maxScaleDenominator:
+    title: Maximum scale denominator for the style
+    description: Maximum scale denominator for usage of the style.
+    type: number
+  minCellSize:
+    title: Minimum cell size for the style
+    description: Minimum cell size for usage of the style, in degrees of latitude for data referenced to Earth.
+    type: number
+  maxCellSize:
+    title: Maximum cell size for the style
+    description: Maximum cell size for usage of the style, in degrees of latitude for data referenced to Earth.
+    type: number
+  created:
+    title: Timestamp when the style was first produced
+    description: Timestamp indicating when the style was first produced.
+    type: string
+    format: date-time
+  updated:
+    title: Timestamp of the last change/revision to the style
+    description: Timestamp of the last change/revision to the style.
+    type: string
+    format: date-time
+  aiAssistance:
+    description: Acknowledgement of the use of AI assistance to generate the style
+    type: string
+  version:
+    title: Semantic versioning string
+    type: string
+    description: Versioning information for this style, in the form of semantic versioning (major.minor.patch) string.

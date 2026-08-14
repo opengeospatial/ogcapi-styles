@@ -1,0 +1,17 @@
+description: A style sheet
+content:
+  application/vnd.ogc.sld+xml;version=1.0:
+    schema:
+      type: string
+  application/vnd.ogc.sld+xml;version=1.1:
+    schema:
+      type: string
+  application/vnd.mapbox.style+json:
+    schema:
+      type: object
+  application/vnd.ogc.cartosym+json:
+    schema:
+      type: object
+  application/vnd.ogc.cartosymcss:
+    schema:
+      type: string

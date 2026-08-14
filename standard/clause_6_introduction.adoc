@@ -8,7 +8,7 @@ This document specifies API building blocks for Web APIs to manage and fetch sty
 The Styles API supports several types of consumers, mainly:
 
 * Visual style editors that create, update and delete styles for datasets that are shared by other Web APIs implementing the OGC API - Features - Part 1: Core standard or the draft OGC API - Coverages or draft OGC API - Tiles specifications;
-* Web APIs implementing the draft OGC API - Maps specification fetch styles and render spatial data (features or coverages) on the server;
+* Web APIs implementing the OGC API - Maps Standard fetch styles and render spatial data (features or coverages) on the server;
 * Map clients that fetch styles and render spatial data (features or coverages) on the client.
 
 Feature data is either accessed directly or organized into spatial partitions such as a tiled data store (aka "vector tiles").
@@ -89,11 +89,11 @@ The process is quite similar to the previous example with the following changes:
 * If the style metadata within the style sheet itself, or included in the entry for the style at `/styles`,  includes links to sample data (e.g., `http://example.org/data-api/collections/TransportationGroundCrv`), the editor may use that data for sample visualizations and perhaps to determine changes to queryables. The user may also select other data sources for these purposes.
 * Since an existing style is replaced, the style definition will always be updated with a PUT request to `http://example.org/styles-api/styles/{styleId}` (no POST request to `http://example.org/styles-api/styles`, which would create a new style).
 
-==== A Web API implementing OGC API - Maps
+==== A Web API implementing OGC API - Maps and OGC API - Tiles
 
-A Web API that implements the conformance class "Map tilesets" of the OGC API Maps specification returns geo-referenced bitmap images showing maps.
+A Web API that implements the conformance class "Map tilesets" of the OGC API - Maps specification returns geo-referenced bitmap images showing maps.
 The URI template for the map tiles is `/collections/{collectionId}/styles/{styleId}/map/tiles/{tileMatrixSetId}/{tileMatrix}/{tileRow}/{tileCol}`.
-If a client requests a map tile for the collection `TransportationGroundCrv` the API will use the style `{styleId}` to render the map. 
+If a client requests a map tile for the collection `TransportationGroundCrv` the API will use the style `{styleId}` to render the map.
 
 [[styles-api]]
 ==== API building blocks for styles
@@ -150,3 +150,13 @@ The client will select the stylesheet that fits best based on its capabilities a
 This standard does not specify any sub-resource of a Style resource.
 APIs and other specification may specify sub-resources of a Style resource.
 For example, a Map sub-resource could be provided that returns map representations of the base resource rendered using the style.
+
+[[uml-model]]
+=== UML Class Diagram
+
+The following UML class diagram describes the data model for the list of styles that can be retrieved from `/styles` and/or `/collections/{collectionId}/styles`.
+
+[[metadata-model]]
+[#img_uml_model='{figure-caption} {counter:figure-num}']
+.UML class diagram describing the list of styles and style metadata
+image::xmi-images/EAID_F5A70E37_A940_4193_8ED2_90B5E0173E3F.png[width=800,align="center"]

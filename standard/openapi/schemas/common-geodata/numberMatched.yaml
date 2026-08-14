@@ -1,0 +1,6 @@
+title: The total number of elements matched for the request
+description: The total number of elements (including any subsequent pages) for the request that match the selection parameters like `bbox`.
+  A server may omit this information, if the information about the number of elements is not known or difficult to compute.
+type: integer
+minimum: 0
+example: 127

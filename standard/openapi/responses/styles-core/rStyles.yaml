@@ -1,0 +1,8 @@
+description: The list of styles available.
+content:
+  application/json:
+    schema:
+      $ref: '../../schemas/styles-core/styles.yaml'
+  text/html:
+    schema:
+      type: string

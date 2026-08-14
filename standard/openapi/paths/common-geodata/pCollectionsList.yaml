@@ -1,0 +1,10 @@
+get:
+   tags:
+     - Data Collections
+   operationId: getCollectionsList
+   summary: Retrieve the list of geospatial data collections available from this service.
+   parameters:
+     - $ref: '../../parameters/unspecified/f-metadata.yaml'
+   responses:
+     '200':
+       $ref: '../../responses/common-geodata/rCollectionsList.yaml'

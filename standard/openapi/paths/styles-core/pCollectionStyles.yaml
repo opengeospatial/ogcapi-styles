@@ -1,0 +1,15 @@
+get:
+   tags:
+     - Styles
+   summary: Retrieve a style for the specified collection
+   operationId: .collection.getStyles
+   parameters:
+     - $ref: '../../parameters/common-geodata/collectionId-all.yaml'
+     - $ref: '../../parameters/unspecified/f-metadata.yaml'
+   responses:
+     '200':
+       $ref: '../../responses/styles-core/rStyles.yaml'
+     '406':
+       $ref: '../../responses/common-core/rNotAcceptable.yaml'
+     '500':
+       $ref: '../../responses/common-core/rServerError.yaml'

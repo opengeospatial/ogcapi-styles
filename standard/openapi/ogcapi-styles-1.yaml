@@ -1,0 +1,159 @@
+openapi: 3.0.0
+info:
+   version: '1.0'
+   title: OGC API - Styles
+   description: |-
+      Example API Definition for OGC API - Styles - Part 1: Core
+   contact:
+      name: Open Geospatial Consortium
+      url: https://ogc.org
+      email: info@ogc.org
+   license:
+      name: OGC License
+      url: http://www.opengeospatial.org/legal/
+servers:
+   - description: Example OGC API - Styles server
+     url: https://maps.gnosis.earth/ogcapi
+paths:
+   # OGC API - Common - Part 1: Core
+   /:
+      $ref: 'paths/common-core/pLandingPage.yaml'
+   /conformance:
+      $ref: 'paths/common-core/pConformance.yaml'
+   /api:
+      $ref: 'paths/common-core/pAPI.yaml'
+
+   # Dynamic enumeration of resources specific to this implementation
+   /api/all-collections:
+      $ref: 'paths/dynamic/pAllCollections.yaml'
+   /api/styles:
+      $ref: 'paths/dynamic/pStyles.yaml'
+
+   # OGC API - Common - Part 2: Geospatial data
+   /collections:
+      $ref: 'paths/common-geodata/pCollectionsList.yaml'
+   /collections/{collectionId}:
+      $ref: 'paths/common-geodata/pCollection.yaml'
+
+   # OGC API - Styles - Part 1: Core
+   /styles:
+      $ref: 'paths/styles-core/pStyles.yaml'
+
+   /styles/{styleId}:
+      $ref: 'paths/styles-core/pStyle.yaml'
+
+   /collections/{collectionId}/styles:
+      $ref: 'paths/styles-core/pCollectionStyles.yaml'
+
+   /collections/{collectionId}/styles/{styleId}:
+      $ref: 'paths/styles-core/pCollectionStyle.yaml'
+
+components:
+   schemas:
+      # Common - Core
+      confClasses:
+         $ref: 'schemas/common-core/confClasses.yaml'
+      link:
+         $ref: 'schemas/common-core/link.yaml'
+      landingPage:
+         $ref: 'schemas/common-core/landingPage.yaml'
+      exception:
+         $ref: 'schemas/common-core/exception.yaml'
+
+      # Common - Geospatial Data
+      collections:
+         $ref: 'schemas/common-geodata/collections.yaml'
+      extent:
+         $ref: 'schemas/common-geodata/extent.yaml'
+      dataType:
+         $ref: 'schemas/common-geodata/dataType.yaml'
+      timeStamp:
+         $ref: 'schemas/common-geodata/timeStamp.yaml'
+      # projJSON:
+      #   $ref: 'schemas/common-geodata/projJSON.yaml'
+      numberReturned:
+         $ref: 'schemas/common-geodata/numberReturned.yaml'
+      numberMatched:
+         $ref: 'schemas/common-geodata/numberMatched.yaml'
+
+      # Common - Schemas
+      #jsonSchema:
+      #   $ref: 'schemas/common-schemas/schema.yaml'
+
+      # Dynamic (or implementation-specific)
+      enumeration:
+         $ref: 'schemas/dynamic/enumeration.yaml'
+      all-collections:
+         $ref: 'schemas/dynamic/all-collections.yaml'
+      styles:
+         $ref: 'schemas/dynamic/styles.yaml'
+
+      # Records - Core
+      contact:
+         $ref: 'schemas/records-core/contact.yaml'
+      contact-roles:
+         $ref: 'schemas/records-core/roles.yaml'
+      format:
+         $ref: 'schemas/records-core/format.yaml'
+      language:
+         $ref: 'schemas/records-core/language.yaml'
+      theme:
+         $ref: 'schemas/records-core/theme.yaml'
+
+   parameters:
+      # Common - Core
+      f-metadata:
+         $ref: 'parameters/unspecified/f-metadata.yaml'
+
+      # Common - Geospatial data
+      collectionId-all:
+         $ref: 'parameters/common-geodata/collectionId-all.yaml'
+
+      # Styles - Core
+      styleId:
+         $ref: 'parameters/styles-core/styleId.yaml'
+      styleId-collection:
+         $ref: 'parameters/styles-core/styleId-collection.yaml'
+
+      # Styles - Core (unspecified)
+      f-style:
+         $ref: 'parameters/unspecified/f-style.yaml'
+
+   responses:
+      # Generic Errors
+      NotFound:
+         $ref: 'responses/common-core/rNotFound.yaml'
+      NotAcceptable:
+         $ref: 'responses/common-core/rNotAcceptable.yaml'
+      ServerError:
+         $ref: 'responses/common-core/rServerError.yaml'
+      InvalidParameter:
+         $ref: 'responses/common-core/rInvalidParameter.yaml'
+      Exception:
+         $ref: 'responses/common-core/rException.yaml'
+
+      # Common - Core
+      LandingPage:
+         $ref: 'responses/common-core/rLandingPage.yaml'
+      Conformance:
+         $ref: 'responses/common-core/rConformance.yaml'
+      API:
+         $ref: 'responses/common-core/rAPI.yaml'
+
+      # Dynamic enumeration of resources specific to this implementation
+      Enumeration:
+         $ref: 'responses/dynamic/rEnumeration.yaml'
+
+      # Common - Geospatial Data
+      CollectionsList:
+         $ref: 'responses/common-geodata/rCollectionsList.yaml'
+      Collection:
+         $ref: 'responses/common-geodata/rCollection.yaml'
+
+      # Styles - Core
+      StylesList:
+         $ref: 'responses/styles-core/rStyles.yaml'
+      Style:
+         $ref: 'responses/styles-core/rStyle.yaml'
+      EmptyStyle:
+         $ref: 'responses/styles-core/rEmptyStyle.yaml'

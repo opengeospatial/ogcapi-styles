@@ -98,6 +98,8 @@ The following is an example of the conformance declaration of an API that implem
 
 This operation returns a list of styles that are currently available for the base resource.
 
+A description of each style can be included in each element of this list, as detailed in the <<uml-model>>.
+
 [[req_core_styles-op]]
 [width="90%",cols="2,6a"]
 |===
@@ -106,67 +108,33 @@ This operation returns a list of styles that are currently available for the bas
 |===
 
 [[req_core_styles-success]]
-[width="90%",cols="2,6a"]
-|===
-^|*Requirement {counter:req-id}* |*/req/core/styles-success*
-^|A |A successful execution of the operation SHALL be reported as a response with an HTTP status code `200`.
-^|B |The content of that response SHALL be based upon the following OpenAPI 3.0 schema:
+[width="90%",cols="2,6a",separator="!"]
+!===
+^!*Requirement {counter:req-id}* !*/req/core/styles-success*
+^!A !A successful execution of the operation SHALL be reported as a response with an HTTP status code `200`.
+^!B a!The content of that response SHALL be based upon the https://github.com/opengeospatial/ogcapi-styles/blob/master/standard/openapi/schemas/styles-core/styles.yaml[styles.yaml OpenAPI 3.0 schema]:
 
+.styles.yaml
+[source,yaml]
+----
+include::openapi/schemas/styles-core/styles.yaml[]
+----
+
+.styleDescription.yaml
 [source,YAML]
 ----
-type: object
-required:
-  - styles
-properties:
-  styles:
-    type: array
-    items:
-      type: object
-      required:
-        - id
-        - links
-      properties:
-        id:
-          type: string
-        title:
-          type: string
-        description:
-          type: string
-        keywords:
-          type: string
-        attribution:
-          type: string
-        geoDataClasses:
-          type: array
-          items:
-            type: string
-            format: uri
-        pointOfContact:
-          type: string
-        aiAssistance:
-          description: Acknowledgement of the use of AI assistance to generate the style
-          type: string
-        license:
-          type: string
-        version:
-          type: string
-        links:
-          type: array
-          minItems: 1
-          items:
-            $ref: 'http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/schemas/link.yaml'
-  default:
-    type: string
+include::openapi/schemas/styles-core/styleDescription.yaml[]
 ----
-^|C |The `styles` member SHALL include one item for each style currently on the server.
-^|D |The `id` member of each style SHALL be unique.
-^|E |Each style SHALL have at least one link to a style encoding supported for the style (link relation type: `stylesheet`) with the `type` attribute stating the media type of the style encoding.
-^|F |The `default` member SHALL, if provided, be the `id` of one of the styles in the `styles` array.
-^|G |If one or more GeoDataClass is registered for the data for which the style is intended, a URI to each of these GeoDataClasses SHALL be included in the
+
+^!C !The `styles` member SHALL include one item for each style currently on the server.
+^!D !The `id` member of each style SHALL be unique.
+^!E !Each style SHALL have at least one link to a style encoding supported for the style (link relation type: `stylesheet`) with the `type` attribute stating the media type of the style encoding.
+^!F !The `default` member SHALL, if provided, be the `id` of one of the styles in the `styles` array.
+^!G !If one or more GeoDataClass is registered for the data for which the style is intended, a URI to each of these GeoDataClasses SHALL be included in the
 `geoDataClasses` array of the corresponding element of the Styles resource.
 The GeoDataClass definition would specify the logical schema for each feature type present within that GeoDataClass.
-^|H |If a thumbnail is available for a style in the style metadata, a link with the link relation type `preview` SHALL be provided in the Styles resource.
-|===
+^!H !If a thumbnail is available for a style in the style metadata, a link with the link relation type `preview` SHALL be provided in the Styles resource.
+!===
 
 The metadata, including the links to the GeoDataClasses and previews, should also be embedded within the representation of the style, if that is supported by the style encoding.
 Also including this metadata in the Styles resource provide clients access to this information without the need to send requests for each all style resource for discovering
