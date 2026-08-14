@@ -108,7 +108,7 @@ The PATCH operation on `{baseResource}/styles` updates the default style of the 
 ^|A |The server SHALL process PATCH requests with a content type `application/merge-patch+json` to such a resource endpoint as specified by <<rfc7396,RFC 7396 (JSON Merge Patch)>>.
 ^|B |The content of the request SHALL be based upon the following OpenAPI 3.0 schema:
 
-[source,YAML]
+[source,yaml]
 ----
 type: object
 properties:

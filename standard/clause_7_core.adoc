@@ -121,7 +121,7 @@ include::openapi/schemas/styles-core/styles.yaml[]
 ----
 
 .styleDescription.yaml
-[source,YAML]
+[source,yaml]
 ----
 include::openapi/schemas/styles-core/styleDescription.yaml[]
 ----

@@ -13,7 +13,7 @@ include::requirements/requirements_class_style-validation.adoc[]
 ^|A |The server SHALL support the `Prefer` header with the https://tools.ietf.org/html/rfc7240#section-4.4["handling=strict" and "handling=lenient" Preferences].
 ^|B |The server SHALL support a parameter with the name "dry-run" in POST requests to the path `{baseResource}/styles` and in PUT requests to the path `{baseResource}/styles/{styleId}` with the following schema:
 
-[source,YAML]
+[source,yaml]
 ----
 name: validate
 in: query
