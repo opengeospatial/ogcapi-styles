@@ -1,0 +1,33 @@
+[[rc_global-styles]]
+== Requirements Class "Global Styles"
+
+include::requirements/requirements_class_global_styles.adoc[]
+
+[[get_global_styles]]
+=== Fetch global styles
+
+The Global Styles requirements class specifies support for styles where the base resource is the root of the API (`/styles`).
+For example, this can be used for styles that are shared across multiple data collections.
+
+This operation returns a list of global styles.
+
+[[req_global-styles_styles-op]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/global-styles/styles-op*
+^|A |The server SHALL support the HTTP GET operation at the path `/styles`.
+^|B |The response for that request is a list of styles as defined in the Core requirements class (see <<req_core_styles-success>>).
+|===
+
+[[global-styles_get_style]]
+=== Fetch global style
+
+This operation returns the stylesheet of a global style.
+
+[[req_global-style-op]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/global-styles/style-op*
+^|A |The server SHALL support the HTTP GET operation at the path `/styles/{styleId}` for each global style referenced from the Global Styles resource at `/styles`.
+^|B |The response for that request is a list of styles as defined in the Core requirements class (see <<req_core_style-success]>>).
+|===

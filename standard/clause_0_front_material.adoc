@@ -95,6 +95,7 @@ The following organizations submitted this Document to the Open Geospatial Conso
 * Ecere Corporation
 * GeoSolutions
 * interactive instruments GmbH
+* Institut National de l'Information Géographique et Forestière (IGN)
 * Leidos
 * Reinventing Geospatial, Inc.
 * US Army Geospatial Center (AGC)
@@ -114,4 +115,5 @@ All questions regarding this submission should be directed to the editor or the 
 |Richard Kim |Reinventing Geospatial, Inc.
 |Panagiotis (Peter) A. Vretanos |Cubewerx Inc. (MariaDB)
 |Joan Masó Pau |Universitat Autònoma de Barcelona (CREAF)
+|Clément Drouadaine |Institut National de l'Information Géographique et Forestière (IGN)
 |===

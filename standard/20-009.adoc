@@ -102,13 +102,17 @@ include::clause_6_introduction.adoc[]
 
 include::clause_7_core.adoc[]
 
-include::clause_8_manage_styles.adoc[]
+include::clause_8_global_styles.adoc[]
 
-include::clause_9_validate_styles.adoc[]
+include::clause_9_collection_styles.adoc[]
 
-include::clause_10_style_encodings.adoc[]
+include::clause_10_manage_styles.adoc[]
 
-include::clause_11_media_types.adoc[]
+include::clause_11_validate_styles.adoc[]
+
+include::clause_12_style_encodings.adoc[]
+
+include::clause_13_media_types.adoc[]
 
 include::annex-a.adoc[]
 
