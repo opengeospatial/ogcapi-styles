@@ -1,7 +1,9 @@
 == Conformance
-This draft specification defines five requirements/conformance classes for the Styles API building blocks:
+This draft specification defines seven requirements/conformance classes for the Styles API building blocks:
 
 * "core" provides access to styles and their metadata. JSON is a mandatory encoding in requests and responses where JSON schemas have been specified for the Styles API.
+* "global styles" defines globally available styles at the root of the API (`/styles`).
+* "collection styles" defines style available per collection as defined in OGC API - Common - Part 2  (`/collections/{collectionId}/styles`).
 * "manage-styles" adds the capabilities for creating, updating and deleting styles.
 * "style-validation" adds the capability to validate a stylesheet.
 

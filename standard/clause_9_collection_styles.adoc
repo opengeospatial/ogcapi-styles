@@ -1,0 +1,47 @@
+[[rc_collection-styles]]
+== Requirements Class "Collection Styles"
+
+include::requirements/requirements_class_collection_styles.adoc[]
+
+[[get_collection_styles]]
+=== Fetch collection styles
+
+The Collection Styles requirements class specifies support for styles where the base resource is a collection of data as defined in
+https://docs.ogc.org/DRAFTS/20-024.html[OGC API - Common - Part 2: Geospatial Data] (`/collections/{collectionId}/styles`).
+Those styles therefore can be used to style the data of that collection.
+
+[[req_collection-styles_styles-op]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/collection-styles/styles-op*
+^|A |The server SHALL support the HTTP GET operation at the path `/collections/{collectionId}/styles`.
+^|B |The response for that request is a list of styles as defined in the Core requirements class (see <<req_core_styles-success>>).
+|===
+
+[[collection-styles_get-style]]
+=== Fetch collection style
+
+This operation returns the stylesheet of a collection style.
+
+[[req_collection-styles_op]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/collection-styles/style-op*
+^|A |The server SHALL support the HTTP GET operation at the path `/collections/{collectionId}/styles/{styleId}` for each collection style referenced from
+the Collection Styles resource at `/collections/{collectionId}/styles` (for a given value of `{collectionId}`).
+^|B |The response for that request is a list of styles as defined in the Core requirements class (see <<req_core_style-success]>>).
+|===
+
+[[collection-styles_styles_applicability]]
+=== Applicability of collection styles
+
+The styles listed for a given collection are applicable to style the data of that collection.
+
+[[req_collection-styles_applicability]]
+[width="90%",cols="2,6a"]
+|===
+^|*Requirement {counter:req-id}* |*/req/collection-styles/styles-applicability*
+^|A |All styles listed at `/collections/{collectionId}/styles` SHALL be applicable to the the data collection at `/collections/{collectionId}`.
+That is, the styling rules shall generally apply to an arbitrary feature or coverage type, or target feature types present in that collection,
+as described in <<req_core_style-feature-type>>.
+|===
