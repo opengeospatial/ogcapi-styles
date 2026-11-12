@@ -3,6 +3,13 @@
 	<xmi:Documentation exporter="Enterprise Architect" exporterVersion="6.5" exporterID="1704"/>
 	<uml:Model xmi:type="uml:Model" name="EA_Model">
 		<packagedElement xmi:type="uml:Package" xmi:id="EAPK_3DD366A7_7B35_491c_A006_293403765415" name="OGC API">
+			<ownedComment xmi:type="uml:Comment" xmi:id="EAID_B22911AC_BA7D_48d6_85B9_83F497069CAF" body="'coordinates' and 'firstCoordinate' are direct positions. The 'bbox' and 'interval' includes the bounds of the measurement. If the measurement covers the whole cell, the spatial.bbox, the temporal&lt;b&gt;.&lt;/b&gt;interval and extraDimensions.interval will be resolution/2 larger in each direction than if the measurement is representing the direct position only. In general we talk about measureIsArea or measureIsPoint respectively, but if the grid represents sensor measurements, other situations in between are also possible. For the IrregularGrid, if boundsCoordinates property is not included, the default bounds of the cells are the mid point between two consecutive coordinates, and the bounds at each end can be inferred from bbox (for spatial dimensions) or interval. For RegularGrids if relativeBounds is not provided, the default relative bounds of the cells are assumed to be [-resolution/2, resolution/2] (in other words we assume measureIsArea and measureIsCentered) making it match with the bbox and the interval.">
+				<annotatedElement xmi:idref="EAID_82D611CD_9E4A_4357_A9D9_6ACE2E39C10D"/>
+				<annotatedElement xmi:idref="EAID_41F16368_31BB_4ec3_B0E8_FF32863D6135"/>
+			</ownedComment>
+			<ownedComment xmi:type="uml:Comment" xmi:id="EAID_E4023F76_6C74_4ce2_94E5_1B4BF08795FF" body="'coordinates' and 'firstCoordinate' are direct positions. The 'bbox' and 'interval' includes the bounds of the measurement. If the measurement covers the whole cell, the spatial.bbox, the temporal&lt;b&gt;.&lt;/b&gt;interval and extraDimensions.interval will be resolution/2 larger in each direction than if the measurement is representing the direct position only. In general we talk about measureIsArea or measureIsPoint respectively, but if the grid represents sensor measurements, other situations in between are also possible. For the IrregularGrid, if boundsCoordinates property is not included, the default bounds of the cells are the mid point between two consecutive coordinates, and the bounds at each end can be inferred from bbox (for spatial dimensions) or interval. For RegularGrids if relativeBounds is not provided, the default relative bounds of the cells are assumed to be [-resolution/2, resolution/2] (in other words we assume measureIsArea and measureIsCentered) making it match with the bbox and the interval.">
+				<annotatedElement xmi:idref="EAID_82D611CD_9E4A_4357_A9D9_6ACE2E39C10D"/>
+			</ownedComment>
 			<ownedComment xmi:type="uml:Comment" xmi:id="EAID_95A79B34_8AE3_4ddc_83D5_2D254923D1DC" body="The LandingPage will have a link to a styles collection with rel=[ogc-rel:styles]">
 				<annotatedElement xmi:idref="EAID_1ED8F45A_4E9E_4827_8B08_46359121FDD3"/>
 			</ownedComment>
@@ -12,25 +19,18 @@
 			<ownedComment xmi:type="uml:Comment" xmi:id="EAID_B8E65ED3_F5BE_487a_B620_A52E6A3EEF55" body="Many properties come from CollectionDescription">
 				<annotatedElement xmi:idref="EAID_A3233172_C021_5FD6_B285_D5E3FA2E96BC"/>
 			</ownedComment>
-			<ownedComment xmi:type="uml:Comment" xmi:id="EAID_E4023F76_6C74_4ce2_94E5_1B4BF08795FF" body="'coordinates' and 'firstCoordinate' are direct positions. The 'bbox' and 'interval' includes the bounds of the measurement. If the measurement covers the whole cell, the spatial.bbox, the temporal&lt;b&gt;.&lt;/b&gt;interval and extraDimensions.interval will be resolution/2 larger in each direction than if the measurement is representing the direct position only. In general we talk about measureIsArea or measureIsPoint respectively, but if the grid represents sensor measurements, other situations in between are also possible. For the IrregularGrid, if boundsCoordinates property is not included, the default bounds of the cells are the mid point between two consecutive coordinates, and the bounds at each end can be inferred from bbox (for spatial dimensions) or interval. For RegularGrids if relativeBounds is not provided, the default relative bounds of the cells are assumed to be [-resolution/2, resolution/2] (in other words we assume measureIsArea and measureIsCentered) making it match with the bbox and the interval.">
-				<annotatedElement xmi:idref="EAID_82D611CD_9E4A_4357_A9D9_6ACE2E39C10D"/>
-			</ownedComment>
-			<ownedComment xmi:type="uml:Comment" xmi:id="EAID_B22911AC_BA7D_48d6_85B9_83F497069CAF" body="'coordinates' and 'firstCoordinate' are direct positions. The 'bbox' and 'interval' includes the bounds of the measurement. If the measurement covers the whole cell, the spatial.bbox, the temporal&lt;b&gt;.&lt;/b&gt;interval and extraDimensions.interval will be resolution/2 larger in each direction than if the measurement is representing the direct position only. In general we talk about measureIsArea or measureIsPoint respectively, but if the grid represents sensor measurements, other situations in between are also possible. For the IrregularGrid, if boundsCoordinates property is not included, the default bounds of the cells are the mid point between two consecutive coordinates, and the bounds at each end can be inferred from bbox (for spatial dimensions) or interval. For RegularGrids if relativeBounds is not provided, the default relative bounds of the cells are assumed to be [-resolution/2, resolution/2] (in other words we assume measureIsArea and measureIsCentered) making it match with the bbox and the interval.">
-				<annotatedElement xmi:idref="EAID_82D611CD_9E4A_4357_A9D9_6ACE2E39C10D"/>
-				<annotatedElement xmi:idref="EAID_41F16368_31BB_4ec3_B0E8_FF32863D6135"/>
-			</ownedComment>
+			<packagedElement xmi:type="uml:Class" xmi:id="EAID_413715C5_4DDB_407e_A517_C62AE021663E" name="OGC API  - Styles"/>
+			<packagedElement xmi:type="uml:Class" xmi:id="EAID_657CBD67_FA32_4ad2_9748_4154B68E4B7A" name="OGC API - Common - Part 2"/>
+			<packagedElement xmi:type="uml:Class" xmi:id="EAID_6FE33B58_68B4_4d4f_8A60_CC819F17FD9D" name="OGC API - Common - Part 1"/>
+			<packagedElement xmi:type="uml:Class" xmi:id="EAID_CFEF94B6_B309_4d6c_9FB9_CE1618916B2A" name="OGC API - Common - Part 2"/>
+			<packagedElement xmi:type="uml:Class" xmi:id="EAID_DCC4388B_AAF6_4ba2_9A5D_661582071795" name="OGC API - Common - Part 1"/>
+			<packagedElement xmi:type="uml:Class" xmi:id="EAID_A6BD904E_E8D0_4b6f_9ED9_56F3B9C14713" name="OGC API - Records"/>
+			<packagedElement xmi:type="uml:Class" xmi:id="EAID_C26ECADE_DB57_4ae3_9F7D_50FEFD1877A0" name="Uniform Additional Dimensions"/>
+			<packagedElement xmi:type="uml:Class" xmi:id="EAID_1D72BC8F_5D39_4138_9364_B3BD57A3423A" name="OGC API - Common - Part 2"/>
 			<packagedElement xmi:type="uml:Class" xmi:id="EAID_F457684D_54A7_431f_899C_094AC939D2EA"/>
 			<packagedElement xmi:type="uml:Class" xmi:id="EAID_84A92D2A_1BC9_4a86_84C3_E7477B173CF8" name="OGC API - Common - Part 1"/>
-			<packagedElement xmi:type="uml:Class" xmi:id="EAID_DCC4388B_AAF6_4ba2_9A5D_661582071795" name="OGC API - Common - Part 1"/>
-			<packagedElement xmi:type="uml:Class" xmi:id="EAID_6FE33B58_68B4_4d4f_8A60_CC819F17FD9D" name="OGC API - Common - Part 1"/>
-			<packagedElement xmi:type="uml:Class" xmi:id="EAID_1D72BC8F_5D39_4138_9364_B3BD57A3423A" name="OGC API - Common - Part 2"/>
-			<packagedElement xmi:type="uml:Class" xmi:id="EAID_CFEF94B6_B309_4d6c_9FB9_CE1618916B2A" name="OGC API - Common - Part 2"/>
-			<packagedElement xmi:type="uml:Class" xmi:id="EAID_657CBD67_FA32_4ad2_9748_4154B68E4B7A" name="OGC API - Common - Part 2"/>
 			<packagedElement xmi:type="uml:Class" xmi:id="EAID_24F3A68E_F881_4623_92D4_14EB69C1BB48" name="OGC API - Records"/>
-			<packagedElement xmi:type="uml:Class" xmi:id="EAID_A6BD904E_E8D0_4b6f_9ED9_56F3B9C14713" name="OGC API - Records"/>
-			<packagedElement xmi:type="uml:Class" xmi:id="EAID_413715C5_4DDB_407e_A517_C62AE021663E" name="OGC API  - Styles"/>
 			<packagedElement xmi:type="uml:Class" xmi:id="EAID_46191DF6_AF1B_49d5_84F4_FA8D87C802CC" name="Uniform Additional Dimensions"/>
-			<packagedElement xmi:type="uml:Class" xmi:id="EAID_C26ECADE_DB57_4ae3_9F7D_50FEFD1877A0" name="Uniform Additional Dimensions"/>
 			<packagedElement xmi:type="uml:Class" xmi:id="EAID_5EA26874_CA49_4965_A5E4_59463F033C7F" name="Focus1"/>
 			<packagedElement xmi:type="uml:Class" xmi:id="EAID_682B8205_0C6E_408f_B59B_3481CE612AB9" name="Address">
 				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_C8C218E0_8441_4f4b_9E25_A0ABDFB4969A" name="deliveryPoint">
@@ -381,12 +381,12 @@
 					<type xmi:idref="EAJava_DateTime"/>
 				</ownedAttribute>
 				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_7EE5CAF9_FCE4_4671_ABA3_22157EC53F82" name="version">
-					<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000115_FCE4_4671_ABA3_22157EC53F82" value="1"/>
+					<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000115_FCE4_4671_ABA3_22157EC53F82" value="0"/>
 					<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000116_FCE4_4671_ABA3_22157EC53F82" value="1"/>
 					<type xmi:idref="EAJava_String"/>
 				</ownedAttribute>
 				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_DBF0349C_7112_495c_831A_57E1C973BA2A" name="aiAssisted">
-					<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000117_7112_495c_831A_57E1C973BA2A" value="1"/>
+					<lowerValue xmi:type="uml:LiteralInteger" xmi:id="EAID_LI000117_7112_495c_831A_57E1C973BA2A" value="0"/>
 					<upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="EAID_LI000118_7112_495c_831A_57E1C973BA2A" value="1"/>
 					<type xmi:idref="EAJava_Boolean"/>
 				</ownedAttribute>
@@ -1061,33 +1061,6 @@
 				<times created="2024-08-09 15:58:59" modified="2026-08-13 16:18:05" lastloaddate="2019-01-23 13:38:10" lastsavedate="2019-01-23 13:38:10"/>
 				<flags iscontrolled="0" isprotected="0" batchsave="0" batchload="0" usedtd="0" logxml="0"/>
 			</element>
-			<element xmi:idref="EAID_B22911AC_BA7D_48d6_85B9_83F497069CAF" xmi:type="uml:Note" scope="public">
-				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="69" ea_eleType="element"/>
-				<properties documentation="'coordinates' and 'firstCoordinate' are direct positions. The 'bbox' and 'interval' includes the bounds of the measurement. If the measurement covers the whole cell, the spatial.bbox, the temporal&lt;b&gt;.&lt;/b&gt;interval and extraDimensions.interval will be resolution/2 larger in each direction than if the measurement is representing the direct position only. In general we talk about measureIsArea or measureIsPoint respectively, but if the grid represents sensor measurements, other situations in between are also possible. For the IrregularGrid, if boundsCoordinates property is not included, the default bounds of the cells are the mid point between two consecutive coordinates, and the bounds at each end can be inferred from bbox (for spatial dimensions) or interval. For RegularGrids if relativeBounds is not provided, the default relative bounds of the cells are assumed to be [-resolution/2, resolution/2] (in other words we assume measureIsArea and measureIsCentered) making it match with the bbox and the interval." isSpecification="false" sType="Note" nType="0" scope="public"/>
-				<project author="miniusu" version="1.0" phase="1.0" created="2025-01-09 18:38:45" modified="2026-02-05 18:52:46" complexity="1" status="Proposed"/>
-				<code gentype="&lt;none&gt;"/>
-				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
-				<tags/>
-				<xrefs/>
-				<extendedProperties tagged="0" package_name="OGC API"/>
-				<links>
-					<NoteLink xmi:id="EAID_574ED880_9736_44c3_9723_740E2A8D056E" start="EAID_B22911AC_BA7D_48d6_85B9_83F497069CAF" end="EAID_82D611CD_9E4A_4357_A9D9_6ACE2E39C10D"/>
-					<NoteLink xmi:id="EAID_8E227FB6_C29B_44dc_9FA8_E59597572AED" start="EAID_B22911AC_BA7D_48d6_85B9_83F497069CAF" end="EAID_41F16368_31BB_4ec3_B0E8_FF32863D6135"/>
-				</links>
-			</element>
-			<element xmi:idref="EAID_E4023F76_6C74_4ce2_94E5_1B4BF08795FF" xmi:type="uml:Note" scope="public">
-				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="83" ea_eleType="element"/>
-				<properties documentation="'coordinates' and 'firstCoordinate' are direct positions. The 'bbox' and 'interval' includes the bounds of the measurement. If the measurement covers the whole cell, the spatial.bbox, the temporal&lt;b&gt;.&lt;/b&gt;interval and extraDimensions.interval will be resolution/2 larger in each direction than if the measurement is representing the direct position only. In general we talk about measureIsArea or measureIsPoint respectively, but if the grid represents sensor measurements, other situations in between are also possible. For the IrregularGrid, if boundsCoordinates property is not included, the default bounds of the cells are the mid point between two consecutive coordinates, and the bounds at each end can be inferred from bbox (for spatial dimensions) or interval. For RegularGrids if relativeBounds is not provided, the default relative bounds of the cells are assumed to be [-resolution/2, resolution/2] (in other words we assume measureIsArea and measureIsCentered) making it match with the bbox and the interval." isSpecification="false" sType="Note" nType="0" scope="public"/>
-				<project author="miniusu" version="1.0" phase="1.0" created="2026-08-13 16:19:35" modified="2026-02-05 18:52:46" complexity="1" status="Proposed"/>
-				<code gentype="&lt;none&gt;"/>
-				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
-				<tags/>
-				<xrefs/>
-				<extendedProperties tagged="0" package_name="OGC API"/>
-				<links>
-					<NoteLink xmi:id="EAID_812D1C28_620D_41b0_8F5E_14A0A58DA894" start="EAID_E4023F76_6C74_4ce2_94E5_1B4BF08795FF" end="EAID_82D611CD_9E4A_4357_A9D9_6ACE2E39C10D"/>
-				</links>
-			</element>
 			<element xmi:idref="EAID_B8E65ED3_F5BE_487a_B620_A52E6A3EEF55" xmi:type="uml:Note" scope="public">
 				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="97" ea_eleType="element"/>
 				<properties documentation="Many properties come from CollectionDescription" isSpecification="false" sType="Note" nType="0" scope="public"/>
@@ -1100,6 +1073,36 @@
 				<links>
 					<NoteLink xmi:id="EAID_587A211B_D78B_430e_BB00_BAE996E6224C" start="EAID_B8E65ED3_F5BE_487a_B620_A52E6A3EEF55" end="EAID_A3233172_C021_5FD6_B285_D5E3FA2E96BC"/>
 				</links>
+			</element>
+			<element xmi:idref="EAID_413715C5_4DDB_407e_A517_C62AE021663E" xmi:type="uml:Boundary" name="OGC API  - Styles" scope="public">
+				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="96" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
+				<project author="miniusu" version="1.0" phase="1.0" created="2026-08-13 17:10:50" modified="2026-08-13 17:11:18" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="OGC API"/>
+			</element>
+			<element xmi:idref="EAID_657CBD67_FA32_4ad2_9748_4154B68E4B7A" xmi:type="uml:Boundary" name="OGC API - Common - Part 2" scope="public">
+				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="95" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
+				<project author="miniusu" version="1.0" phase="1.0" created="2026-08-13 17:08:31" modified="2026-08-13 17:08:43" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="OGC API"/>
+			</element>
+			<element xmi:idref="EAID_6FE33B58_68B4_4d4f_8A60_CC819F17FD9D" xmi:type="uml:Boundary" name="OGC API - Common - Part 1" scope="public">
+				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="94" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
+				<project author="miniusu" version="1.0" phase="1.0" created="2026-08-13 17:07:42" modified="2026-08-13 17:08:14" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="OGC API"/>
 			</element>
 			<element xmi:idref="EAID_9FCCA89E_EC0F_4d19_8E97_8F3719B2798B" xmi:type="uml:Note" scope="public">
 				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="93" ea_eleType="element"/>
@@ -1127,6 +1130,69 @@
 					<NoteLink xmi:id="EAID_5FA560A8_7115_452d_BCA0_D4A225C1F67C" start="EAID_95A79B34_8AE3_4ddc_83D5_2D254923D1DC" end="EAID_1ED8F45A_4E9E_4827_8B08_46359121FDD3"/>
 				</links>
 			</element>
+			<element xmi:idref="EAID_CFEF94B6_B309_4d6c_9FB9_CE1618916B2A" xmi:type="uml:Boundary" name="OGC API - Common - Part 2" scope="public">
+				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="87" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
+				<project author="miniusu" version="1.0" phase="1.0" created="2026-08-13 16:19:35" modified="2025-08-28 19:41:37" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;" styleex="BT=81;Path=793:-8@1074:-8@1074:-1153@11:-1153@11:-603@793:-603;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="OGC API"/>
+			</element>
+			<element xmi:idref="EAID_DCC4388B_AAF6_4ba2_9A5D_661582071795" xmi:type="uml:Boundary" name="OGC API - Common - Part 1" scope="public">
+				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="86" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
+				<project author="miniusu" version="1.0" phase="1.0" created="2026-08-13 16:19:35" modified="2025-08-28 19:30:59" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="OGC API"/>
+			</element>
+			<element xmi:idref="EAID_A6BD904E_E8D0_4b6f_9ED9_56F3B9C14713" xmi:type="uml:Boundary" name="OGC API - Records" scope="public">
+				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="85" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
+				<project author="miniusu" version="1.0" phase="1.0" created="2026-08-13 16:19:35" modified="2025-08-28 19:30:10" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="OGC API"/>
+			</element>
+			<element xmi:idref="EAID_C26ECADE_DB57_4ae3_9F7D_50FEFD1877A0" xmi:type="uml:Boundary" name="Uniform Additional Dimensions" scope="public">
+				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="84" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
+				<project author="miniusu" version="1.0" phase="1.0" created="2026-08-13 16:19:35" modified="2024-12-12 18:37:50" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=1;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="OGC API"/>
+			</element>
+			<element xmi:idref="EAID_E4023F76_6C74_4ce2_94E5_1B4BF08795FF" xmi:type="uml:Note" scope="public">
+				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="83" ea_eleType="element"/>
+				<properties documentation="'coordinates' and 'firstCoordinate' are direct positions. The 'bbox' and 'interval' includes the bounds of the measurement. If the measurement covers the whole cell, the spatial.bbox, the temporal&lt;b&gt;.&lt;/b&gt;interval and extraDimensions.interval will be resolution/2 larger in each direction than if the measurement is representing the direct position only. In general we talk about measureIsArea or measureIsPoint respectively, but if the grid represents sensor measurements, other situations in between are also possible. For the IrregularGrid, if boundsCoordinates property is not included, the default bounds of the cells are the mid point between two consecutive coordinates, and the bounds at each end can be inferred from bbox (for spatial dimensions) or interval. For RegularGrids if relativeBounds is not provided, the default relative bounds of the cells are assumed to be [-resolution/2, resolution/2] (in other words we assume measureIsArea and measureIsCentered) making it match with the bbox and the interval." isSpecification="false" sType="Note" nType="0" scope="public"/>
+				<project author="miniusu" version="1.0" phase="1.0" created="2026-08-13 16:19:35" modified="2026-02-05 18:52:46" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="OGC API"/>
+				<links>
+					<NoteLink xmi:id="EAID_812D1C28_620D_41b0_8F5E_14A0A58DA894" start="EAID_E4023F76_6C74_4ce2_94E5_1B4BF08795FF" end="EAID_82D611CD_9E4A_4357_A9D9_6ACE2E39C10D"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_1D72BC8F_5D39_4138_9364_B3BD57A3423A" xmi:type="uml:Boundary" name="OGC API - Common - Part 2" scope="public">
+				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="82" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
+				<project author="miniusu" version="1.0" phase="1.0" created="2025-08-28 19:36:15" modified="2025-08-28 19:41:37" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;" styleex="BT=81;Path=793:-8@1074:-8@1074:-1153@11:-1153@11:-603@793:-603;"/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="OGC API"/>
+			</element>
 			<element xmi:idref="EAID_F457684D_54A7_431f_899C_094AC939D2EA" xmi:type="uml:Boundary" scope="public">
 				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="81" ea_eleType="element"/>
 				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
@@ -1147,56 +1213,6 @@
 				<xrefs/>
 				<extendedProperties tagged="0" package_name="OGC API"/>
 			</element>
-			<element xmi:idref="EAID_DCC4388B_AAF6_4ba2_9A5D_661582071795" xmi:type="uml:Boundary" name="OGC API - Common - Part 1" scope="public">
-				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="86" ea_eleType="element"/>
-				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
-				<project author="miniusu" version="1.0" phase="1.0" created="2026-08-13 16:19:35" modified="2025-08-28 19:30:59" complexity="1" status="Proposed"/>
-				<code gentype="&lt;none&gt;"/>
-				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
-				<tags/>
-				<xrefs/>
-				<extendedProperties tagged="0" package_name="OGC API"/>
-			</element>
-			<element xmi:idref="EAID_6FE33B58_68B4_4d4f_8A60_CC819F17FD9D" xmi:type="uml:Boundary" name="OGC API - Common - Part 1" scope="public">
-				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="94" ea_eleType="element"/>
-				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
-				<project author="miniusu" version="1.0" phase="1.0" created="2026-08-13 17:07:42" modified="2026-08-13 17:08:14" complexity="1" status="Proposed"/>
-				<code gentype="&lt;none&gt;"/>
-				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
-				<tags/>
-				<xrefs/>
-				<extendedProperties tagged="0" package_name="OGC API"/>
-			</element>
-			<element xmi:idref="EAID_1D72BC8F_5D39_4138_9364_B3BD57A3423A" xmi:type="uml:Boundary" name="OGC API - Common - Part 2" scope="public">
-				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="82" ea_eleType="element"/>
-				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
-				<project author="miniusu" version="1.0" phase="1.0" created="2025-08-28 19:36:15" modified="2025-08-28 19:41:37" complexity="1" status="Proposed"/>
-				<code gentype="&lt;none&gt;"/>
-				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;" styleex="BT=81;Path=793:-8@1074:-8@1074:-1153@11:-1153@11:-603@793:-603;"/>
-				<tags/>
-				<xrefs/>
-				<extendedProperties tagged="0" package_name="OGC API"/>
-			</element>
-			<element xmi:idref="EAID_CFEF94B6_B309_4d6c_9FB9_CE1618916B2A" xmi:type="uml:Boundary" name="OGC API - Common - Part 2" scope="public">
-				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="87" ea_eleType="element"/>
-				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
-				<project author="miniusu" version="1.0" phase="1.0" created="2026-08-13 16:19:35" modified="2025-08-28 19:41:37" complexity="1" status="Proposed"/>
-				<code gentype="&lt;none&gt;"/>
-				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;" styleex="BT=81;Path=793:-8@1074:-8@1074:-1153@11:-1153@11:-603@793:-603;"/>
-				<tags/>
-				<xrefs/>
-				<extendedProperties tagged="0" package_name="OGC API"/>
-			</element>
-			<element xmi:idref="EAID_657CBD67_FA32_4ad2_9748_4154B68E4B7A" xmi:type="uml:Boundary" name="OGC API - Common - Part 2" scope="public">
-				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="95" ea_eleType="element"/>
-				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
-				<project author="miniusu" version="1.0" phase="1.0" created="2026-08-13 17:08:31" modified="2026-08-13 17:08:43" complexity="1" status="Proposed"/>
-				<code gentype="&lt;none&gt;"/>
-				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
-				<tags/>
-				<xrefs/>
-				<extendedProperties tagged="0" package_name="OGC API"/>
-			</element>
 			<element xmi:idref="EAID_24F3A68E_F881_4623_92D4_14EB69C1BB48" xmi:type="uml:Boundary" name="OGC API - Records" scope="public">
 				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="79" ea_eleType="element"/>
 				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
@@ -1207,40 +1223,24 @@
 				<xrefs/>
 				<extendedProperties tagged="0" package_name="OGC API"/>
 			</element>
-			<element xmi:idref="EAID_A6BD904E_E8D0_4b6f_9ED9_56F3B9C14713" xmi:type="uml:Boundary" name="OGC API - Records" scope="public">
-				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="85" ea_eleType="element"/>
-				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
-				<project author="miniusu" version="1.0" phase="1.0" created="2026-08-13 16:19:35" modified="2025-08-28 19:30:10" complexity="1" status="Proposed"/>
+			<element xmi:idref="EAID_B22911AC_BA7D_48d6_85B9_83F497069CAF" xmi:type="uml:Note" scope="public">
+				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="69" ea_eleType="element"/>
+				<properties documentation="'coordinates' and 'firstCoordinate' are direct positions. The 'bbox' and 'interval' includes the bounds of the measurement. If the measurement covers the whole cell, the spatial.bbox, the temporal&lt;b&gt;.&lt;/b&gt;interval and extraDimensions.interval will be resolution/2 larger in each direction than if the measurement is representing the direct position only. In general we talk about measureIsArea or measureIsPoint respectively, but if the grid represents sensor measurements, other situations in between are also possible. For the IrregularGrid, if boundsCoordinates property is not included, the default bounds of the cells are the mid point between two consecutive coordinates, and the bounds at each end can be inferred from bbox (for spatial dimensions) or interval. For RegularGrids if relativeBounds is not provided, the default relative bounds of the cells are assumed to be [-resolution/2, resolution/2] (in other words we assume measureIsArea and measureIsCentered) making it match with the bbox and the interval." isSpecification="false" sType="Note" nType="0" scope="public"/>
+				<project author="miniusu" version="1.0" phase="1.0" created="2025-01-09 18:38:45" modified="2026-02-05 18:52:46" complexity="1" status="Proposed"/>
 				<code gentype="&lt;none&gt;"/>
-				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
 				<tags/>
 				<xrefs/>
 				<extendedProperties tagged="0" package_name="OGC API"/>
-			</element>
-			<element xmi:idref="EAID_413715C5_4DDB_407e_A517_C62AE021663E" xmi:type="uml:Boundary" name="OGC API  - Styles" scope="public">
-				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="96" ea_eleType="element"/>
-				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
-				<project author="miniusu" version="1.0" phase="1.0" created="2026-08-13 17:10:50" modified="2026-08-13 17:11:18" complexity="1" status="Proposed"/>
-				<code gentype="&lt;none&gt;"/>
-				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
-				<tags/>
-				<xrefs/>
-				<extendedProperties tagged="0" package_name="OGC API"/>
+				<links>
+					<NoteLink xmi:id="EAID_574ED880_9736_44c3_9723_740E2A8D056E" start="EAID_B22911AC_BA7D_48d6_85B9_83F497069CAF" end="EAID_82D611CD_9E4A_4357_A9D9_6ACE2E39C10D"/>
+					<NoteLink xmi:id="EAID_8E227FB6_C29B_44dc_9FA8_E59597572AED" start="EAID_B22911AC_BA7D_48d6_85B9_83F497069CAF" end="EAID_41F16368_31BB_4ec3_B0E8_FF32863D6135"/>
+				</links>
 			</element>
 			<element xmi:idref="EAID_46191DF6_AF1B_49d5_84F4_FA8D87C802CC" xmi:type="uml:Boundary" name="Uniform Additional Dimensions" scope="public">
 				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="64" ea_eleType="element"/>
 				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
 				<project author="miniusu" version="1.0" phase="1.0" created="2024-12-12 18:36:38" modified="2024-12-12 18:37:50" complexity="1" status="Proposed"/>
-				<code gentype="&lt;none&gt;"/>
-				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=1;"/>
-				<tags/>
-				<xrefs/>
-				<extendedProperties tagged="0" package_name="OGC API"/>
-			</element>
-			<element xmi:idref="EAID_C26ECADE_DB57_4ae3_9F7D_50FEFD1877A0" xmi:type="uml:Boundary" name="Uniform Additional Dimensions" scope="public">
-				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" tpos="0" ea_localid="84" ea_eleType="element"/>
-				<properties isSpecification="false" sType="Boundary" nType="0" scope="public"/>
-				<project author="miniusu" version="1.0" phase="1.0" created="2026-08-13 16:19:35" modified="2024-12-12 18:37:50" complexity="1" status="Proposed"/>
 				<code gentype="&lt;none&gt;"/>
 				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=1;"/>
 				<tags/>
@@ -2089,7 +2089,7 @@
 						<coords ordered="0"/>
 						<containment containment="Not Specified" position="18"/>
 						<stereotype/>
-						<bounds lower="1" upper="1"/>
+						<bounds lower="0" upper="1"/>
 						<options/>
 						<style/>
 						<styleex value="volatile=0;union=0;"/>
@@ -2104,7 +2104,7 @@
 						<coords ordered="0"/>
 						<containment containment="Not Specified" position="19"/>
 						<stereotype/>
-						<bounds lower="1" upper="1"/>
+						<bounds lower="0" upper="1"/>
 						<options/>
 						<style/>
 						<styleex value="volatile=0;union=0;"/>
@@ -3762,108 +3762,6 @@
 			</element>
 		</elements>
 		<connectors>
-			<connector xmi:idref="EAID_574ED880_9736_44c3_9723_740E2A8D056E">
-				<source xmi:idref="EAID_B22911AC_BA7D_48d6_85B9_83F497069CAF">
-					<model ea_localid="69" type="Note"/>
-					<role visibility="Public" targetScope="instance"/>
-					<type aggregation="none" containment="Unspecified"/>
-					<constraints/>
-					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
-					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
-					<documentation/>
-					<xrefs/>
-					<tags/>
-				</source>
-				<target xmi:idref="EAID_82D611CD_9E4A_4357_A9D9_6ACE2E39C10D">
-					<model ea_localid="67" type="Class" name="RegularGrid"/>
-					<role visibility="Public" targetScope="instance"/>
-					<type aggregation="none" containment="Unspecified"/>
-					<constraints/>
-					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
-					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
-					<documentation/>
-					<xrefs/>
-					<tags/>
-				</target>
-				<model ea_localid="34"/>
-				<properties ea_type="NoteLink" direction="Source -&gt; Destination"/>
-				<modifiers isRoot="false" isLeaf="false"/>
-				<documentation/>
-				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
-				<labels/>
-				<extendedProperties virtualInheritance="0"/>
-				<style/>
-				<xrefs/>
-				<tags/>
-			</connector>
-			<connector xmi:idref="EAID_8E227FB6_C29B_44dc_9FA8_E59597572AED">
-				<source xmi:idref="EAID_B22911AC_BA7D_48d6_85B9_83F497069CAF">
-					<model ea_localid="69" type="Note"/>
-					<role visibility="Public" targetScope="instance"/>
-					<type aggregation="none" containment="Unspecified"/>
-					<constraints/>
-					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
-					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
-					<documentation/>
-					<xrefs/>
-					<tags/>
-				</source>
-				<target xmi:idref="EAID_41F16368_31BB_4ec3_B0E8_FF32863D6135">
-					<model ea_localid="56" type="Class" name="Coordinates"/>
-					<role visibility="Public" targetScope="instance"/>
-					<type aggregation="none" containment="Unspecified"/>
-					<constraints/>
-					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
-					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
-					<documentation/>
-					<xrefs/>
-					<tags/>
-				</target>
-				<model ea_localid="33"/>
-				<properties ea_type="NoteLink" direction="Source -&gt; Destination"/>
-				<modifiers isRoot="false" isLeaf="false"/>
-				<documentation/>
-				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
-				<labels/>
-				<extendedProperties virtualInheritance="0"/>
-				<style/>
-				<xrefs/>
-				<tags/>
-			</connector>
-			<connector xmi:idref="EAID_812D1C28_620D_41b0_8F5E_14A0A58DA894">
-				<source xmi:idref="EAID_E4023F76_6C74_4ce2_94E5_1B4BF08795FF">
-					<model ea_localid="83" type="Note"/>
-					<role visibility="Public" targetScope="instance"/>
-					<type aggregation="none" containment="Unspecified"/>
-					<constraints/>
-					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
-					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
-					<documentation/>
-					<xrefs/>
-					<tags/>
-				</source>
-				<target xmi:idref="EAID_82D611CD_9E4A_4357_A9D9_6ACE2E39C10D">
-					<model ea_localid="67" type="Class" name="RegularGrid"/>
-					<role visibility="Public" targetScope="instance"/>
-					<type aggregation="none" containment="Unspecified"/>
-					<constraints/>
-					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
-					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
-					<documentation/>
-					<xrefs/>
-					<tags/>
-				</target>
-				<model ea_localid="53"/>
-				<properties ea_type="NoteLink" direction="Source -&gt; Destination"/>
-				<modifiers isRoot="false" isLeaf="false"/>
-				<documentation/>
-				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
-				<labels/>
-				<extendedProperties virtualInheritance="0"/>
-				<style/>
-				<xrefs/>
-				<tags/>
-			</connector>
 			<connector xmi:idref="EAID_587A211B_D78B_430e_BB00_BAE996E6224C">
 				<source xmi:idref="EAID_B8E65ED3_F5BE_487a_B620_A52E6A3EEF55">
 					<model ea_localid="97" type="Note"/>
@@ -3956,6 +3854,108 @@
 					<tags/>
 				</target>
 				<model ea_localid="62"/>
+				<properties ea_type="NoteLink" direction="Source -&gt; Destination"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_812D1C28_620D_41b0_8F5E_14A0A58DA894">
+				<source xmi:idref="EAID_E4023F76_6C74_4ce2_94E5_1B4BF08795FF">
+					<model ea_localid="83" type="Note"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_82D611CD_9E4A_4357_A9D9_6ACE2E39C10D">
+					<model ea_localid="67" type="Class" name="RegularGrid"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="53"/>
+				<properties ea_type="NoteLink" direction="Source -&gt; Destination"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_574ED880_9736_44c3_9723_740E2A8D056E">
+				<source xmi:idref="EAID_B22911AC_BA7D_48d6_85B9_83F497069CAF">
+					<model ea_localid="69" type="Note"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_82D611CD_9E4A_4357_A9D9_6ACE2E39C10D">
+					<model ea_localid="67" type="Class" name="RegularGrid"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="34"/>
+				<properties ea_type="NoteLink" direction="Source -&gt; Destination"/>
+				<modifiers isRoot="false" isLeaf="false"/>
+				<documentation/>
+				<appearance linemode="3" linecolor="-1" linewidth="0" seqno="0" headStyle="0" lineStyle="0"/>
+				<labels/>
+				<extendedProperties virtualInheritance="0"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_8E227FB6_C29B_44dc_9FA8_E59597572AED">
+				<source xmi:idref="EAID_B22911AC_BA7D_48d6_85B9_83F497069CAF">
+					<model ea_localid="69" type="Note"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_41F16368_31BB_4ec3_B0E8_FF32863D6135">
+					<model ea_localid="56" type="Class" name="Coordinates"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="33"/>
 				<properties ea_type="NoteLink" direction="Source -&gt; Destination"/>
 				<modifiers isRoot="false" isLeaf="false"/>
 				<documentation/>
@@ -5674,13 +5674,13 @@
 			<diagram xmi:id="EAID_F5A70E37_A940_4193_8ED2_90B5E0173E3F">
 				<model package="EAPK_3DD366A7_7B35_491c_A006_293403765415" localID="4" owner="EAPK_3DD366A7_7B35_491c_A006_293403765415"/>
 				<properties name="OGC API - Styles" type="Logical"/>
-				<project author="gobehobona" version="1.0" created="2026-08-13 16:19:35" modified="2026-08-13 17:22:57"/>
+				<project author="gobehobona" version="1.0" created="2026-08-13 16:19:35" modified="2026-11-12 16:10:19"/>
 				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=826;DocSize.cy=1169;ShowDetails=0;Orientation=P;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;ShowShape=1;AllDockable=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
-				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;MDGDgm=;STBLDgm=;ShowNotes=0;SPL=S_1ED8F4=56B03C,49D03D,0A09B6,C890CF:S_547BEB=3DE8F3,20DB9C,A0816D,C8E250,A610B3,68EAEB,EEC3AC,F39C09,0D4399,61F2F0,59C408,3AA850,870FBB,81D748,19B1C4,8BF49C,1F4941,2836FE,7E4180,50E440,776A52,9187A2,92161E,6CC69B,D5E616,74F516:S_FB9693=5A2017,4CCA2C:;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=94CFF9E3;"/>
+				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=1;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLineClr=0;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;m_bElementClassifier=1;SPT=1;MDGDgm=;STBLDgm=;ShowNotes=0;SPL=S_1ED8F4=56B03C,49D03D,0A09B6,C890CF:S_547BEB=3DE8F3,20DB9C,A0816D,C8E250,A610B3,68EAEB,EEC3AC,F39C09,0D4399,61F2F0,59C408,3AA850,870FBB,81D748,19B1C4,8BF49C,1F4941,2836FE,7E4180,50E440,776A52,9187A2,92161E,6CC69B,D5E616,74F516:S_FB9693=5A2017,4CCA2C:;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;Theme=:119;SaveTag=85BFEAED;"/>
 				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;bro=0;SwimlaneFont=lfh:-13,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;"/>
 				<matrixitems value="locked=false;matrixactive=false;swimlanesactive=true;kanbanactive=false;width=1;clrLine=0;"/>
 				<extendedProperties/>
-				<persistentstyle value="DGS=On=0:CNT=8:W=120:H=40:SG=0:SGH=0:AEB=0:;AR=0;DCL=0;"/>
+				<persistentstyle value="DGS=On=0:CNT=8:W=120:H=40:SG=0:SGH=0:AEB=0:;AR=0;DCL=0;Swimlanes=locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;tcol=-1;ofCol=-1;ufCol=-1;hl=0;ufh=0;hh=0;cls=0;bw=0;hli=0;bro=0;SwimlaneFont=lfh:-13,lfw:0,lfi:0,lfu:0,lfs:0,lfface:Calibri,lfe:0,lfo:0,lfchar:1,lfop:0,lfcp:0,lfq:0,lfpf=0,lfWidth=0;;"/>
 				<xrefs/>
 				<elements>
 					<element geometry="Left=922;Top=631;Right=1037;Bottom=676;imgL=1178;imgT=880;imgR=1335;imgB=942;" subject="EAID_B8E65ED3_F5BE_487a_B620_A52E6A3EEF55" seqno="1" style="DUID=B27FCC03;"/>
@@ -5710,14 +5710,14 @@
 					<element geometry="SX=-3;SY=49;EX=-78;EY=66;EDGE=1;$LLB=CX=17:CY=14:OX=-33:OY=-1:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=CX=37:CY=14:OX=47:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=319:-365$;" subject="EAID_D16CCCF8_1A6B_4dc0_ACF3_FBB2758F50D5" style="Mode=3;EOID=13F6DF7E;SOID=1D5EEF31;Color=-1;LWidth=0;Hidden=0;"/>
 					<element geometry="SX=40;SY=23;EX=-61;EY=-82;EDGE=1;$LLB=CX=17:CY=14:OX=8:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=CX=28:CY=14:OX=-16:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_3CA1FC2C_840A_4f77_AA5B_03C1BCB328F5" style="Mode=3;EOID=13F6DF7E;SOID=E8290C58;Color=-1;LWidth=0;Hidden=0;"/>
 					<element geometry="SX=4;SY=31;EX=22;EY=-83;EDGE=1;$LLB=CX=17:CY=14:OX=4:OY=4:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=CX=31:CY=14:OX=-12:OY=-2:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_E25ADA04_2B09_4475_98E2_8FED7617BB9E" style="Mode=3;EOID=13F6DF7E;SOID=F677CDCE;Color=-1;LWidth=0;Hidden=0;"/>
-					<element geometry="EDGE=2;$LLB=CX=17:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=CX=35:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_2AB2014F_58D3_41f5_95F0_4D122812300E" style="Mode=3;EOID=019A7697;SOID=13F6DF7E;Color=-1;LWidth=0;Hidden=1;"/>
+					<element geometry="EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_2AB2014F_58D3_41f5_95F0_4D122812300E" style="Mode=3;EOID=019A7697;SOID=13F6DF7E;Color=-1;LWidth=0;Hidden=1;"/>
 					<element geometry="SX=15;SY=63;EX=-119;EY=101;EDGE=2;$LLB=CX=17:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=CX=35:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_4FE97CFD_CAD9_4a64_93B9_20A650D54EA7" style="Mode=3;EOID=0655EE11;SOID=13F6DF7E;Color=-1;LWidth=0;Hidden=0;"/>
-					<element geometry="SX=1;SY=0;EX=1;EY=0;EDGE=1;$LLB=CX=17:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=CX=79:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_1AE3B7B4_4A5C_4ae7_9B0B_A0784733F607" style="Mode=3;EOID=019A7697;SOID=CC711922;Color=-1;LWidth=0;Hidden=1;"/>
+					<element geometry="SX=1;SY=0;EX=1;EY=0;EDGE=1;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_1AE3B7B4_4A5C_4ae7_9B0B_A0784733F607" style="Mode=3;EOID=019A7697;SOID=CC711922;Color=-1;LWidth=0;Hidden=1;"/>
 					<element geometry="SX=79;SY=1;EX=-123;EY=-115;EDGE=2;$LLB=CX=17:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=CX=79:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_F92FC603_31FD_436a_AB84_30EF3F5A9E1A" style="Mode=3;EOID=0655EE11;SOID=CC711922;Color=-1;LWidth=0;Hidden=0;"/>
 					<element geometry="SX=44;SY=0;EX=-47;EY=0;EDGE=3;$LLB=CX=17:CY=14:OX=14:OY=-2:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=CX=37:CY=14:OX=4:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_62130309_3585_48ca_882B_137E647C5254" style="Mode=3;EOID=BE7661BF;SOID=29D08CF1;Color=-1;LWidth=0;TREE=OS;Hidden=0;"/>
-					<element geometry="EDGE=2;$LLB=CX=17:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=CX=32:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_44EB4747_1838_4729_8C0A_426654E7F10D" style="Mode=3;EOID=019A7697;SOID=BE7661BF;Color=-1;LWidth=0;Hidden=1;"/>
+					<element geometry="EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_44EB4747_1838_4729_8C0A_426654E7F10D" style="Mode=3;EOID=019A7697;SOID=BE7661BF;Color=-1;LWidth=0;Hidden=1;"/>
 					<element geometry="SX=0;SY=-14;EX=-95;EY=0;EDGE=2;$LLB=CX=17:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=CX=32:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=839:-642$;" subject="EAID_E243CA36_C2E4_4435_85DF_2203E82B0E28" style="Mode=3;EOID=0655EE11;SOID=BE7661BF;Color=-1;LWidth=0;TREE=OS;Hidden=0;"/>
-					<element geometry="EDGE=2;$LLB=CX=17:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=CX=33:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_60D17931_9422_4a9a_BDE6_06D3FF810508" style="Mode=3;EOID=019A7697;SOID=50E927C2;Color=-1;LWidth=0;Hidden=1;"/>
+					<element geometry="EDGE=2;$LLB=;LLT=;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_60D17931_9422_4a9a_BDE6_06D3FF810508" style="Mode=3;EOID=019A7697;SOID=50E927C2;Color=-1;LWidth=0;Hidden=1;"/>
 					<element geometry="SX=9;SY=-18;EX=-123;EY=0;EDGE=2;$LLB=CX=17:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=CX=33:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=;" subject="EAID_00B7E104_69D7_4852_A3F2_C037FC5EDA75" style="Mode=3;EOID=0655EE11;SOID=50E927C2;Color=-1;LWidth=0;Hidden=0;"/>
 					<element geometry="SX=40;SY=-50;EX=35;EY=82;EDGE=3;$LLB=CX=17:CY=14:OX=1:OY=-1:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=CX=20:CY=14:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=441:-273$529:-273$;" subject="EAID_E5BAFFBE_B791_4232_A479_66C33F24CC76" style="Mode=3;EOID=13F6DF7E;SOID=B4E6C1AA;Color=-1;LWidth=0;Hidden=0;"/>
 					<element geometry="SX=-46;SY=-61;EX=-51;EY=36;EDGE=3;$LLB=CX=17:CY=14:OX=6:OY=-1:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LLT=CX=23:CY=14:OX=-3:OY=3:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMT=;LMB=;LRT=;LRB=;IRHS=;ILHS=;Path=354:-289$442:-289$;" subject="EAID_C3A4732F_CA21_4ff7_84A7_52BC8BD1B598" style="Mode=3;EOID=13F6DF7E;SOID=B4E6C1AA;Color=-1;LWidth=0;Hidden=0;"/>
