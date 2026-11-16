@@ -8,6 +8,10 @@ properties:
       $ref: styleDescription.yaml
   default:
     type: string
+  numberMatched:
+    $ref: 'numberMatched.yaml'
+  numberReturned:
+    $ref: 'numberReturned.yaml'
 example:
   styles:
    - id: night

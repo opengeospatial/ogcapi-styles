@@ -1,0 +1,11 @@
+name: Prefer
+in: header
+description: >-
+  'handling=strict' creates or replaces the style after successful validation.
+  Status 400 is returned, if validation fails. 'handling=lenient' (the default) creates or replaces the style without validation.
+schema:
+  type: string
+  default: 'handling=lenient'
+  enum:
+  - handling=strict
+  - handling=lenient

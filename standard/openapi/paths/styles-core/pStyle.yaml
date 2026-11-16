@@ -1,19 +1,76 @@
 get:
-   tags:
-     - Styles
-   summary: Retrieve a dataset-level style
-   operationId: .dataset.getStyle
-   parameters:
-     - $ref: '../../parameters/styles-core/styleId.yaml'
-     - $ref: '../../parameters/unspecified/f-style.yaml'
-   responses:
-     '200':
-       $ref: '../../responses/styles-core/rStyle.yaml'
-     '204':
-       $ref: '../../responses/styles-core/rEmptyStyle.yaml'
-     '404':
-       $ref: '../../responses/common-core/rNotFound.yaml'
-     '406':
-       $ref: '../../responses/common-core/rNotAcceptable.yaml'
-     '500':
-       $ref: '../../responses/common-core/rServerError.yaml'
+  tags:
+    - Styles
+  summary: Retrieve a dataset-level style
+  operationId: .dataset.getStyle
+  parameters:
+    - $ref: '../../parameters/styles-core/styleId.yaml'
+    - $ref: '../../parameters/unspecified/f-style.yaml'
+  responses:
+    '200':
+      $ref: '../../responses/styles-core/rStyle.yaml'
+    '204':
+      $ref: '../../responses/styles-core/rEmptyStyle.yaml'
+    '400':
+      $ref: '../../responses/styles-core/rBadRequest.yaml'
+    '404':
+      $ref: '../../responses/common-core/rNotFound.yaml'
+    '406':
+      $ref: '../../responses/common-core/rNotAcceptable.yaml'
+    '500':
+      $ref: '../../responses/common-core/rServerError.yaml'
+
+put:
+  tags:
+    - Styles
+  summary: Replace a style or create a new style with a specific id
+  description: >-
+    Replace an existing style with the id `styleId`, create a new style with the id `styleId`, or just validate a style.
+    If the header `Prefer` is set to `handling=strict`, the style will be validated before adding the style to the server.
+    If the parameter `dry-run` is set to `true`, the server will not be changed and only any validation errors will be reported.
+  operationId: .dataset.putStyle
+  parameters:
+    - $ref: '../../parameters/styles-core/styleId.yaml'
+    - $ref: '../../parameters/styles-core/dry-run.yaml'
+    - $ref: '../../parameters/styles-core/Prefer_header.yaml'
+  requestBody:
+    $ref: '../../responses/styles-core/rbStyle.yaml'
+  responses:
+    '201':
+      $ref: '../../responses/styles-core/rResourceCreated.yaml'
+    '204':
+      $ref: '../../responses/styles-core/rEmptySuccess.yaml'
+    '400':
+      $ref: '../../responses/styles-core/rBadRequest.yaml'
+    '401':
+      $ref: '../../responses/styles-core/rUnauthorized.yaml'
+    '403':
+      $ref: '../../responses/styles-core/rForbidden.yaml'
+    '404':
+      $ref: '../../responses/common-core/rNotFound.yaml'
+    '415':
+      $ref: '../../responses/styles-core/rUnsupportedMediaType.yaml'
+    '500':
+      $ref: '../../responses/common-core/rServerError.yaml'
+
+delete:
+  tags:
+    - Styles
+  summary: Delete a style
+  description: Delete an existing style with the id `styleId`.
+  operationId: .dataset.deleteStyle
+  parameters:
+    - $ref: '../../parameters/styles-core/styleId.yaml'
+  responses:
+    '204':
+      $ref: '../../responses/styles-core/rEmptySuccess.yaml'
+    '400':
+      $ref: '../../responses/styles-core/rBadRequest.yaml'
+    '401':
+      $ref: '../../responses/styles-core/rUnauthorized.yaml'
+    '403':
+      $ref: '../../responses/styles-core/rForbidden.yaml'
+    '404':
+      $ref: '../../responses/common-core/rNotFound.yaml'
+    '500':
+      $ref: '../../responses/common-core/rServerError.yaml'

@@ -1,15 +1,91 @@
 get:
-   tags:
-     - Styles
-   summary: Retrieve a style for the specified collection
-   operationId: .collection.getStyles
-   parameters:
-     - $ref: '../../parameters/common-geodata/collectionId-all.yaml'
-     - $ref: '../../parameters/unspecified/f-metadata.yaml'
-   responses:
-     '200':
-       $ref: '../../responses/styles-core/rStyles.yaml'
-     '406':
-       $ref: '../../responses/common-core/rNotAcceptable.yaml'
-     '500':
-       $ref: '../../responses/common-core/rServerError.yaml'
+  tags:
+    - Styles
+  summary: Retrieve the list of styles for the specified collection
+  operationId: .collection.getStyles
+  parameters:
+    - $ref: '../../parameters/common-geodata/collectionId-all.yaml'
+    - $ref: '../../parameters/unspecified/f-metadata.yaml'
+  responses:
+    '200':
+      $ref: '../../responses/styles-core/rStyles.yaml'
+    '400':
+      $ref: '../../responses/styles-core/rBadRequest.yaml'
+    '404':
+      $ref: '../../responses/common-core/rNotFound.yaml'
+    '406':
+      $ref: '../../responses/common-core/rNotAcceptable.yaml'
+    '500':
+      $ref: '../../responses/common-core/rServerError.yaml'
+
+post:
+  tags:
+    - Styles
+  summary: Add a new style for the specified collection
+  description: >-
+    Adds a style or just validates a style for collection `collectionId`.
+    If the `Prefer:` header is set to `handling=strict`, the style will be validated before adding the style to the server.
+    If the parameter `dry-run` is set to `true`, the server will not be changed and only any validation errors will be reported.
+    If a new style is created, the server will assign a new identifier to the style.
+    The URI of the new style is returned in the `Location:` header.
+  operationId: .collection.createStyle
+  parameters:
+    - $ref: '../../parameters/common-geodata/collectionId-all.yaml'
+    - $ref: '../../parameters/styles-core/dry-run.yaml'
+    - $ref: '../../parameters/styles-core/Prefer_header.yaml'
+  requestBody:
+     $ref: '../../responses/styles-core/rbStyle.yaml'
+  responses:
+    '201':
+      $ref: '../../responses/styles-core/rResourceCreated.yaml'
+    '204':
+      $ref: '../../responses/styles-core/rEmptySuccess.yaml'
+    '400':
+      $ref: '../../responses/styles-core/rBadRequest.yaml'
+    '401':
+      $ref: '../../responses/styles-core/rUnauthorized.yaml'
+    '403':
+      $ref: '../../responses/styles-core/rForbidden.yaml'
+    '404':
+      $ref: '../../responses/common-core/rNotFound.yaml'
+    '415':
+      $ref: '../../responses/styles-core/rUnsupportedMediaType.yaml'
+    '500':
+      $ref: '../../responses/common-core/rServerError.yaml'
+
+patch:
+  tags:
+    - Styles
+  summary: Update the default style for the specified collection
+  description: >-
+    Updates the default style for collection `collectionId` using JSON Merge Patch
+    (RFC 7396). Setting `default` to a valid style identifier sets that style as
+    the default style. Setting `default` to `null` removes the default style.
+  operationId: .collection.patchStyles
+  parameters:
+    - $ref: '../../parameters/common-geodata/collectionId-all.yaml'
+  requestBody:
+    required: true
+    content:
+      application/merge-patch+json:
+        schema:
+          type: object
+          properties:
+            default:
+              type: string
+              nullable: true
+  responses:
+    '204':
+      $ref: '../../responses/styles-core/rEmptySuccess.yaml'
+    '400':
+      $ref: '../../responses/styles-core/rBadRequest.yaml'
+    '401':
+      $ref: '../../responses/styles-core/rUnauthorized.yaml'
+    '403':
+      $ref: '../../responses/styles-core/rForbidden.yaml'
+    '404':
+      $ref: '../../responses/common-core/rNotFound.yaml'
+    '415':
+      $ref: '../../responses/styles-core/rUnsupportedMediaType.yaml'
+    '500':
+      $ref: '../../responses/common-core/rServerError.yaml'

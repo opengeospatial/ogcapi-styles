@@ -1,0 +1,7 @@
+description: The resource was created successfully.
+headers:
+  Location:
+    description: The URI of the resource that has been created.
+    schema:
+      type: string
+      format: uri

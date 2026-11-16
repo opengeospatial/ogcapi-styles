@@ -1,0 +1,7 @@
+name: dry-run
+in: query
+description: 'When set to true, the style is only validated without creating a new style, returning 400 on failure, or 204 otherwise.'
+required: false
+schema:
+  type: boolean
+  default: false

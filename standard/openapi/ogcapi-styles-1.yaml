@@ -114,6 +114,10 @@ components:
          $ref: 'parameters/styles-core/styleId.yaml'
       styleId-collection:
          $ref: 'parameters/styles-core/styleId-collection.yaml'
+      dry-run:
+         $ref: 'parameters/styles-core/dry-run.yaml'
+      Prefer:
+        $ref: 'parameters/styles-core/Prefer_header.yaml'
 
       # Styles - Core (unspecified)
       f-style:
@@ -157,3 +161,21 @@ components:
          $ref: 'responses/styles-core/rStyle.yaml'
       EmptyStyle:
          $ref: 'responses/styles-core/rEmptyStyle.yaml'
+      ResourceCreated:
+        $ref: 'responses/styles-core/rResourceCreated.yaml'
+      EmptySuccess:
+        $ref: 'responses/styles-core/rEmptySuccess.yaml'
+      BadRequest:
+        $ref: 'responses/styles-core/rBadRequest.yaml'
+      Unauthorized:
+        $ref: 'responses/styles-core/rUnauthorized.yaml'
+      Forbidden:
+        $ref: 'responses/styles-core/rForbidden.yaml'
+      UnsupportedMediaType:
+        $ref: 'responses/styles-core/rUnsupportedMediaType.yaml'
+
+   requestBodies:
+      # NOTE: Although identical except for required:, SwaggerUI does note validate when referencing a response components as a request body
+      # Styles - Core
+      Style:
+         $ref: 'responses/styles-core/rbStyle.yaml'
