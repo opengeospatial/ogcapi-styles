@@ -1,6 +1,6 @@
 get:
   tags:
-    - Styles
+    - Dataset Styles
   summary: Retrieve the list of styles for the whole dataset
   operationId: .dataset.getStyles
   parameters:
@@ -15,7 +15,7 @@ get:
 
 post:
   tags:
-    - Styles
+    - Dataset Styles
   summary: Add a new style
   description: >-
     Adds a style or just validates a style.
@@ -49,7 +49,7 @@ post:
 
 patch:
   tags:
-    - Styles
+    - Dataset Styles
   summary: Update the default style
   description: >-
     Updates the default style using JSON Merge Patch

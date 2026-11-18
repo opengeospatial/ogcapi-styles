@@ -1,6 +1,6 @@
 get:
   tags:
-    - Styles
+    - Collection Styles
   summary: Retrieve a style for a specified collection
   operationId: .collection.getStyle
   parameters:
@@ -23,7 +23,7 @@ get:
 
 put:
   tags:
-    - Styles
+    - Collection Styles
   summary: Replace a style or create a new style with a specific id for a specified collection
   description: >-
     Replace an existing style with the id `styleId`, create a new style with the id `styleId`, or just validate a style, for collection `collectionId`.
@@ -57,7 +57,7 @@ put:
 
 delete:
   tags:
-    - Styles
+    - Collection Styles
   summary: Delete a style for a specified collection
   description: Delete an existing style with the id `styleId` for collection `collectionId`.
   operationId: .collection.deleteStyle

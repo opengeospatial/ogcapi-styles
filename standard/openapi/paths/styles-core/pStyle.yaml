@@ -1,6 +1,6 @@
 get:
   tags:
-    - Styles
+    - Dataset Styles
   summary: Retrieve a dataset-level style
   operationId: .dataset.getStyle
   parameters:
@@ -22,7 +22,7 @@ get:
 
 put:
   tags:
-    - Styles
+    - Dataset Styles
   summary: Replace a style or create a new style with a specific id
   description: >-
     Replace an existing style with the id `styleId`, create a new style with the id `styleId`, or just validate a style.
@@ -55,7 +55,7 @@ put:
 
 delete:
   tags:
-    - Styles
+    - Dataset Styles
   summary: Delete a style
   description: Delete an existing style with the id `styleId`.
   operationId: .dataset.deleteStyle

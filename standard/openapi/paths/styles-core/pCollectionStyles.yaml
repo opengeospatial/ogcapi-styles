@@ -1,6 +1,6 @@
 get:
   tags:
-    - Styles
+    - Collection Styles
   summary: Retrieve the list of styles for the specified collection
   operationId: .collection.getStyles
   parameters:
@@ -20,7 +20,7 @@ get:
 
 post:
   tags:
-    - Styles
+    - Collection Styles
   summary: Add a new style for the specified collection
   description: >-
     Adds a style or just validates a style for collection `collectionId`.
@@ -55,7 +55,7 @@ post:
 
 patch:
   tags:
-    - Styles
+    - Collection Styles
   summary: Update the default style for the specified collection
   description: >-
     Updates the default style for collection `collectionId` using JSON Merge Patch
