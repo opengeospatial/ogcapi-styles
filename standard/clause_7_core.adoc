@@ -120,11 +120,8 @@ A description of each style can be included in each element of this list, as det
 include::openapi/schemas/styles-core/styles.yaml[]
 ----
 
-.styleDescription.yaml
-[source,yaml]
-----
-include::openapi/schemas/styles-core/styleDescription.yaml[]
-----
+with the _styleDescription.yaml_ schema referenced found at https://github.com/opengeospatial/ogcapi-styles/blob/master/standard/openapi/schemas/styles-core/styleDescription.yaml[styleDescription.yaml OpenAPI 3.0 schema]
+and <<styleDescription-yaml,included below>>.
 
 ^!C !The `styles` member SHALL include one item for each style currently on the server.
 ^!D !The `id` member of each style SHALL be unique.
@@ -135,6 +132,13 @@ include::openapi/schemas/styles-core/styleDescription.yaml[]
 The GeoDataClass definition would specify the logical schema for each feature type present within that GeoDataClass.
 ^!H !If a thumbnail is available for a style in the style metadata, a link with the link relation type `preview` SHALL be provided in the Styles resource.
 !===
+
+[[styleDescription-yaml]]
+.styleDescription.yaml
+[source,yaml]
+----
+include::openapi/schemas/styles-core/styleDescription.yaml[]
+----
 
 The metadata, including the links to the GeoDataClasses and previews, should also be embedded within the representation of the style, if that is supported by the style encoding.
 Also including this metadata in the Styles resource provide clients access to this information without the need to send requests for each all style resource for discovering
