@@ -19,6 +19,7 @@
 :pygments-style: borland
 :pygments-linenums-mode: table
 :copyrightYear: 2020-2026
+:data-uri:
 
 :category: OGC(R) Implementation Standard
 :doc-type: IS
