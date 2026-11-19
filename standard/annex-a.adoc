@@ -2,7 +2,7 @@
 :appendix-caption: Annex
 == Conformance Class Abstract Test Suite (Normative)
 
-#TODO: The ATS needs to be updated and has been commented out until the requirements classes are stable.#
+#TODO: The ATS needs to be updated and has been commented out until it is synchronized with the requirements classes.#
 
 ////
 

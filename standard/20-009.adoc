@@ -35,7 +35,7 @@
 |Publication Date:   yyyy-mm-dd
 |External identifier of this OGC(R) document: http://www.opengis.net/doc/{doc-type}/{standard}/{m_n}
 |Internal reference number of this OGC(R) document: 20-009
-|Version: link:http://docs.opengeospatial.org/DRAFTS/20-009.html[1.0.0-draft.2 (Editor's draft)]
+|Version: link:http://docs.opengeospatial.org/DRAFTS/20-009.html[1.0.0-rc1 (Editor's draft)]
 
 |Category: {category}
 |Editors: Clemens Portele, Jérôme Jacovella-St-Louis

@@ -8,4 +8,5 @@
 |February 19, 2020 |C. Portele | 1.0.0-SNAPSHOT |all |initial version, derived from the [OGC Testbed-15: Styles API Engineering Report](http://docs.opengeospatial.org/per/19-010r2.html)
 |May 19, 2021 |C. Portele | 1.0.0-draft.1 |all |version for OGC May 2021 Code Sprint
 |May 23, 2026 |J. St-Louis | 1.0.0-draft.2 |all |version for review at OGC Connect Helsinki (June 2026)
+|November 19, 2026 |J. St-Louis | 1.0.0-rc1 |all |version ready for OAB review
 |===
